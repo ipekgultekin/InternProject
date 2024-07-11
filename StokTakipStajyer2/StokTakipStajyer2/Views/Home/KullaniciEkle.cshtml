@@ -4,8 +4,8 @@
     ViewBag.Title = "Kullanıcı Ekle";
     var statuOptions = new List<SelectListItem>
 {
-        new SelectListItem { Text = "Aktif", Value = "true" },
-        new SelectListItem { Text = "Pasif", Value = "false" }
+        new SelectListItem { Text = "True", Value = "true" },
+        new SelectListItem { Text = "False", Value = "false" }
     };
 
     var tipOptions = new List<SelectListItem>
@@ -47,11 +47,18 @@
         @Html.ValidationMessageFor(m => m.KUL_TIP, "", new { @class = "text-danger" })
     </div>
     <button type="submit">Kullanıcı Ekle</button>
+
 }
 
-
+@if (ViewBag.Message != null)
+{
+    <p>@ViewBag.Message</p>
+}
 
 @if (ViewBag.ErrorMessage != null)
 {
     <p>@ViewBag.ErrorMessage</p>
 }
+
+<!-- Kullanıcı Listesi Butonu -->
+@Html.ActionLink("Kullanıcı Listesi", "KullaniciListele", "Home", new { }, new { @class = "btn btn-secondary" })

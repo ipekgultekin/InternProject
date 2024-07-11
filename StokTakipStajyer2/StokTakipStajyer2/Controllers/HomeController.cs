@@ -41,7 +41,6 @@ namespace StokTakipStajyer2.Controllers
                 ViewBag.ErrorMessage = "Kullanıcı girişi başarılı.";
 
                 return RedirectToAction("KullaniciEkle");
-                
 
             }
 
@@ -100,6 +99,67 @@ namespace StokTakipStajyer2.Controllers
             }
 
             return View(kullanici);
+        }
+
+
+
+        [HttpGet]
+        public ActionResult KullaniciListele(string searchString = null)
+        {
+            if (Session["ID"] == null)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            var kullanicilar = from k in stokdata.KULLANICI select k;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                kullanicilar = kullanicilar.Where(s => s.KUL_USERNAME.Contains(searchString) ||
+                                                       s.KUL_AD.Contains(searchString) ||
+                                                       s.KUL_SOYAD.Contains(searchString) ||
+                                                       s.KUL_ID.ToString().Contains(searchString) ||
+                                                       s.KUL_TIP.ToString().Contains(searchString) ||
+                                                       (s.STATU == true ? "true" : "false").Contains(searchString));
+            }
+
+            return View(kullanicilar.ToList());
+        }
+
+        [HttpGet]
+        public ActionResult KullaniciSil(int id)
+        {
+            if (Session["ID"] == null)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            var kullanici = stokdata.KULLANICI.Find(id);
+            if (kullanici == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(kullanici);
+        }
+
+        [HttpPost, ActionName("KullaniciSil")]
+        public ActionResult KullaniciSilConfirmed(int id)
+        {
+            if (Session["ID"] == null)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            var kullanici = stokdata.KULLANICI.Find(id);
+            if (kullanici != null)
+            {
+                stokdata.KULLANICI.Remove(kullanici);
+                stokdata.SaveChanges();
+                ViewBag.Message = "Kullanıcı başarıyla silindi.";
+            }
+
+            return RedirectToAction("KullaniciListele");
         }
 
         public ActionResult About()

@@ -1,0 +1,71 @@
+﻿@model StokTakipStajyer2.Models.KULLANICI
+
+@{
+    ViewBag.Title = "Kullanıcı Sil";
+}
+
+<h2>Kullanıcı Sil</h2>
+
+<h3>Bu kullanıcıyı silmek istediğinize emin misiniz?</h3>
+<div>
+    <h4>@Model.KUL_USERNAME</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.KUL_AD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KUL_AD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KUL_SOYAD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KUL_SOYAD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KUL_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KUL_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KUL_SIFRE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KUL_SIFRE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KUL_TIP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KUL_TIP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STATU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STATU)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions no-color">
+            <input type="submit" value="Sil" class="btn btn-danger" /> |
+            @Html.ActionLink("İptal", "KullaniciListele")
+        </div>
+    }
+</div>
