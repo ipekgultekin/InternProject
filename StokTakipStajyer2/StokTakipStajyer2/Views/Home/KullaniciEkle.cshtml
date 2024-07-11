@@ -1,0 +1,57 @@
+﻿@model StokTakipStajyer2.Models.KULLANICI
+
+@{
+    ViewBag.Title = "Kullanıcı Ekle";
+    var statuOptions = new List<SelectListItem>
+{
+        new SelectListItem { Text = "Aktif", Value = "true" },
+        new SelectListItem { Text = "Pasif", Value = "false" }
+    };
+
+    var tipOptions = new List<SelectListItem>
+{
+        new SelectListItem { Text = "Admin", Value = "1" },
+        new SelectListItem { Text = "Depo Yetkilisi", Value = "2" },
+        new SelectListItem { Text = "Rapor Kullanıcısı", Value = "3" }
+    };
+}
+
+<h2>Kullanıcı Ekle</h2>
+
+@using (Html.BeginForm("KullaniciEkle", "Home", new { FormMethod.Post }))
+{
+    <div>
+        <label>Username</label><br />
+        @Html.TextBoxFor(m => m.KUL_USERNAME)
+    </div>
+    <div>
+        <label>Şifre</label><br />
+        @Html.PasswordFor(m => m.KUL_SIFRE)
+    </div>
+    <div>
+        <label>Kullanıcı Adı</label><br />
+        @Html.TextBoxFor(m => m.KUL_AD)
+    </div>
+    <div>
+        <label>Soyadı</label><br />
+        @Html.TextBoxFor(m => m.KUL_SOYAD)
+    </div>
+    <div>
+        <label>Kullanıcı Statüsü</label><br />
+        @Html.DropDownListFor(m => m.STATU, statuOptions, "Seçiniz")
+        @Html.ValidationMessageFor(m => m.STATU, "", new { @class = "text-danger" })
+    </div>
+    <div>
+        <label>Kullanıcı Tipi</label><br />
+        @Html.DropDownListFor(m => m.KUL_TIP, tipOptions, "Seçiniz")
+        @Html.ValidationMessageFor(m => m.KUL_TIP, "", new { @class = "text-danger" })
+    </div>
+    <button type="submit">Kullanıcı Ekle</button>
+}
+
+
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <p>@ViewBag.ErrorMessage</p>
+}

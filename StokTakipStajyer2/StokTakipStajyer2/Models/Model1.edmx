@@ -1,0 +1,798 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="StokTakipDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ALT_DEPO">
+          <Key>
+            <PropertyRef Name="ALT_DEPO_ID" />
+          </Key>
+          <Property Name="ALT_DEPO_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ALT_DEPO_ADI" Type="nvarchar" MaxLength="100" />
+          <Property Name="STATU" Type="bit" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="int" />
+          <Property Name="OLUSTURMA_TARIHI" Type="datetime" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="int" />
+          <Property Name="GUNCELLEME_TARIHI" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DEPO">
+          <Key>
+            <PropertyRef Name="DEPO_ID" />
+          </Key>
+          <Property Name="DEPO_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DEPO_ADI" Type="nvarchar" MaxLength="100" />
+          <Property Name="STATU" Type="nchar" MaxLength="10" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="int" />
+          <Property Name="OLUSTURMA_TARIHI" Type="datetime" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="int" />
+          <Property Name="GUNCELLEME_TARIHI" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DEPO_ESLESTIRME">
+          <Key>
+            <PropertyRef Name="DEPO_ESLESTIRME_ID" />
+          </Key>
+          <Property Name="DEPO_ESLESTIRME_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DEPO_ID" Type="int" />
+          <Property Name="ALT_DEPO_ID" Type="int" />
+          <Property Name="STATU" Type="bit" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="int" />
+          <Property Name="OLUSTURMA_TARIHI" Type="datetime" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="int" />
+          <Property Name="GUNCELLEME_TARIHI" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HAREKET_TIP">
+          <Key>
+            <PropertyRef Name="HAREKET_TIP_ID" />
+          </Key>
+          <Property Name="HAREKET_TIP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HAREKET_TIP_ADI" Type="nvarchar" MaxLength="50" />
+          <Property Name="ISLEM_GOSTERGESI" Type="bit" />
+          <Property Name="STATU" Type="bit" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="int" />
+          <Property Name="OLUSTURMA_TARIHI" Type="datetime" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="int" />
+          <Property Name="GUNCELLEME_TARIHI" Type="datetime" />
+        </EntityType>
+        <EntityType Name="KULLANICI">
+          <Key>
+            <PropertyRef Name="KUL_ID" />
+          </Key>
+          <Property Name="KUL_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KUL_USERNAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="KUL_SIFRE" Type="nvarchar" MaxLength="50" />
+          <Property Name="KUL_AD" Type="nvarchar" MaxLength="50" />
+          <Property Name="KUL_SOYAD" Type="nvarchar" MaxLength="50" />
+          <Property Name="KUL_TIP" Type="int" />
+          <Property Name="STATU" Type="bit" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="int" />
+          <Property Name="OLUSTURMA_TARIHI" Type="datetime" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="int" />
+          <Property Name="GUNCELLEME_TARIHI" Type="datetime" />
+        </EntityType>
+        <EntityType Name="KULLANICI_TIP">
+          <Key>
+            <PropertyRef Name="KULTIP_ID" />
+          </Key>
+          <Property Name="KULTIP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KULTIP_ADI" Type="nvarchar" MaxLength="50" />
+          <Property Name="STATU" Type="bit" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="int" />
+          <Property Name="OLUSTURMA_TARIHI" Type="datetime" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="int" />
+          <Property Name="GUNCELLEME_TARIHI" Type="datetime" />
+        </EntityType>
+        <EntityType Name="OLCU_BIRIM">
+          <Key>
+            <PropertyRef Name="OLCUBIRIM_ID" />
+          </Key>
+          <Property Name="OLCUBIRIM_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OLCUBIRIM_ADI" Type="nvarchar" MaxLength="50" />
+          <Property Name="STATU" Type="bit" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="int" />
+          <Property Name="OLUSTURMA_TARIHI" Type="datetime" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="int" />
+          <Property Name="GUNCELLEME_TARIHI" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SORUMLU">
+          <Key>
+            <PropertyRef Name="SORUMLU_ID" />
+          </Key>
+          <Property Name="SORUMLU_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SORUMLU_ADI" Type="nvarchar" MaxLength="50" />
+          <Property Name="STATU" Type="int" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="int" />
+          <Property Name="OLUSTURMA_TARIHI" Type="datetime" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="int" />
+          <Property Name="GUNCELLEME_TARIHI" Type="datetime" />
+        </EntityType>
+        <EntityType Name="STOK">
+          <Key>
+            <PropertyRef Name="STOK_ID" />
+          </Key>
+          <Property Name="STOK_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STOK_AD" Type="nvarchar" MaxLength="50" />
+          <Property Name="STOK_OLCUBIRIM" Type="int" />
+          <Property Name="STOK_MARKA" Type="nvarchar" MaxLength="50" />
+          <Property Name="STOK_DETAY" Type="nvarchar" MaxLength="50" />
+          <Property Name="KAYIT_TARIHI" Type="bit" />
+          <Property Name="MIN_MIKTAR" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="STATU" Type="bit" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="int" />
+          <Property Name="OLUSTURMA_TARIHI" Type="datetime" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="int" />
+          <Property Name="GUNCELLEME_TARIHI" Type="datetime" />
+        </EntityType>
+        <EntityType Name="STOK_DURUM">
+          <Key>
+            <PropertyRef Name="DURUM_ID" />
+          </Key>
+          <Property Name="DURUM_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STOK_ID" Type="int" />
+          <Property Name="DEPO_ESLESTIRME_ID" Type="int" />
+          <Property Name="DURUM_MIKTAR" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="int" />
+          <Property Name="OLUSTURMA_TARIHI" Type="datetime" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="int" />
+          <Property Name="GUNCELLEME_TARIHI" Type="datetime" />
+        </EntityType>
+        <EntityType Name="STOK_HAREKET">
+          <Key>
+            <PropertyRef Name="HAREKET_ID" />
+          </Key>
+          <Property Name="HAREKET_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STOK_ID" Type="int" />
+          <Property Name="DEPO_ESLESTIRME_ID" Type="int" />
+          <Property Name="SORUMLU_ID" Type="int" />
+          <Property Name="HAREKET_TIP" Type="int" />
+          <Property Name="ACIKLAMA" Type="nvarchar" MaxLength="250" />
+          <Property Name="HAREKET_MIKTAR" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="HAREKET_TARIHI" Type="datetime" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="int" />
+          <Property Name="OLUSTURMA_TARIHI" Type="datetime" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="int" />
+          <Property Name="GUNCELLEME_TARIHI" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_ALT_DEPO_ALT_DEPO_ID">
+          <End Role="ALT_DEPO" Type="Self.ALT_DEPO" Multiplicity="0..1" />
+          <End Role="DEPO_ESLESTIRME" Type="Self.DEPO_ESLESTIRME" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ALT_DEPO">
+              <PropertyRef Name="ALT_DEPO_ID" />
+            </Principal>
+            <Dependent Role="DEPO_ESLESTIRME">
+              <PropertyRef Name="ALT_DEPO_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DEPO_DEPO_ID">
+          <End Role="DEPO" Type="Self.DEPO" Multiplicity="0..1" />
+          <End Role="DEPO_ESLESTIRME" Type="Self.DEPO_ESLESTIRME" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPO">
+              <PropertyRef Name="DEPO_ID" />
+            </Principal>
+            <Dependent Role="DEPO_ESLESTIRME">
+              <PropertyRef Name="DEPO_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DEPO_ESLESTIRME_DEPO_ESLESTIRME_ID">
+          <End Role="DEPO_ESLESTIRME" Type="Self.DEPO_ESLESTIRME" Multiplicity="0..1" />
+          <End Role="STOK_HAREKET" Type="Self.STOK_HAREKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPO_ESLESTIRME">
+              <PropertyRef Name="DEPO_ESLESTIRME_ID" />
+            </Principal>
+            <Dependent Role="STOK_HAREKET">
+              <PropertyRef Name="DEPO_ESLESTIRME_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HAREKET_TIP_HAREKET_TIP_ID">
+          <End Role="HAREKET_TIP" Type="Self.HAREKET_TIP" Multiplicity="1" />
+          <End Role="STOK_HAREKET" Type="Self.STOK_HAREKET" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="HAREKET_TIP">
+              <PropertyRef Name="HAREKET_TIP_ID" />
+            </Principal>
+            <Dependent Role="STOK_HAREKET">
+              <PropertyRef Name="HAREKET_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KULLANICI_TIP_KULLANICI_TIP_ID">
+          <End Role="KULLANICI_TIP" Type="Self.KULLANICI_TIP" Multiplicity="0..1" />
+          <End Role="KULLANICI" Type="Self.KULLANICI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KULLANICI_TIP">
+              <PropertyRef Name="KULTIP_ID" />
+            </Principal>
+            <Dependent Role="KULLANICI">
+              <PropertyRef Name="KUL_TIP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OLCU_BIRIMI_OLCU_BIRIMI_ID">
+          <End Role="OLCU_BIRIM" Type="Self.OLCU_BIRIM" Multiplicity="0..1" />
+          <End Role="STOK" Type="Self.STOK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OLCU_BIRIM">
+              <PropertyRef Name="OLCUBIRIM_ID" />
+            </Principal>
+            <Dependent Role="STOK">
+              <PropertyRef Name="STOK_OLCUBIRIM" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SORUMLU_SORUMLU_ID">
+          <End Role="SORUMLU" Type="Self.SORUMLU" Multiplicity="0..1" />
+          <End Role="STOK_HAREKET" Type="Self.STOK_HAREKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SORUMLU">
+              <PropertyRef Name="SORUMLU_ID" />
+            </Principal>
+            <Dependent Role="STOK_HAREKET">
+              <PropertyRef Name="SORUMLU_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STOK_STOK_ID">
+          <End Role="STOK" Type="Self.STOK" Multiplicity="1" />
+          <End Role="STOK_DURUM" Type="Self.STOK_DURUM" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="STOK">
+              <PropertyRef Name="STOK_ID" />
+            </Principal>
+            <Dependent Role="STOK_DURUM">
+              <PropertyRef Name="DURUM_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StokTakipDBModelStoreContainer">
+          <EntitySet Name="ALT_DEPO" EntityType="Self.ALT_DEPO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DEPO" EntityType="Self.DEPO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DEPO_ESLESTIRME" EntityType="Self.DEPO_ESLESTIRME" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HAREKET_TIP" EntityType="Self.HAREKET_TIP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KULLANICI" EntityType="Self.KULLANICI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KULLANICI_TIP" EntityType="Self.KULLANICI_TIP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OLCU_BIRIM" EntityType="Self.OLCU_BIRIM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SORUMLU" EntityType="Self.SORUMLU" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STOK" EntityType="Self.STOK" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STOK_DURUM" EntityType="Self.STOK_DURUM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STOK_HAREKET" EntityType="Self.STOK_HAREKET" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ALT_DEPO_ALT_DEPO_ID" Association="Self.FK_ALT_DEPO_ALT_DEPO_ID">
+            <End Role="ALT_DEPO" EntitySet="ALT_DEPO" />
+            <End Role="DEPO_ESLESTIRME" EntitySet="DEPO_ESLESTIRME" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DEPO_DEPO_ID" Association="Self.FK_DEPO_DEPO_ID">
+            <End Role="DEPO" EntitySet="DEPO" />
+            <End Role="DEPO_ESLESTIRME" EntitySet="DEPO_ESLESTIRME" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DEPO_ESLESTIRME_DEPO_ESLESTIRME_ID" Association="Self.FK_DEPO_ESLESTIRME_DEPO_ESLESTIRME_ID">
+            <End Role="DEPO_ESLESTIRME" EntitySet="DEPO_ESLESTIRME" />
+            <End Role="STOK_HAREKET" EntitySet="STOK_HAREKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HAREKET_TIP_HAREKET_TIP_ID" Association="Self.FK_HAREKET_TIP_HAREKET_TIP_ID">
+            <End Role="HAREKET_TIP" EntitySet="HAREKET_TIP" />
+            <End Role="STOK_HAREKET" EntitySet="STOK_HAREKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KULLANICI_TIP_KULLANICI_TIP_ID" Association="Self.FK_KULLANICI_TIP_KULLANICI_TIP_ID">
+            <End Role="KULLANICI_TIP" EntitySet="KULLANICI_TIP" />
+            <End Role="KULLANICI" EntitySet="KULLANICI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OLCU_BIRIMI_OLCU_BIRIMI_ID" Association="Self.FK_OLCU_BIRIMI_OLCU_BIRIMI_ID">
+            <End Role="OLCU_BIRIM" EntitySet="OLCU_BIRIM" />
+            <End Role="STOK" EntitySet="STOK" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SORUMLU_SORUMLU_ID" Association="Self.FK_SORUMLU_SORUMLU_ID">
+            <End Role="SORUMLU" EntitySet="SORUMLU" />
+            <End Role="STOK_HAREKET" EntitySet="STOK_HAREKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STOK_STOK_ID" Association="Self.FK_STOK_STOK_ID">
+            <End Role="STOK" EntitySet="STOK" />
+            <End Role="STOK_DURUM" EntitySet="STOK_DURUM" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StokTakipDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ALT_DEPO">
+          <Key>
+            <PropertyRef Name="ALT_DEPO_ID" />
+          </Key>
+          <Property Name="ALT_DEPO_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ALT_DEPO_ADI" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="STATU" Type="Boolean" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="Int32" />
+          <Property Name="OLUSTURMA_TARIHI" Type="DateTime" Precision="3" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="Int32" />
+          <Property Name="GUNCELLEME_TARIHI" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DEPO_ESLESTIRME" Relationship="Self.FK_ALT_DEPO_ALT_DEPO_ID" FromRole="ALT_DEPO" ToRole="DEPO_ESLESTIRME" />
+        </EntityType>
+        <EntityType Name="DEPO">
+          <Key>
+            <PropertyRef Name="DEPO_ID" />
+          </Key>
+          <Property Name="DEPO_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DEPO_ADI" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="STATU" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="Int32" />
+          <Property Name="OLUSTURMA_TARIHI" Type="DateTime" Precision="3" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="Int32" />
+          <Property Name="GUNCELLEME_TARIHI" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DEPO_ESLESTIRME" Relationship="Self.FK_DEPO_DEPO_ID" FromRole="DEPO" ToRole="DEPO_ESLESTIRME" />
+        </EntityType>
+        <EntityType Name="DEPO_ESLESTIRME">
+          <Key>
+            <PropertyRef Name="DEPO_ESLESTIRME_ID" />
+          </Key>
+          <Property Name="DEPO_ESLESTIRME_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DEPO_ID" Type="Int32" />
+          <Property Name="ALT_DEPO_ID" Type="Int32" />
+          <Property Name="STATU" Type="Boolean" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="Int32" />
+          <Property Name="OLUSTURMA_TARIHI" Type="DateTime" Precision="3" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="Int32" />
+          <Property Name="GUNCELLEME_TARIHI" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ALT_DEPO" Relationship="Self.FK_ALT_DEPO_ALT_DEPO_ID" FromRole="DEPO_ESLESTIRME" ToRole="ALT_DEPO" />
+          <NavigationProperty Name="DEPO" Relationship="Self.FK_DEPO_DEPO_ID" FromRole="DEPO_ESLESTIRME" ToRole="DEPO" />
+          <NavigationProperty Name="STOK_HAREKET" Relationship="Self.FK_DEPO_ESLESTIRME_DEPO_ESLESTIRME_ID" FromRole="DEPO_ESLESTIRME" ToRole="STOK_HAREKET" />
+        </EntityType>
+        <EntityType Name="HAREKET_TIP">
+          <Key>
+            <PropertyRef Name="HAREKET_TIP_ID" />
+          </Key>
+          <Property Name="HAREKET_TIP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HAREKET_TIP_ADI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ISLEM_GOSTERGESI" Type="Boolean" />
+          <Property Name="STATU" Type="Boolean" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="Int32" />
+          <Property Name="OLUSTURMA_TARIHI" Type="DateTime" Precision="3" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="Int32" />
+          <Property Name="GUNCELLEME_TARIHI" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="STOK_HAREKET" Relationship="Self.FK_HAREKET_TIP_HAREKET_TIP_ID" FromRole="HAREKET_TIP" ToRole="STOK_HAREKET" />
+        </EntityType>
+        <EntityType Name="KULLANICI">
+          <Key>
+            <PropertyRef Name="KUL_ID" />
+          </Key>
+          <Property Name="KUL_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KUL_USERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KUL_SIFRE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KUL_AD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KUL_SOYAD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KUL_TIP" Type="Int32" />
+          <Property Name="STATU" Type="Boolean" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="Int32" />
+          <Property Name="OLUSTURMA_TARIHI" Type="DateTime" Precision="3" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="Int32" />
+          <Property Name="GUNCELLEME_TARIHI" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="KULLANICI_TIP" Relationship="Self.FK_KULLANICI_TIP_KULLANICI_TIP_ID" FromRole="KULLANICI" ToRole="KULLANICI_TIP" />
+        </EntityType>
+        <EntityType Name="KULLANICI_TIP">
+          <Key>
+            <PropertyRef Name="KULTIP_ID" />
+          </Key>
+          <Property Name="KULTIP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KULTIP_ADI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="STATU" Type="Boolean" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="Int32" />
+          <Property Name="OLUSTURMA_TARIHI" Type="DateTime" Precision="3" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="Int32" />
+          <Property Name="GUNCELLEME_TARIHI" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="KULLANICI" Relationship="Self.FK_KULLANICI_TIP_KULLANICI_TIP_ID" FromRole="KULLANICI_TIP" ToRole="KULLANICI" />
+        </EntityType>
+        <EntityType Name="OLCU_BIRIM">
+          <Key>
+            <PropertyRef Name="OLCUBIRIM_ID" />
+          </Key>
+          <Property Name="OLCUBIRIM_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OLCUBIRIM_ADI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="STATU" Type="Boolean" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="Int32" />
+          <Property Name="OLUSTURMA_TARIHI" Type="DateTime" Precision="3" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="Int32" />
+          <Property Name="GUNCELLEME_TARIHI" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="STOK" Relationship="Self.FK_OLCU_BIRIMI_OLCU_BIRIMI_ID" FromRole="OLCU_BIRIM" ToRole="STOK" />
+        </EntityType>
+        <EntityType Name="SORUMLU">
+          <Key>
+            <PropertyRef Name="SORUMLU_ID" />
+          </Key>
+          <Property Name="SORUMLU_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SORUMLU_ADI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="STATU" Type="Int32" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="Int32" />
+          <Property Name="OLUSTURMA_TARIHI" Type="DateTime" Precision="3" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="Int32" />
+          <Property Name="GUNCELLEME_TARIHI" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="STOK_HAREKET" Relationship="Self.FK_SORUMLU_SORUMLU_ID" FromRole="SORUMLU" ToRole="STOK_HAREKET" />
+        </EntityType>
+        <EntityType Name="STOK">
+          <Key>
+            <PropertyRef Name="STOK_ID" />
+          </Key>
+          <Property Name="STOK_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STOK_AD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="STOK_OLCUBIRIM" Type="Int32" />
+          <Property Name="STOK_MARKA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="STOK_DETAY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KAYIT_TARIHI" Type="Boolean" />
+          <Property Name="MIN_MIKTAR" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="STATU" Type="Boolean" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="Int32" />
+          <Property Name="OLUSTURMA_TARIHI" Type="DateTime" Precision="3" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="Int32" />
+          <Property Name="GUNCELLEME_TARIHI" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="OLCU_BIRIM" Relationship="Self.FK_OLCU_BIRIMI_OLCU_BIRIMI_ID" FromRole="STOK" ToRole="OLCU_BIRIM" />
+          <NavigationProperty Name="STOK_DURUM" Relationship="Self.FK_STOK_STOK_ID" FromRole="STOK" ToRole="STOK_DURUM" />
+        </EntityType>
+        <EntityType Name="STOK_DURUM">
+          <Key>
+            <PropertyRef Name="DURUM_ID" />
+          </Key>
+          <Property Name="DURUM_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STOK_ID" Type="Int32" />
+          <Property Name="DEPO_ESLESTIRME_ID" Type="Int32" />
+          <Property Name="DURUM_MIKTAR" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="Int32" />
+          <Property Name="OLUSTURMA_TARIHI" Type="DateTime" Precision="3" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="Int32" />
+          <Property Name="GUNCELLEME_TARIHI" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="STOK" Relationship="Self.FK_STOK_STOK_ID" FromRole="STOK_DURUM" ToRole="STOK" />
+        </EntityType>
+        <EntityType Name="STOK_HAREKET">
+          <Key>
+            <PropertyRef Name="HAREKET_ID" />
+          </Key>
+          <Property Name="HAREKET_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STOK_ID" Type="Int32" />
+          <Property Name="DEPO_ESLESTIRME_ID" Type="Int32" />
+          <Property Name="SORUMLU_ID" Type="Int32" />
+          <Property Name="HAREKET_TIP" Type="Int32" />
+          <Property Name="ACIKLAMA" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="HAREKET_MIKTAR" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="HAREKET_TARIHI" Type="DateTime" Precision="3" />
+          <Property Name="OLUSTURAN_KULLANICI" Type="Int32" />
+          <Property Name="OLUSTURMA_TARIHI" Type="DateTime" Precision="3" />
+          <Property Name="GUNCELLEYEN_KULLANICI" Type="Int32" />
+          <Property Name="GUNCELLEME_TARIHI" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DEPO_ESLESTIRME" Relationship="Self.FK_DEPO_ESLESTIRME_DEPO_ESLESTIRME_ID" FromRole="STOK_HAREKET" ToRole="DEPO_ESLESTIRME" />
+          <NavigationProperty Name="HAREKET_TIP1" Relationship="Self.FK_HAREKET_TIP_HAREKET_TIP_ID" FromRole="STOK_HAREKET" ToRole="HAREKET_TIP" />
+          <NavigationProperty Name="SORUMLU" Relationship="Self.FK_SORUMLU_SORUMLU_ID" FromRole="STOK_HAREKET" ToRole="SORUMLU" />
+        </EntityType>
+        <Association Name="FK_ALT_DEPO_ALT_DEPO_ID">
+          <End Role="ALT_DEPO" Type="Self.ALT_DEPO" Multiplicity="0..1" />
+          <End Role="DEPO_ESLESTIRME" Type="Self.DEPO_ESLESTIRME" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ALT_DEPO">
+              <PropertyRef Name="ALT_DEPO_ID" />
+            </Principal>
+            <Dependent Role="DEPO_ESLESTIRME">
+              <PropertyRef Name="ALT_DEPO_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DEPO_DEPO_ID">
+          <End Role="DEPO" Type="Self.DEPO" Multiplicity="0..1" />
+          <End Role="DEPO_ESLESTIRME" Type="Self.DEPO_ESLESTIRME" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPO">
+              <PropertyRef Name="DEPO_ID" />
+            </Principal>
+            <Dependent Role="DEPO_ESLESTIRME">
+              <PropertyRef Name="DEPO_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DEPO_ESLESTIRME_DEPO_ESLESTIRME_ID">
+          <End Role="DEPO_ESLESTIRME" Type="Self.DEPO_ESLESTIRME" Multiplicity="0..1" />
+          <End Role="STOK_HAREKET" Type="Self.STOK_HAREKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPO_ESLESTIRME">
+              <PropertyRef Name="DEPO_ESLESTIRME_ID" />
+            </Principal>
+            <Dependent Role="STOK_HAREKET">
+              <PropertyRef Name="DEPO_ESLESTIRME_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HAREKET_TIP_HAREKET_TIP_ID">
+          <End Role="HAREKET_TIP" Type="Self.HAREKET_TIP" Multiplicity="1" />
+          <End Role="STOK_HAREKET" Type="Self.STOK_HAREKET" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="HAREKET_TIP">
+              <PropertyRef Name="HAREKET_TIP_ID" />
+            </Principal>
+            <Dependent Role="STOK_HAREKET">
+              <PropertyRef Name="HAREKET_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KULLANICI_TIP_KULLANICI_TIP_ID">
+          <End Role="KULLANICI_TIP" Type="Self.KULLANICI_TIP" Multiplicity="0..1" />
+          <End Role="KULLANICI" Type="Self.KULLANICI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KULLANICI_TIP">
+              <PropertyRef Name="KULTIP_ID" />
+            </Principal>
+            <Dependent Role="KULLANICI">
+              <PropertyRef Name="KUL_TIP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OLCU_BIRIMI_OLCU_BIRIMI_ID">
+          <End Role="OLCU_BIRIM" Type="Self.OLCU_BIRIM" Multiplicity="0..1" />
+          <End Role="STOK" Type="Self.STOK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OLCU_BIRIM">
+              <PropertyRef Name="OLCUBIRIM_ID" />
+            </Principal>
+            <Dependent Role="STOK">
+              <PropertyRef Name="STOK_OLCUBIRIM" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SORUMLU_SORUMLU_ID">
+          <End Role="SORUMLU" Type="Self.SORUMLU" Multiplicity="0..1" />
+          <End Role="STOK_HAREKET" Type="Self.STOK_HAREKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SORUMLU">
+              <PropertyRef Name="SORUMLU_ID" />
+            </Principal>
+            <Dependent Role="STOK_HAREKET">
+              <PropertyRef Name="SORUMLU_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STOK_STOK_ID">
+          <End Role="STOK" Type="Self.STOK" Multiplicity="1" />
+          <End Role="STOK_DURUM" Type="Self.STOK_DURUM" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="STOK">
+              <PropertyRef Name="STOK_ID" />
+            </Principal>
+            <Dependent Role="STOK_DURUM">
+              <PropertyRef Name="DURUM_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StokTakipDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ALT_DEPO" EntityType="Self.ALT_DEPO" />
+          <EntitySet Name="DEPO" EntityType="Self.DEPO" />
+          <EntitySet Name="DEPO_ESLESTIRME" EntityType="Self.DEPO_ESLESTIRME" />
+          <EntitySet Name="HAREKET_TIP" EntityType="Self.HAREKET_TIP" />
+          <EntitySet Name="KULLANICI" EntityType="Self.KULLANICI" />
+          <EntitySet Name="KULLANICI_TIP" EntityType="Self.KULLANICI_TIP" />
+          <EntitySet Name="OLCU_BIRIM" EntityType="Self.OLCU_BIRIM" />
+          <EntitySet Name="SORUMLU" EntityType="Self.SORUMLU" />
+          <EntitySet Name="STOK" EntityType="Self.STOK" />
+          <EntitySet Name="STOK_DURUM" EntityType="Self.STOK_DURUM" />
+          <EntitySet Name="STOK_HAREKET" EntityType="Self.STOK_HAREKET" />
+          <AssociationSet Name="FK_ALT_DEPO_ALT_DEPO_ID" Association="Self.FK_ALT_DEPO_ALT_DEPO_ID">
+            <End Role="ALT_DEPO" EntitySet="ALT_DEPO" />
+            <End Role="DEPO_ESLESTIRME" EntitySet="DEPO_ESLESTIRME" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DEPO_DEPO_ID" Association="Self.FK_DEPO_DEPO_ID">
+            <End Role="DEPO" EntitySet="DEPO" />
+            <End Role="DEPO_ESLESTIRME" EntitySet="DEPO_ESLESTIRME" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DEPO_ESLESTIRME_DEPO_ESLESTIRME_ID" Association="Self.FK_DEPO_ESLESTIRME_DEPO_ESLESTIRME_ID">
+            <End Role="DEPO_ESLESTIRME" EntitySet="DEPO_ESLESTIRME" />
+            <End Role="STOK_HAREKET" EntitySet="STOK_HAREKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HAREKET_TIP_HAREKET_TIP_ID" Association="Self.FK_HAREKET_TIP_HAREKET_TIP_ID">
+            <End Role="HAREKET_TIP" EntitySet="HAREKET_TIP" />
+            <End Role="STOK_HAREKET" EntitySet="STOK_HAREKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KULLANICI_TIP_KULLANICI_TIP_ID" Association="Self.FK_KULLANICI_TIP_KULLANICI_TIP_ID">
+            <End Role="KULLANICI_TIP" EntitySet="KULLANICI_TIP" />
+            <End Role="KULLANICI" EntitySet="KULLANICI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OLCU_BIRIMI_OLCU_BIRIMI_ID" Association="Self.FK_OLCU_BIRIMI_OLCU_BIRIMI_ID">
+            <End Role="OLCU_BIRIM" EntitySet="OLCU_BIRIM" />
+            <End Role="STOK" EntitySet="STOK" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SORUMLU_SORUMLU_ID" Association="Self.FK_SORUMLU_SORUMLU_ID">
+            <End Role="SORUMLU" EntitySet="SORUMLU" />
+            <End Role="STOK_HAREKET" EntitySet="STOK_HAREKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STOK_STOK_ID" Association="Self.FK_STOK_STOK_ID">
+            <End Role="STOK" EntitySet="STOK" />
+            <End Role="STOK_DURUM" EntitySet="STOK_DURUM" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StokTakipDBModelStoreContainer" CdmEntityContainer="StokTakipDBEntities">
+          <EntitySetMapping Name="ALT_DEPO">
+            <EntityTypeMapping TypeName="StokTakipDBModel.ALT_DEPO">
+              <MappingFragment StoreEntitySet="ALT_DEPO">
+                <ScalarProperty Name="ALT_DEPO_ID" ColumnName="ALT_DEPO_ID" />
+                <ScalarProperty Name="ALT_DEPO_ADI" ColumnName="ALT_DEPO_ADI" />
+                <ScalarProperty Name="STATU" ColumnName="STATU" />
+                <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+                <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+                <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+                <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DEPO">
+            <EntityTypeMapping TypeName="StokTakipDBModel.DEPO">
+              <MappingFragment StoreEntitySet="DEPO">
+                <ScalarProperty Name="DEPO_ID" ColumnName="DEPO_ID" />
+                <ScalarProperty Name="DEPO_ADI" ColumnName="DEPO_ADI" />
+                <ScalarProperty Name="STATU" ColumnName="STATU" />
+                <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+                <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+                <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+                <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DEPO_ESLESTIRME">
+            <EntityTypeMapping TypeName="StokTakipDBModel.DEPO_ESLESTIRME">
+              <MappingFragment StoreEntitySet="DEPO_ESLESTIRME">
+                <ScalarProperty Name="DEPO_ESLESTIRME_ID" ColumnName="DEPO_ESLESTIRME_ID" />
+                <ScalarProperty Name="DEPO_ID" ColumnName="DEPO_ID" />
+                <ScalarProperty Name="ALT_DEPO_ID" ColumnName="ALT_DEPO_ID" />
+                <ScalarProperty Name="STATU" ColumnName="STATU" />
+                <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+                <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+                <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+                <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HAREKET_TIP">
+            <EntityTypeMapping TypeName="StokTakipDBModel.HAREKET_TIP">
+              <MappingFragment StoreEntitySet="HAREKET_TIP">
+                <ScalarProperty Name="HAREKET_TIP_ID" ColumnName="HAREKET_TIP_ID" />
+                <ScalarProperty Name="HAREKET_TIP_ADI" ColumnName="HAREKET_TIP_ADI" />
+                <ScalarProperty Name="ISLEM_GOSTERGESI" ColumnName="ISLEM_GOSTERGESI" />
+                <ScalarProperty Name="STATU" ColumnName="STATU" />
+                <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+                <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+                <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+                <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KULLANICI">
+            <EntityTypeMapping TypeName="StokTakipDBModel.KULLANICI">
+              <MappingFragment StoreEntitySet="KULLANICI">
+                <ScalarProperty Name="KUL_ID" ColumnName="KUL_ID" />
+                <ScalarProperty Name="KUL_USERNAME" ColumnName="KUL_USERNAME" />
+                <ScalarProperty Name="KUL_SIFRE" ColumnName="KUL_SIFRE" />
+                <ScalarProperty Name="KUL_AD" ColumnName="KUL_AD" />
+                <ScalarProperty Name="KUL_SOYAD" ColumnName="KUL_SOYAD" />
+                <ScalarProperty Name="KUL_TIP" ColumnName="KUL_TIP" />
+                <ScalarProperty Name="STATU" ColumnName="STATU" />
+                <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+                <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+                <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+                <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KULLANICI_TIP">
+            <EntityTypeMapping TypeName="StokTakipDBModel.KULLANICI_TIP">
+              <MappingFragment StoreEntitySet="KULLANICI_TIP">
+                <ScalarProperty Name="KULTIP_ID" ColumnName="KULTIP_ID" />
+                <ScalarProperty Name="KULTIP_ADI" ColumnName="KULTIP_ADI" />
+                <ScalarProperty Name="STATU" ColumnName="STATU" />
+                <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+                <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+                <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+                <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OLCU_BIRIM">
+            <EntityTypeMapping TypeName="StokTakipDBModel.OLCU_BIRIM">
+              <MappingFragment StoreEntitySet="OLCU_BIRIM">
+                <ScalarProperty Name="OLCUBIRIM_ID" ColumnName="OLCUBIRIM_ID" />
+                <ScalarProperty Name="OLCUBIRIM_ADI" ColumnName="OLCUBIRIM_ADI" />
+                <ScalarProperty Name="STATU" ColumnName="STATU" />
+                <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+                <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+                <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+                <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SORUMLU">
+            <EntityTypeMapping TypeName="StokTakipDBModel.SORUMLU">
+              <MappingFragment StoreEntitySet="SORUMLU">
+                <ScalarProperty Name="SORUMLU_ID" ColumnName="SORUMLU_ID" />
+                <ScalarProperty Name="SORUMLU_ADI" ColumnName="SORUMLU_ADI" />
+                <ScalarProperty Name="STATU" ColumnName="STATU" />
+                <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+                <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+                <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+                <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STOK">
+            <EntityTypeMapping TypeName="StokTakipDBModel.STOK">
+              <MappingFragment StoreEntitySet="STOK">
+                <ScalarProperty Name="STOK_ID" ColumnName="STOK_ID" />
+                <ScalarProperty Name="STOK_AD" ColumnName="STOK_AD" />
+                <ScalarProperty Name="STOK_OLCUBIRIM" ColumnName="STOK_OLCUBIRIM" />
+                <ScalarProperty Name="STOK_MARKA" ColumnName="STOK_MARKA" />
+                <ScalarProperty Name="STOK_DETAY" ColumnName="STOK_DETAY" />
+                <ScalarProperty Name="KAYIT_TARIHI" ColumnName="KAYIT_TARIHI" />
+                <ScalarProperty Name="MIN_MIKTAR" ColumnName="MIN_MIKTAR" />
+                <ScalarProperty Name="STATU" ColumnName="STATU" />
+                <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+                <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+                <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+                <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STOK_DURUM">
+            <EntityTypeMapping TypeName="StokTakipDBModel.STOK_DURUM">
+              <MappingFragment StoreEntitySet="STOK_DURUM">
+                <ScalarProperty Name="DURUM_ID" ColumnName="DURUM_ID" />
+                <ScalarProperty Name="STOK_ID" ColumnName="STOK_ID" />
+                <ScalarProperty Name="DEPO_ESLESTIRME_ID" ColumnName="DEPO_ESLESTIRME_ID" />
+                <ScalarProperty Name="DURUM_MIKTAR" ColumnName="DURUM_MIKTAR" />
+                <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+                <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+                <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+                <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STOK_HAREKET">
+            <EntityTypeMapping TypeName="StokTakipDBModel.STOK_HAREKET">
+              <MappingFragment StoreEntitySet="STOK_HAREKET">
+                <ScalarProperty Name="HAREKET_ID" ColumnName="HAREKET_ID" />
+                <ScalarProperty Name="STOK_ID" ColumnName="STOK_ID" />
+                <ScalarProperty Name="DEPO_ESLESTIRME_ID" ColumnName="DEPO_ESLESTIRME_ID" />
+                <ScalarProperty Name="SORUMLU_ID" ColumnName="SORUMLU_ID" />
+                <ScalarProperty Name="HAREKET_TIP" ColumnName="HAREKET_TIP" />
+                <ScalarProperty Name="ACIKLAMA" ColumnName="ACIKLAMA" />
+                <ScalarProperty Name="HAREKET_MIKTAR" ColumnName="HAREKET_MIKTAR" />
+                <ScalarProperty Name="HAREKET_TARIHI" ColumnName="HAREKET_TARIHI" />
+                <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+                <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+                <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+                <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

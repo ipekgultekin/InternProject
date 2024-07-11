@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="StokTakipDBModelStoreContainer" CdmEntityContainer="StokTakipDBEntities">
+    <EntitySetMapping Name="ALT_DEPO">
+      <EntityTypeMapping TypeName="StokTakipDBModel.ALT_DEPO">
+        <MappingFragment StoreEntitySet="ALT_DEPO">
+          <ScalarProperty Name="ALT_DEPO_ID" ColumnName="ALT_DEPO_ID" />
+          <ScalarProperty Name="ALT_DEPO_ADI" ColumnName="ALT_DEPO_ADI" />
+          <ScalarProperty Name="STATU" ColumnName="STATU" />
+          <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+          <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+          <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+          <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DEPO">
+      <EntityTypeMapping TypeName="StokTakipDBModel.DEPO">
+        <MappingFragment StoreEntitySet="DEPO">
+          <ScalarProperty Name="DEPO_ID" ColumnName="DEPO_ID" />
+          <ScalarProperty Name="DEPO_ADI" ColumnName="DEPO_ADI" />
+          <ScalarProperty Name="STATU" ColumnName="STATU" />
+          <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+          <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+          <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+          <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DEPO_ESLESTIRME">
+      <EntityTypeMapping TypeName="StokTakipDBModel.DEPO_ESLESTIRME">
+        <MappingFragment StoreEntitySet="DEPO_ESLESTIRME">
+          <ScalarProperty Name="DEPO_ESLESTIRME_ID" ColumnName="DEPO_ESLESTIRME_ID" />
+          <ScalarProperty Name="DEPO_ID" ColumnName="DEPO_ID" />
+          <ScalarProperty Name="ALT_DEPO_ID" ColumnName="ALT_DEPO_ID" />
+          <ScalarProperty Name="STATU" ColumnName="STATU" />
+          <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+          <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+          <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+          <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HAREKET_TIP">
+      <EntityTypeMapping TypeName="StokTakipDBModel.HAREKET_TIP">
+        <MappingFragment StoreEntitySet="HAREKET_TIP">
+          <ScalarProperty Name="HAREKET_TIP_ID" ColumnName="HAREKET_TIP_ID" />
+          <ScalarProperty Name="HAREKET_TIP_ADI" ColumnName="HAREKET_TIP_ADI" />
+          <ScalarProperty Name="ISLEM_GOSTERGESI" ColumnName="ISLEM_GOSTERGESI" />
+          <ScalarProperty Name="STATU" ColumnName="STATU" />
+          <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+          <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+          <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+          <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KULLANICI">
+      <EntityTypeMapping TypeName="StokTakipDBModel.KULLANICI">
+        <MappingFragment StoreEntitySet="KULLANICI">
+          <ScalarProperty Name="KUL_ID" ColumnName="KUL_ID" />
+          <ScalarProperty Name="KUL_USERNAME" ColumnName="KUL_USERNAME" />
+          <ScalarProperty Name="KUL_SIFRE" ColumnName="KUL_SIFRE" />
+          <ScalarProperty Name="KUL_AD" ColumnName="KUL_AD" />
+          <ScalarProperty Name="KUL_SOYAD" ColumnName="KUL_SOYAD" />
+          <ScalarProperty Name="KUL_TIP" ColumnName="KUL_TIP" />
+          <ScalarProperty Name="STATU" ColumnName="STATU" />
+          <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+          <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+          <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+          <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KULLANICI_TIP">
+      <EntityTypeMapping TypeName="StokTakipDBModel.KULLANICI_TIP">
+        <MappingFragment StoreEntitySet="KULLANICI_TIP">
+          <ScalarProperty Name="KULTIP_ID" ColumnName="KULTIP_ID" />
+          <ScalarProperty Name="KULTIP_ADI" ColumnName="KULTIP_ADI" />
+          <ScalarProperty Name="STATU" ColumnName="STATU" />
+          <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+          <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+          <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+          <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OLCU_BIRIM">
+      <EntityTypeMapping TypeName="StokTakipDBModel.OLCU_BIRIM">
+        <MappingFragment StoreEntitySet="OLCU_BIRIM">
+          <ScalarProperty Name="OLCUBIRIM_ID" ColumnName="OLCUBIRIM_ID" />
+          <ScalarProperty Name="OLCUBIRIM_ADI" ColumnName="OLCUBIRIM_ADI" />
+          <ScalarProperty Name="STATU" ColumnName="STATU" />
+          <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+          <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+          <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+          <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SORUMLU">
+      <EntityTypeMapping TypeName="StokTakipDBModel.SORUMLU">
+        <MappingFragment StoreEntitySet="SORUMLU">
+          <ScalarProperty Name="SORUMLU_ID" ColumnName="SORUMLU_ID" />
+          <ScalarProperty Name="SORUMLU_ADI" ColumnName="SORUMLU_ADI" />
+          <ScalarProperty Name="STATU" ColumnName="STATU" />
+          <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+          <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+          <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+          <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="STOK">
+      <EntityTypeMapping TypeName="StokTakipDBModel.STOK">
+        <MappingFragment StoreEntitySet="STOK">
+          <ScalarProperty Name="STOK_ID" ColumnName="STOK_ID" />
+          <ScalarProperty Name="STOK_AD" ColumnName="STOK_AD" />
+          <ScalarProperty Name="STOK_OLCUBIRIM" ColumnName="STOK_OLCUBIRIM" />
+          <ScalarProperty Name="STOK_MARKA" ColumnName="STOK_MARKA" />
+          <ScalarProperty Name="STOK_DETAY" ColumnName="STOK_DETAY" />
+          <ScalarProperty Name="KAYIT_TARIHI" ColumnName="KAYIT_TARIHI" />
+          <ScalarProperty Name="MIN_MIKTAR" ColumnName="MIN_MIKTAR" />
+          <ScalarProperty Name="STATU" ColumnName="STATU" />
+          <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+          <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+          <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+          <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="STOK_DURUM">
+      <EntityTypeMapping TypeName="StokTakipDBModel.STOK_DURUM">
+        <MappingFragment StoreEntitySet="STOK_DURUM">
+          <ScalarProperty Name="DURUM_ID" ColumnName="DURUM_ID" />
+          <ScalarProperty Name="STOK_ID" ColumnName="STOK_ID" />
+          <ScalarProperty Name="DEPO_ESLESTIRME_ID" ColumnName="DEPO_ESLESTIRME_ID" />
+          <ScalarProperty Name="DURUM_MIKTAR" ColumnName="DURUM_MIKTAR" />
+          <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+          <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+          <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+          <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="STOK_HAREKET">
+      <EntityTypeMapping TypeName="StokTakipDBModel.STOK_HAREKET">
+        <MappingFragment StoreEntitySet="STOK_HAREKET">
+          <ScalarProperty Name="HAREKET_ID" ColumnName="HAREKET_ID" />
+          <ScalarProperty Name="STOK_ID" ColumnName="STOK_ID" />
+          <ScalarProperty Name="DEPO_ESLESTIRME_ID" ColumnName="DEPO_ESLESTIRME_ID" />
+          <ScalarProperty Name="SORUMLU_ID" ColumnName="SORUMLU_ID" />
+          <ScalarProperty Name="HAREKET_TIP" ColumnName="HAREKET_TIP" />
+          <ScalarProperty Name="ACIKLAMA" ColumnName="ACIKLAMA" />
+          <ScalarProperty Name="HAREKET_MIKTAR" ColumnName="HAREKET_MIKTAR" />
+          <ScalarProperty Name="HAREKET_TARIHI" ColumnName="HAREKET_TARIHI" />
+          <ScalarProperty Name="OLUSTURAN_KULLANICI" ColumnName="OLUSTURAN_KULLANICI" />
+          <ScalarProperty Name="OLUSTURMA_TARIHI" ColumnName="OLUSTURMA_TARIHI" />
+          <ScalarProperty Name="GUNCELLEYEN_KULLANICI" ColumnName="GUNCELLEYEN_KULLANICI" />
+          <ScalarProperty Name="GUNCELLEME_TARIHI" ColumnName="GUNCELLEME_TARIHI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
