@@ -14,10 +14,10 @@
         <label>Şifre</label><br />
         @Html.PasswordFor(m => m.KUL_SIFRE)
     </div>
-    <button type="submit">Giriş Yap</button>
+    <button type="submit" class="btn btn-primary">Giriş Yap</button>
 
     if (ViewBag.Message != null)
-{
-    <p>@ViewBag.Message</p>
-}
+    {
+        <p>@ViewBag.Message</p>
+    }
 }

@@ -1,0 +1,40 @@
+﻿@model StokTakipStajyer2.Models.DEPO
+
+@{
+    ViewBag.Title = "Depo Güncelle";
+    var statuOptions = new List<SelectListItem>
+{
+        new SelectListItem { Text = "True", Value = "true" },
+        new SelectListItem { Text = "False", Value = "false" }
+    };
+}
+
+<h2>Depo Güncelle</h2>
+
+@using (Html.BeginForm("DepoGuncelle", "Home", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.DEPO_ID)
+    <div>
+        <label>Depo Adı</label><br />
+        @Html.TextBoxFor(m => m.DEPO_ADI)
+    </div>
+    <div>
+        <label>Statü</label><br />
+        @Html.DropDownListFor(m => m.STATU, statuOptions, new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+}
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.Message
+    </div>
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}

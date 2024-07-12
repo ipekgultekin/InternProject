@@ -254,6 +254,15 @@
     <Content Include="Views\Home\KullaniciEkle.cshtml" />
     <Content Include="Views\Home\KullaniciListele.cshtml" />
     <Content Include="Views\Home\KullaniciSil.cshtml" />
+    <Content Include="Views\Home\KullaniciGuncelle.cshtml" />
+    <Content Include="Views\Home\DepoEkle.cshtml" />
+    <Content Include="Views\Home\DepoListele.cshtml" />
+    <Content Include="Views\Home\DepoGuncelle.cshtml" />
+    <Content Include="Views\Home\DepoSil.cshtml" />
+    <Content Include="Views\Home\AltDepoGuncelle.cshtml" />
+    <Content Include="Views\Home\AltDepoSil.cshtml" />
+    <Content Include="Views\Home\AltDepoListele.cshtml" />
+    <Content Include="Views\Home\AltDepoEkle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

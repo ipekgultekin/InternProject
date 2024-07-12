@@ -18,47 +18,48 @@
 
 <h2>Kullanıcı Ekle</h2>
 
-@using (Html.BeginForm("KullaniciEkle", "Home", new { FormMethod.Post }))
+@using (Html.BeginForm("KullaniciEkle", "Home", FormMethod.Post))
 {
-    <div>
-        <label>Username</label><br />
-        @Html.TextBoxFor(m => m.KUL_USERNAME)
+    <div class="form-group">
+        <label for="KUL_USERNAME">Username</label><br />
+        @Html.TextBoxFor(m => m.KUL_USERNAME, new { @class = "form-control", @placeholder = "Kullanıcı Adı" })
     </div>
-    <div>
-        <label>Şifre</label><br />
-        @Html.PasswordFor(m => m.KUL_SIFRE)
+    <div class="form-group">
+        <label for="KUL_SIFRE">Şifre</label><br />
+        @Html.PasswordFor(m => m.KUL_SIFRE, new { @class = "form-control", @placeholder = "Şifre" })
     </div>
-    <div>
-        <label>Kullanıcı Adı</label><br />
-        @Html.TextBoxFor(m => m.KUL_AD)
+    <div class="form-group">
+        <label for="KUL_AD">Kullanıcı Adı</label><br />
+        @Html.TextBoxFor(m => m.KUL_AD, new { @class = "form-control", @placeholder = "Kullanıcı Adı" })
     </div>
-    <div>
-        <label>Soyadı</label><br />
-        @Html.TextBoxFor(m => m.KUL_SOYAD)
+    <div class="form-group">
+        <label for="KUL_SOYAD">Soyadı</label><br />
+        @Html.TextBoxFor(m => m.KUL_SOYAD, new { @class = "form-control", @placeholder = "Soyadı" })
     </div>
-    <div>
-        <label>Kullanıcı Statüsü</label><br />
-        @Html.DropDownListFor(m => m.STATU, statuOptions, "Seçiniz")
+    <div class="form-group">
+        <label for="STATU">Kullanıcı Statüsü</label><br />
+        @Html.DropDownListFor(m => m.STATU, statuOptions, "Seçiniz", new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.STATU, "", new { @class = "text-danger" })
     </div>
-    <div>
-        <label>Kullanıcı Tipi</label><br />
-        @Html.DropDownListFor(m => m.KUL_TIP, tipOptions, "Seçiniz")
+    <div class="form-group">
+        <label for="KUL_TIP">Kullanıcı Tipi</label><br />
+        @Html.DropDownListFor(m => m.KUL_TIP, tipOptions, "Seçiniz", new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.KUL_TIP, "", new { @class = "text-danger" })
     </div>
-    <button type="submit">Kullanıcı Ekle</button>
-
+    <button type="submit" class="btn btn-primary">Kullanıcı Ekle</button>
 }
 
 @if (ViewBag.Message != null)
 {
-    <p>@ViewBag.Message</p>
+    <div class="alert alert-success">
+        @ViewBag.Message
+    </div>
 }
 
 @if (ViewBag.ErrorMessage != null)
 {
-    <p>@ViewBag.ErrorMessage</p>
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
 }
 
-<!-- Kullanıcı Listesi Butonu -->
-@Html.ActionLink("Kullanıcı Listesi", "KullaniciListele", "Home", new { }, new { @class = "btn btn-secondary" })

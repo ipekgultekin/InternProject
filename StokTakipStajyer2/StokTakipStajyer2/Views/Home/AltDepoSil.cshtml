@@ -1,20 +1,20 @@
-﻿@model StokTakipStajyer2.Models.KULLANICI
+﻿@model StokTakipStajyer2.Models.ALT_DEPO
 
 @{
-    ViewBag.Title = "Kullanıcı Sil";
+    ViewBag.Title = "Alt Depo Sil";
 }
 
-<h2>Kullanıcı Sil</h2>
+<h2>Alt Depo Sil</h2>
 
 <div>
- 
+
 
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
         <div class="form-actions no-color">
             <input type="submit" value="Sil" class="btn btn-danger" /> |
-            @Html.ActionLink("İptal", "KullaniciListele")
+            @Html.ActionLink("İptal", "AltDepoListele")
         </div>
     }
 </div>
