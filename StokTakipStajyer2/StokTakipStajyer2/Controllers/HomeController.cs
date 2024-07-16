@@ -259,15 +259,46 @@ namespace StokTakipStajyer2.Controllers
             }
 
             var depo = stokdata.DEPO.Find(id);
+            if (depo == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(depo);
+        }
+
+        [HttpPost, ActionName("DepoSil")]
+        public ActionResult DepoSilConfirmed(int id)
+        {
+            if (Session["ID"] == null)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            var depo = stokdata.DEPO.Find(id);
             if (depo != null)
             {
-                stokdata.DEPO.Remove(depo);
+                var hasReferences = stokdata.DEPO_ESLESTIRME.Any(e => e.DEPO_ID == id);
+
+                if (hasReferences)
+                {
+                    depo.STATU = "false"; // Ensure this is correctly assigned
+                    stokdata.Entry(depo).State = System.Data.Entity.EntityState.Modified;
+                    TempData["SuccessMessage"] = "Depo başarıyla pasif duruma çekildi.";
+                }
+                else
+                {
+                    stokdata.DEPO.Remove(depo);
+                    TempData["SuccessMessage"] = "Depo başarıyla silindi.";
+                }
+
                 stokdata.SaveChanges();
-                TempData["SuccessMessage"] = "Depo başarıyla silindi.";
             }
 
             return RedirectToAction("DepoListele");
         }
+
+
 
         [HttpGet]
         public ActionResult DepoGuncelle(int id)
@@ -320,12 +351,13 @@ namespace StokTakipStajyer2.Controllers
                 return RedirectToAction("Giris");
             }
             var altdepoModel = new ALT_DEPO();
+            ViewBag.Depolar = new SelectList(stokdata.DEPO.ToList(), "DEPO_ID", "DEPO_ADI");
 
             return View(altdepoModel);
         }
 
         [HttpPost]
-        public ActionResult AltDepoEkle(ALT_DEPO depo)
+        public ActionResult AltDepoEkle(ALT_DEPO depo, int selectedDepoId)
         {
             if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 1)
             {
@@ -346,13 +378,30 @@ namespace StokTakipStajyer2.Controllers
 
                 stokdata.ALT_DEPO.Add(depoModel);
                 stokdata.SaveChanges();
+
+                var depoEslestirme = new DEPO_ESLESTIRME()
+                {
+                    DEPO_ID = selectedDepoId,
+                    ALT_DEPO_ID = depoModel.ALT_DEPO_ID,
+                    STATU = true,
+                    OLUSTURAN_KULLANICI = Convert.ToInt32(Session["ID"]),
+                    OLUSTURMA_TARIHI = DateTime.Now,
+                    GUNCELLEME_TARIHI = DateTime.Now,
+                    GUNCELLEYEN_KULLANICI = Convert.ToInt32(Session["ID"]),
+                };
+
+                stokdata.DEPO_ESLESTIRME.Add(depoEslestirme);
+                stokdata.SaveChanges();
+
                 TempData["SuccessMessage"] = "Alt depo başarıyla eklendi.";
 
                 return RedirectToAction("AltDepoListele");
             }
 
+            ViewBag.Depolar = new SelectList(stokdata.DEPO.ToList(), "DEPO_ID", "DEPO_ADI");
             return View(depo);
         }
+
 
 
         [HttpGet]
@@ -363,16 +412,16 @@ namespace StokTakipStajyer2.Controllers
                 return RedirectToAction("Giris");
             }
 
-            var depolar = from d in stokdata.ALT_DEPO select d;
+            var altDepolar = from ad in stokdata.ALT_DEPO select ad;
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                depolar = depolar.Where(s => s.ALT_DEPO_ADI.Contains(searchString) ||
-                                             s.STATU.ToString().Contains(searchString));
+                altDepolar = altDepolar.Where(s => s.ALT_DEPO_ADI.Contains(searchString) ||
+                                                   s.STATU.ToString().Contains(searchString));
             }
 
             ViewBag.SuccessMessage = TempData["SuccessMessage"];
-            return View(depolar.ToList());
+            return View(altDepolar.ToList());
         }
 
         [HttpGet]
@@ -383,16 +432,46 @@ namespace StokTakipStajyer2.Controllers
                 return RedirectToAction("Giris");
             }
 
-            var depo = stokdata.ALT_DEPO.Find(id);
-            if (depo != null)
+            var altdepo = stokdata.ALT_DEPO.Find(id);
+            if (altdepo == null)
             {
-                stokdata.ALT_DEPO.Remove(depo);
+                return HttpNotFound();
+            }
+
+            return View(altdepo);
+        }
+
+        [HttpPost, ActionName("AltDepoSil")]
+        public ActionResult AltDepoSilConfirmed(int id)
+        {
+            if (Session["ID"] == null)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            var altdepo = stokdata.ALT_DEPO.Find(id);
+            if (altdepo != null)
+            {
+                var hasReferences = stokdata.DEPO_ESLESTIRME.Any(e => e.ALT_DEPO_ID == id);
+
+                if (hasReferences)
+                {
+                    altdepo.STATU = false;
+                    stokdata.Entry(altdepo).State = System.Data.Entity.EntityState.Modified;
+                    TempData["SuccessMessage"] = "Alt Depo başarıyla pasif duruma çekildi.";
+                }
+                else
+                {
+                    stokdata.ALT_DEPO.Remove(altdepo);
+                    TempData["SuccessMessage"] = "Alt Depo başarıyla silindi.";
+                }
+
                 stokdata.SaveChanges();
-                TempData["SuccessMessage"] = "Depo başarıyla silindi.";
             }
 
             return RedirectToAction("AltDepoListele");
         }
+
 
         [HttpGet]
         public ActionResult AltDepoGuncelle(int id)
@@ -434,6 +513,201 @@ namespace StokTakipStajyer2.Controllers
             }
 
             return View(depo);
+        }
+
+
+        [HttpGet]
+        public ActionResult DepoAltdepoGuncelle(int id)
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 1)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            var depoEsleme = stokdata.DEPO_ESLESTIRME.Find(id);
+            if (depoEsleme == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.AltDepolar = new SelectList(stokdata.ALT_DEPO.ToList(), "ALT_DEPO_ID", "ALT_DEPO_ADI", depoEsleme.ALT_DEPO_ID);
+            ViewBag.Depolar = new SelectList(stokdata.DEPO.ToList(), "DEPO_ID", "DEPO_ADI", depoEsleme.DEPO_ID);
+
+            return View(depoEsleme);
+        }
+
+        [HttpPost]
+        public ActionResult DepoAltdepoGuncelle(DEPO_ESLESTIRME model)
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 1)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            if (ModelState.IsValid)
+            {
+                var depoEsleme = stokdata.DEPO_ESLESTIRME.Find(model.DEPO_ESLESTIRME_ID);
+                if (depoEsleme != null)
+                {
+                    depoEsleme.DEPO_ID = model.DEPO_ID;
+                    depoEsleme.ALT_DEPO_ID = model.ALT_DEPO_ID;
+                    depoEsleme.STATU = model.STATU;
+                    depoEsleme.GUNCELLEYEN_KULLANICI = Convert.ToInt32(Session["ID"]);
+                    depoEsleme.GUNCELLEME_TARIHI = DateTime.Now;
+
+                    stokdata.SaveChanges();
+                    TempData["SuccessMessage"] = "Depo ve Alt Depo eşleştirmesi başarıyla güncellendi.";
+
+                    return RedirectToAction("DepoAltdepoListele");
+                }
+            }
+
+            ViewBag.AltDepolar = new SelectList(stokdata.ALT_DEPO.ToList(), "ALT_DEPO_ID", "ALT_DEPO_ADI", model.ALT_DEPO_ID);
+            ViewBag.Depolar = new SelectList(stokdata.DEPO.ToList(), "DEPO_ID", "DEPO_ADI", model.DEPO_ID);
+
+            return View(model);
+        }
+
+
+        [HttpGet]
+        public ActionResult DepoAltdepoListele(string searchString = null)
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 1)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            var eslestirmeler = from e in stokdata.DEPO_ESLESTIRME select e;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                eslestirmeler = eslestirmeler.Where(e => e.DEPO.DEPO_ADI.Contains(searchString) ||
+                                                         e.ALT_DEPO.ALT_DEPO_ADI.Contains(searchString));
+            }
+
+            ViewBag.SuccessMessage = TempData["SuccessMessage"];
+            return View(eslestirmeler.ToList());
+        }
+
+        [HttpGet]
+        public ActionResult StokEkle()
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 1)
+            {
+                return RedirectToAction("Giris");
+            }
+            var model = new STOK();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult StokEkle(STOK stok)
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 1)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            if (ModelState.IsValid)
+            {
+                var model = new STOK()
+                {
+                    STOK_AD = stok.STOK_AD,
+                    STOK_DETAY = stok.STOK_DETAY,
+                    STOK_DURUM = stok.STOK_DURUM,
+                    STOK_ID = stok.STOK_ID,
+                    STOK_MARKA = stok.STOK_MARKA,
+                    STOK_OLCUBIRIM = stok.STOK_OLCUBIRIM,
+                    KAYIT_TARIHI = stok.KAYIT_TARIHI,
+                    MIN_MIKTAR = stok.MIN_MIKTAR,
+
+                    OLUSTURAN_KULLANICI = Convert.ToInt32(Session["ID"]),
+                    OLUSTURMA_TARIHI = DateTime.Now,
+                    GUNCELLEME_TARIHI = DateTime.Now,
+                    GUNCELLEYEN_KULLANICI = Convert.ToInt32(Session["ID"]),
+                };
+
+                stokdata.STOK.Add(model);
+                stokdata.SaveChanges();
+                TempData["SuccessMessage"] = "Kullanıcı başarıyla eklendi.";
+
+                return RedirectToAction("StokListele");
+            }
+
+            return View(stok);
+        }
+
+        [HttpGet]
+        public ActionResult StokGuncelle(int id)
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 1)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            var stok = stokdata.STOK.Find(id);
+            if (stok == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(stok);
+        }
+
+        [HttpPost]
+        public ActionResult StokGuncelle(STOK stok)
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 1)
+            {
+                return RedirectToAction("Giris");
+            }
+            if (ModelState.IsValid)
+            {
+                var updateStok = stokdata.STOK.Find(stok.STOK_ID);
+
+                if (updateStok != null)
+                {
+                    updateStok.STOK_AD = stok.STOK_AD;
+                    updateStok.STOK_DETAY = stok.STOK_DETAY;
+                    updateStok.STOK_DURUM = stok.STOK_DURUM;
+                    updateStok.STOK_ID = stok.STOK_ID;
+                    updateStok.STOK_MARKA = stok.STOK_MARKA;
+                    updateStok.STOK_OLCUBIRIM = stok.STOK_OLCUBIRIM;
+                    updateStok.KAYIT_TARIHI = stok.KAYIT_TARIHI;
+                    updateStok.MIN_MIKTAR = stok.MIN_MIKTAR;
+ 
+                    stokdata.SaveChanges();
+                    TempData["SuccessMessage"] = "Stok başarıyla güncellendi.";
+                    return RedirectToAction("StokListele");
+                }
+            }
+
+            return View(stok);
+        }
+
+        [HttpGet]
+        public ActionResult StokListele(string searchString = null)
+        {
+            if (Session["ID"] == null)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            var stoklar = from k in stokdata.STOK select k;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                stoklar = stoklar.Where(s =>s.STOK_AD.Contains(searchString) ||
+                                                       s.STOK_DETAY.Contains(searchString) ||
+                                                       s.STOK_DURUM.ToString().Contains(searchString) ||
+                                                       s.STOK_MARKA.ToString().Contains(searchString) ||
+                                                       s.MIN_MIKTAR.ToString().Contains(searchString) ||
+                                                       s.STOK_MARKA.ToString().Contains(searchString) ||
+                                                       (s.STATU == true ? "true" : "false").Contains(searchString));
+            }
+
+            return View(stoklar.ToList());
         }
 
 

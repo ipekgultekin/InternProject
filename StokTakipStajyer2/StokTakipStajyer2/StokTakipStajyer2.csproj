@@ -263,6 +263,10 @@
     <Content Include="Views\Home\AltDepoSil.cshtml" />
     <Content Include="Views\Home\AltDepoListele.cshtml" />
     <Content Include="Views\Home\AltDepoEkle.cshtml" />
+    <Content Include="Views\Home\DepoAltdepoGuncelle.cshtml" />
+    <Content Include="Views\Home\DepoAltdepoListele.cshtml" />
+    <Content Include="Views\Home\StokListele.cshtml" />
+    <Content Include="Views\Home\StokEkle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

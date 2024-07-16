@@ -34,7 +34,7 @@
         {
             <tr>
                 <td>@depo.DEPO_ADI</td>
-                <td>@(depo.STATU == "True" ? "True" : "False")</td> 
+                <td>@(depo.STATU == "true" ? "True" : "False")</td>
                 <td>
                     @Html.ActionLink("Düzenle", "DepoGuncelle", new { id = depo.DEPO_ID }, new { @class = "btn btn-primary" })
                     @Html.ActionLink("Sil", "DepoSil", new { id = depo.DEPO_ID }, new { @class = "btn btn-danger", onclick = "return confirm('Bu depoyu silmek istediğinize emin misiniz?');" })
@@ -43,13 +43,3 @@
         }
     </tbody>
 </table>
-
-@if (ViewBag.Message != null)
-{
-    <p>@ViewBag.Message</p>
-}
-
-@if (ViewBag.ErrorMessage != null)
-{
-    <p>@ViewBag.ErrorMessage</p>
-}

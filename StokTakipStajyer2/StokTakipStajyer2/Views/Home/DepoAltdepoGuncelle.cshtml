@@ -1,0 +1,47 @@
+﻿@model StokTakipStajyer2.Models.DEPO_ESLESTIRME
+
+@{
+    ViewBag.Title = "Depo ve Alt Depo Güncelle";
+    var statuOptions = new List<SelectListItem>
+{
+        new SelectListItem { Text = "True", Value = "true" },
+        new SelectListItem { Text = "False", Value = "false" }
+    };
+}
+
+<h2>Depo ve Alt Depo Güncelle</h2>
+
+@using (Html.BeginForm("DepoAltdepoGuncelle", "Home", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.DEPO_ESLESTIRME_ID)
+    <div class="form-group">
+        <label for="ALT_DEPO_ID">Alt Depo Adı</label>
+        @Html.DropDownListFor(m => m.ALT_DEPO_ID, (SelectList)ViewBag.AltDepolar, "Seçiniz", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ALT_DEPO_ID, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label for="DEPO_ID">Depo Adı</label>
+        @Html.DropDownListFor(m => m.DEPO_ID, (SelectList)ViewBag.Depolar, "Seçiniz", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.DEPO_ID, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label for="STATU">Statü</label>
+        @Html.DropDownListFor(m => m.STATU, statuOptions, "Seçiniz", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.STATU, "", new { @class = "text-danger" })
+    </div>
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+}
+
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success mt-3">
+        @ViewBag.SuccessMessage
+    </div>
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger mt-3">
+        @ViewBag.ErrorMessage
+    </div>
+}

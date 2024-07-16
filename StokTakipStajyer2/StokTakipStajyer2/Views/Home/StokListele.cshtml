@@ -1,0 +1,64 @@
+﻿@model IEnumerable<StokTakipStajyer2.Models.STOK>
+
+@{
+    ViewBag.Title = "Stok Listele";
+}
+
+<h2>Stok Listele</h2>
+
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.SuccessMessage
+    </div>
+}
+
+<div class="d-flex justify-content-between mb-3">
+    <form class="form-inline" method="get" action="@Url.Action("StokListele", "Home")">
+        <input type="text" class="form-control mr-2" id="searchString" name="searchString" placeholder="Ara" value="@Request.QueryString["searchString"]" />
+        <button type="submit" class="btn btn-primary">Ara</button>
+    </form>
+    @Html.ActionLink("Excel'e Aktar", "ExportToExcel", "Home", new { area = "" }, new { @class = "btn btn-success" })
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Stod ID</th>
+            <th>Ad</th>
+            <th>Ölçü Birimi</th>
+            <th>Marka</th>
+            <th>Detay</th>
+            <th>Minimum Miktar</th>
+            <th>Statü</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var stok in Model)
+        {
+            <tr>
+                <td>@stok.STOK_ID</td>
+                <td>@stok.STOK_AD</td>
+                <td>@stok.STOK_OLCUBIRIM</td>
+                <td>@stok.STOK_MARKA</td>
+                <td>@stok.STOK_DETAY</td>
+                <td>@stok.MIN_MIKTAR</td>
+                <td>@(stok.STATU == true ? "True" : "False")</td>
+                <td>
+                    @Html.ActionLink("Düzenle", "StokGuncelle", new { id = stok.STOK_ID }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Sil", "StokSil", new { id = stok.STOK_ID }, new { @class = "btn btn-danger", onclick = "return confirm('Bu kullanıcıyı silmek istediğinize emin misiniz?');" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (ViewBag.Message != null)
+{
+    <p>@ViewBag.Message</p>
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <p>@ViewBag.ErrorMessage</p>
+}

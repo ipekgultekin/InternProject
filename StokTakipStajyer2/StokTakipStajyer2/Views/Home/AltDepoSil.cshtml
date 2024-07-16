@@ -6,15 +6,24 @@
 
 <h2>Alt Depo Sil</h2>
 
+<h3>Bu alt depoyu silmek istediğinize emin misiniz?</h3>
 <div>
+    <h4>@Model.ALT_DEPO_ADI</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Alt Depo Adı</dt>
+        <dd>@Model.ALT_DEPO_ADI</dd>
 
+        <dt>Statü</dt>
+        <dd>@(Model.STATU.HasValue ? (Model.STATU.Value ? "Aktif" : "Pasif") : "Belirtilmemiş")</dd>
+    </dl>
 
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-        <div class="form-actions no-color">
-            <input type="submit" value="Sil" class="btn btn-danger" /> |
-            @Html.ActionLink("İptal", "AltDepoListele")
+        <div class="form-actions">
+            <input type="submit" value="Sil" class="btn btn-danger" />
+            @Html.ActionLink("İptal", "AltDepoListele", null, new { @class = "btn btn-secondary" })
         </div>
     }
 </div>

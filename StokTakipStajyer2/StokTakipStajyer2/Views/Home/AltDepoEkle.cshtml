@@ -23,13 +23,17 @@
         @Html.DropDownListFor(m => m.STATU, statuOptions, "Seçiniz", new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.STATU, "", new { @class = "text-danger" })
     </div>
-    <button type="submit" class="btn btn-primary">Güncelle</button>
+    <div class="form-group">
+        <label for="DEPO_ID">Depo Seçiniz</label>
+        @Html.DropDownList("selectedDepoId", (SelectList)ViewBag.Depolar, "Seçiniz", new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Ekle</button>
 }
 
-@if (ViewBag.Message != null)
+@if (ViewBag.SuccessMessage != null)
 {
     <div class="alert alert-success mt-3">
-        @ViewBag.Message
+        @ViewBag.SuccessMessage
     </div>
 }
 

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<StokTakipStajyer2.Models.DEPO_ESLESTIRME>
+
+@{
+    ViewBag.Title = "Depo ve Alt Depo Eşleştirmeleri";
+}
+
+<h2>Depo ve Alt Depo Eşleştirmeleri</h2>
+
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.SuccessMessage
+    </div>
+}
+
+<div class="d-flex justify-content-between mb-3">
+    <form class="form-inline" method="get" action="@Url.Action("DepoAltdepoListele", "Home")">
+        <input type="text" class="form-control mr-2" id="searchString" name="searchString" placeholder="Ara" value="@Request.QueryString["searchString"]" />
+        <button type="submit" class="btn btn-primary">Ara</button>
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Depo Adı</th>
+            <th>Alt Depo Adı</th>
+            <th>Statü</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var eslestirme in Model)
+        {
+            <tr>
+                <td>@eslestirme.DEPO.DEPO_ADI</td>
+                <td>@eslestirme.ALT_DEPO.ALT_DEPO_ADI</td>
+                <td>@(eslestirme.STATU.HasValue ? (eslestirme.STATU.Value ? "Aktif" : "Pasif") : "Belirtilmemiş")</td>
+                <td>
+                    @Html.ActionLink("Düzenle", "DepoAltdepoGuncelle", new { id = eslestirme.DEPO_ESLESTIRME_ID }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Sil", "DepoAltdepoSil", new { id = eslestirme.DEPO_ESLESTIRME_ID }, new { @class = "btn btn-danger", onclick = "return confirm('Bu eşleştirmeyi silmek istediğinize emin misiniz?');" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
