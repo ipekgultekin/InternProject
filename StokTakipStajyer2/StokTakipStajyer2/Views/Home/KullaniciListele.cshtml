@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<StokTakipStajyer2.Models.KULLANICI>
 
 @{
-    ViewBag.Title = "Kullanıcı Listele";
+    ViewBag.Title = "Kullanıcı Listesi";
 }
 
-<h2>Kullanıcı Listele</h2>
+<h2>Kullanıcı Listesi</h2>
 
-@if (ViewBag.SuccessMessage != null)
+@if (TempData["SuccessMessage"] != null)
 {
     <div class="alert alert-success">
-        @ViewBag.SuccessMessage
+        @TempData["SuccessMessage"]
     </div>
 }
 
@@ -18,18 +18,21 @@
         <input type="text" class="form-control mr-2" id="searchString" name="searchString" placeholder="Ara" value="@Request.QueryString["searchString"]" />
         <button type="submit" class="btn btn-primary">Ara</button>
     </form>
-    @Html.ActionLink("Excel'e Aktar", "ExportToExcel", "Home", new { area = "" }, new { @class = "btn btn-success" })
+    @Html.ActionLink("Excel'e Aktar", "ExportKullaniciToExcel", "Home", new { area = "" }, new { @class = "btn btn-success" })
 </div>
 
 <table class="table">
     <thead>
         <tr>
-            <th>Username</th>
-            <th>Ad</th>
-            <th>Soyad</th>
-            <th>ID</th>
-            <th>Tip</th>
+            <th>Kullanıcı ID</th>
+            <th>Kullanıcı Adı</th>
+            <th>Soyadı</th>
+            <th>Kullanıcı Tipi</th>
             <th>Statü</th>
+            <th>Oluşturan Kullanıcı</th>
+            <th>Oluşturma Tarihi</th>
+            <th>Güncelleyen Kullanıcı</th>
+            <th>Güncelleme Tarihi</th>
             <th>İşlemler</th>
         </tr>
     </thead>
@@ -37,12 +40,15 @@
         @foreach (var kullanici in Model)
         {
             <tr>
-                <td>@kullanici.KUL_USERNAME</td>
+                <td>@kullanici.KUL_ID</td>
                 <td>@kullanici.KUL_AD</td>
                 <td>@kullanici.KUL_SOYAD</td>
-                <td>@kullanici.KUL_ID</td>
                 <td>@kullanici.KUL_TIP</td>
                 <td>@(kullanici.STATU == true ? "True" : "False")</td>
+                <td>@kullanici.OLUSTURAN_KULLANICI</td>
+                <td>@kullanici.OLUSTURMA_TARIHI</td>
+                <td>@kullanici.GUNCELLEYEN_KULLANICI</td>
+                <td>@kullanici.GUNCELLEME_TARIHI</td>
                 <td>
                     @Html.ActionLink("Düzenle", "KullaniciGuncelle", new { id = kullanici.KUL_ID }, new { @class = "btn btn-primary" })
                     @Html.ActionLink("Sil", "KullaniciSil", new { id = kullanici.KUL_ID }, new { @class = "btn btn-danger", onclick = "return confirm('Bu kullanıcıyı silmek istediğinize emin misiniz?');" })
@@ -51,13 +57,3 @@
         }
     </tbody>
 </table>
-
-@if (ViewBag.Message != null)
-{
-    <p>@ViewBag.Message</p>
-}
-
-@if (ViewBag.ErrorMessage != null)
-{
-    <p>@ViewBag.ErrorMessage</p>
-}

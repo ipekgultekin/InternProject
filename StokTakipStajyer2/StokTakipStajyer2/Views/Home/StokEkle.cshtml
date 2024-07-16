@@ -1,7 +1,46 @@
-﻿
+﻿@model StokTakipStajyer2.Models.STOK
+
 @{
-    ViewBag.Title = "StokEkle";
+    ViewBag.Title = "Stok Ekle";
+    var statuOptions = new List<SelectListItem>
+{
+        new SelectListItem { Text = "Aktif", Value = "true" },
+        new SelectListItem { Text = "Pasif", Value = "false" }
+    };
 }
 
-<h2>StokEkle</h2>
+<h2>Stok Ekle</h2>
 
+@using (Html.BeginForm("StokEkle", "Home", FormMethod.Post))
+{
+    <div class="form-group">
+        <label for="STOK_ID">Stok ID</label><br />
+        @Html.TextBoxFor(m => m.STOK_ID, new { @class = "form-control", @placeholder = "Stok ID" })
+    </div>
+    <div class="form-group">
+        <label for="AD">Ad</label><br />
+        @Html.TextBoxFor(m => m.STOK_AD, new { @class = "form-control", @placeholder = "Ad" })
+    </div>
+    <div class="form-group">
+        <label for="OLCU_BIRIMI">Ölçü Birimi</label><br />
+        @Html.TextBoxFor(m => m.STOK_OLCUBIRIM, new { @class = "form-control", @placeholder = "Ölçü Birimi" })
+    </div>
+    <div class="form-group">
+        <label for="MARKA">Marka</label><br />
+        @Html.TextBoxFor(m => m.STOK_MARKA, new { @class = "form-control", @placeholder = "Marka" })
+    </div>
+    <div class="form-group">
+        <label for="DETAY">Detay</label><br />
+        @Html.TextBoxFor(m => m.STOK_DETAY, new { @class = "form-control", @placeholder = "Detay" })
+    </div>
+    <div class="form-group">
+        <label for="MINIMUM_MIKTAR">Minimum Miktar</label><br />
+        @Html.TextBoxFor(m => m.MIN_MIKTAR, new { @class = "form-control", @placeholder = "Minimum Miktar" })
+    </div>
+    <div class="form-group">
+        <label for="STATU">Statü</label><br />
+        @Html.DropDownListFor(m => m.STATU, statuOptions, "Seçiniz", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.STATU, "", new { @class = "text-danger" })
+    </div>
+    <button type="submit" class="btn btn-primary">Stok Ekle</button>
+}

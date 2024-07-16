@@ -1,0 +1,29 @@
+﻿@model StokTakipStajyer2.Models.STOK
+
+@{
+    ViewBag.Title = "Stok Sil";
+}
+
+<h2>Stok Sil</h2>
+
+<h3>Bu stoğu silmek istediğinize emin misiniz?</h3>
+<div>
+    <h4>@Model.STOK_AD</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Stok Adı</dt>
+        <dd>Model Adı</dd>
+
+        <dt>Statü</dt>
+        <dd>@(Model.STATU.HasValue ? (Model.STATU.Value ? "Aktif" : "Pasif") : "Belirtilmemiş")</dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions">
+            <input type="submit" value="Sil" class="btn btn-danger" />
+            @Html.ActionLink("İptal", "StokListele", null, new { @class = "btn btn-secondary" })
+        </div>
+    }
+</div>
