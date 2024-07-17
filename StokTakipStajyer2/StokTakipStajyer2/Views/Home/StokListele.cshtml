@@ -1,15 +1,14 @@
 ﻿@model IEnumerable<StokTakipStajyer2.Models.STOK>
-
 @{
     ViewBag.Title = "Stok Listele";
 }
 
-<h2>Stok Listele</h2>
+<h2>Stok Listesi</h2>
 
-@if (ViewBag.SuccessMessage != null)
+@if (TempData["SuccessMessage"] != null)
 {
     <div class="alert alert-success">
-        @ViewBag.SuccessMessage
+        @TempData["SuccessMessage"]
     </div>
 }
 
@@ -18,7 +17,7 @@
         <input type="text" class="form-control mr-2" id="searchString" name="searchString" placeholder="Ara" value="@Request.QueryString["searchString"]" />
         <button type="submit" class="btn btn-primary">Ara</button>
     </form>
-    @Html.ActionLink("Excel'e Aktar", "ExportStokToExcel", "Home", new { area = "" }, new { @class = "btn btn-success" })
+    @Html.ActionLink("Excel'e Aktar", "ExportDepoToExcel", "Home", new { area = "" }, new { @class = "btn btn-success" })
 </div>
 
 <table class="table">
@@ -42,22 +41,13 @@
                 <td>@stok.STOK_MARKA</td>
                 <td>@stok.STOK_DETAY</td>
                 <td>@stok.MIN_MIKTAR</td>
-                <td>@(stok.STATU.HasValue && stok.STATU.Value ? "True" : "False")</td>
+                <td>@stok.STATU</td>
+
                 <td>
                     @Html.ActionLink("Düzenle", "StokGuncelle", new { id = stok.STOK_ID }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Sil", "StokSil", new { id = stok.STOK_ID }, new { @class = "btn btn-danger", onclick = "return confirm('Bu stoğu silmek istediğinize emin misiniz?');" })
+                    @Html.ActionLink("Sil", "StokSil", new { id = stok.STOK_ID }, new { @class = "btn btn-danger", onclick = "return confirm('Bu kullanıcıyı silmek istediğinize emin misiniz?');" })
                 </td>
             </tr>
         }
     </tbody>
 </table>
-
-@if (ViewBag.Message != null)
-{
-    <p>@ViewBag.Message</p>
-}
-
-@if (ViewBag.ErrorMessage != null)
-{
-    <p>@ViewBag.ErrorMessage</p>
-}

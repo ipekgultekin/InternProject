@@ -7,49 +7,51 @@
         new SelectListItem { Text = "True", Value = "true" },
         new SelectListItem { Text = "False", Value = "false" }
     };
-    var olcuBirimOptions = (SelectList)ViewBag.OlcuBirimleri;
 }
 
 <h2>Stok Güncelle</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("StokGuncelle", "Home", FormMethod.Post))
 {
-
     @Html.HiddenFor(m => m.STOK_ID)
     <div class="form-group">
-        <label for="STOK_AD">Stok Adı</label>
-        @Html.TextBoxFor(m => m.STOK_AD, new { @class = "form-control" })
+        <label for="STOK_AD">Stok Adı</label><br />
+        @Html.TextBoxFor(m => m.STOK_AD, new { @class = "form-control", @placeholder = "Stok Adı" })
     </div>
     <div class="form-group">
-        <label for="STOK_DETAY">Stok Detay</label>
-        @Html.TextBoxFor(m => m.STOK_DETAY, new { @class = "form-control" })
+        <label for="STOK_DETAY">Stok Detay</label><br />
+        @Html.TextBoxFor(m => m.STOK_DETAY, new { @class = "form-control", @placeholder = "Stok Detay" })
     </div>
     <div class="form-group">
-        <label for="STOK_DURUM">Statü</label>
-        @Html.DropDownListFor(m => m.STOK_DURUM, statuOptions, "Seçiniz", new { @class = "form-control" })
+        <label for="STOK_MARKA">Stok Marka</label><br />
+        @Html.TextBoxFor(m => m.STOK_MARKA, new { @class = "form-control", @placeholder = "Stok Marka" })
     </div>
     <div class="form-group">
-        <label for="STOK_MARKA">Stok Marka</label>
-        @Html.TextBoxFor(m => m.STOK_MARKA, new { @class = "form-control" })
+        <label for="STOK_OLCUBIRIM">Ölçü Birimi</label><br />
+        @Html.DropDownListFor(m => m.STOK_OLCUBIRIM, (SelectList)ViewBag.OlcuBirimleri, "Seçiniz", new { @class = "form-control" })
     </div>
     <div class="form-group">
-        <label for="OLCU_BIRIM">Ölçü Birimi</label>
-        @Html.DropDownListFor(m => m.OLCU_BIRIM, olcuBirimOptions, "Seçiniz", new { @class = "form-control" })
+        <label for="MIN_MIKTAR">Minimum Miktar</label><br />
+        @Html.TextBoxFor(m => m.MIN_MIKTAR, new { @class = "form-control", @placeholder = "Minimum Miktar" })
     </div>
     <div class="form-group">
-        <label for="KAYIT_TARIHI">Kayıt Tarihi</label>
-        @Html.TextBoxFor(m => m.KAYIT_TARIHI, new { @class = "form-control", @type = "date" })
-    </div>
-    <div class="form-group">
-        <label for="MIN_MIKTAR">Minimum Miktar</label>
-        @Html.TextBoxFor(m => m.MIN_MIKTAR, new { @class = "form-control" })
+        <label for="STATU">Statü</label><br />
+        @Html.DropDownListFor(m => m.STATU, statuOptions, "Seçiniz", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.STATU, "", new { @class = "text-danger" })
     </div>
     <button type="submit" class="btn btn-primary">Güncelle</button>
 }
 
-@if (ViewBag.SuccessMessage != null)
+@if (TempData["SuccessMessage"] != null)
 {
     <div class="alert alert-success mt-3">
-        @ViewBag.SuccessMessage
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger mt-3">
+        @TempData["ErrorMessage"]
     </div>
 }

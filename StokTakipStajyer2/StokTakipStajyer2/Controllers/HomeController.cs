@@ -9,11 +9,15 @@ using OfficeOpenXml.Style;
 using System.Web.Mvc;
 using System.Web.Security;
 using StokTakipStajyer2.Models;
+using System.Data.Entity;
+
+
 
 namespace StokTakipStajyer2.Controllers
 {
     public class HomeController : Controller
     {
+
         StokTakipDBEntities stokdata = new StokTakipDBEntities();
 
         public ActionResult Index()
@@ -405,8 +409,48 @@ namespace StokTakipStajyer2.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult DepoGuncelle(int id)
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 1)
+            {
+                return RedirectToAction("Giris");
+            }
 
-      
+            var depo = stokdata.DEPO.Find(id);
+            if (depo == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(depo);
+        }
+
+        [HttpPost]
+        public ActionResult DepoGuncelle(DEPO depo)
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 1)
+            {
+                return RedirectToAction("Giris");
+            }
+            if (ModelState.IsValid)
+            {
+                var updateDepo = stokdata.DEPO.Find(depo.DEPO_ID);
+
+                if (updateDepo != null)
+                {
+                    updateDepo.DEPO_ADI = depo.DEPO_ADI;
+                    updateDepo.STATU = depo.STATU;
+
+                    stokdata.SaveChanges();
+                    TempData["SuccessMessage"] = "Depo başarıyla güncellendi.";
+                    return RedirectToAction("DepoListele");
+                }
+            }
+
+            return View(depo);
+        }
+
 
 
         [HttpGet]
@@ -712,9 +756,10 @@ namespace StokTakipStajyer2.Controllers
             {
                 return RedirectToAction("Giris");
             }
-            var model = new STOK();
 
-            return View(model);
+            ViewBag.OlcuBirimleri = new SelectList(stokdata.OLCU_BIRIM.ToList(), "OLCUBIRIM_ID", "OLCUBIRIM_ADI");
+
+            return View(new STOK());
         }
 
         [HttpPost]
@@ -727,81 +772,74 @@ namespace StokTakipStajyer2.Controllers
 
             if (ModelState.IsValid)
             {
-                var model = new STOK()
-                {
-                    STOK_AD = stok.STOK_AD,
-                    STOK_DETAY = stok.STOK_DETAY,
-                    STOK_DURUM = stok.STOK_DURUM,
-                    STOK_ID = stok.STOK_ID,
-                    STOK_MARKA = stok.STOK_MARKA,
-                    STOK_OLCUBIRIM = stok.STOK_OLCUBIRIM,
-                    KAYIT_TARIHI = stok.KAYIT_TARIHI,
-                    MIN_MIKTAR = stok.MIN_MIKTAR,
+                stok.OLUSTURAN_KULLANICI = Convert.ToInt32(Session["ID"]);
+                stok.KAYIT_TARIHI = true;
+                stok.GUNCELLEYEN_KULLANICI = Convert.ToInt32(Session["ID"]);
+                stok.GUNCELLEME_TARIHI = DateTime.Now;
 
-                    OLUSTURAN_KULLANICI = Convert.ToInt32(Session["ID"]),
-                    OLUSTURMA_TARIHI = DateTime.Now,
-                    GUNCELLEME_TARIHI = DateTime.Now,
-                    GUNCELLEYEN_KULLANICI = Convert.ToInt32(Session["ID"]),
-                };
-
-                stokdata.STOK.Add(model);
+                stokdata.STOK.Add(stok);
                 stokdata.SaveChanges();
-                TempData["SuccessMessage"] = "Kullanıcı başarıyla eklendi.";
+                TempData["SuccessMessage"] = "Stok başarıyla eklendi.";
 
                 return RedirectToAction("StokListele");
             }
 
+            ViewBag.OlcuBirimleri = new SelectList(stokdata.OLCU_BIRIM.ToList(), "OLCUBIRIM_ID", "OLCUBIRIM_ADI");
             return View(stok);
         }
+
+
         [HttpGet]
-        public ActionResult DepoGuncelle(int id)
+public ActionResult StokGuncelle(int id)
+{
+    if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 1)
+    {
+        return RedirectToAction("Giris");
+    }
+
+    var stok = stokdata.STOK.Include(s => s.OLCU_BIRIM).FirstOrDefault(s => s.STOK_ID == id);
+    if (stok == null)
+    {
+        return HttpNotFound();
+    }
+
+    ViewBag.OlcuBirimleri = new SelectList(stokdata.OLCU_BIRIM.ToList(), "OLCUBIRIM_ID", "OLCUBIRIM_ADI", stok.STOK_OLCUBIRIM);
+
+    return View(stok);
+}
+
+[HttpPost]
+public ActionResult StokGuncelle(STOK stok)
+{
+    if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 1)
+    {
+        return RedirectToAction("Giris");
+    }
+
+    if (ModelState.IsValid)
+    {
+        var updateStok = stokdata.STOK.Find(stok.STOK_ID);
+        if (updateStok != null)
         {
-            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 1)
-            {
-                return RedirectToAction("Giris");
-            }
+            updateStok.STOK_AD = stok.STOK_AD;
+            updateStok.STOK_DETAY = stok.STOK_DETAY;
+            updateStok.STOK_MARKA = stok.STOK_MARKA;
+            updateStok.STOK_OLCUBIRIM = stok.STOK_OLCUBIRIM;
+            updateStok.MIN_MIKTAR = stok.MIN_MIKTAR;
+            updateStok.STATU = stok.STATU;
+            updateStok.GUNCELLEYEN_KULLANICI = Convert.ToInt32(Session["ID"]);
+            updateStok.GUNCELLEME_TARIHI = DateTime.Now;
 
-            var depo = stokdata.DEPO.Find(id);
-            if (depo == null)
-            {
-                return HttpNotFound();
-            }
+            stokdata.SaveChanges();
+            TempData["SuccessMessage"] = "Stok başarıyla güncellendi.";
 
-            // Populate the ViewBag with OLCU_BIRIM data
-            ViewBag.OlcuBirimleri = new SelectList(stokdata.OLCU_BIRIM.ToList(), "OLCU_BIRIMI_ID", "OLCUBIRIM_ADI");
-
-            return View(depo);
+            return RedirectToAction("StokListele");
         }
+    }
 
-        [HttpPost]
-        public ActionResult DepoGuncelle(DEPO depo)
-        {
-            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 1)
-            {
-                return RedirectToAction("Giris");
-            }
-
-            if (ModelState.IsValid)
-            {
-                var updateDepo = stokdata.DEPO.Find(depo.DEPO_ID);
-
-                if (updateDepo != null)
-                {
-                    updateDepo.DEPO_ADI = depo.DEPO_ADI;
-                    updateDepo.STATU = depo.STATU;
-                    updateDepo.OLCU_BIRIMI_ID = depo.OLCU_BIRIMI_ID; // Ensure this line exists
-
-                    stokdata.SaveChanges();
-                    TempData["SuccessMessage"] = "Depo başarıyla güncellendi.";
-                    return RedirectToAction("DepoListele");
-                }
-            }
-
-            ViewBag.OlcuBirimleri = new SelectList(stokdata.OLCU_BIRIM.ToList(), "OLCU_BIRIMI_ID", "OLCUBIRIM_ADI");
-
-            return View(depo);
-        }
-
+    ViewBag.OlcuBirimleri = new SelectList(stokdata.OLCU_BIRIM.ToList(), "OLCUBIRIM_ID", "OLCUBIRIM_ADI", stok.STOK_OLCUBIRIM);
+    return View(stok);
+}
 
         [HttpGet]
         public ActionResult StokListele(string searchString = null)
@@ -815,17 +853,17 @@ namespace StokTakipStajyer2.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                stoklar = stoklar.Where(s =>s.STOK_AD.Contains(searchString) ||
-                                                       s.STOK_DETAY.Contains(searchString) ||
-                                                       s.STOK_DURUM.ToString().Contains(searchString) ||
-                                                       s.STOK_MARKA.ToString().Contains(searchString) ||
-                                                       s.MIN_MIKTAR.ToString().Contains(searchString) ||
-                                                       s.STOK_MARKA.ToString().Contains(searchString) ||
-                                                       (s.STATU == true ? "true" : "false").Contains(searchString));
+                stoklar = stoklar.Where(s => s.STOK_AD.Contains(searchString) ||
+                                             s.STOK_DETAY.Contains(searchString) ||
+                                             (s.STOK_DURUM != null && s.STOK_DURUM.ToString().Contains(searchString)) ||
+                                             s.STOK_MARKA.Contains(searchString) ||
+                                             s.MIN_MIKTAR.ToString().Contains(searchString) ||
+                                             (s.STATU == true ? "true" : "false").Contains(searchString));
             }
 
             return View(stoklar.ToList());
         }
+
 
         public ActionResult ExportStokToExcel()
         {
@@ -886,10 +924,9 @@ namespace StokTakipStajyer2.Controllers
         }
 
 
-        [HttpGet]
         public ActionResult StokSil(int id)
         {
-            if (Session["ID"] == null)
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 1)
             {
                 return RedirectToAction("Giris");
             }
@@ -899,41 +936,14 @@ namespace StokTakipStajyer2.Controllers
             {
                 return HttpNotFound();
             }
+   
 
-            return View(stok);
-        }
-
-        [HttpPost, ActionName("StokSil")]
-        public ActionResult StokSilConfirmed(int id)
-        {
-            if (Session["ID"] == null)
-            {
-                return RedirectToAction("Giris");
-            }
-
-            var stok = stokdata.STOK.Find(id);
-            if (stok != null)
-            {
-                var hasReferences = stokdata.STOK_HAREKET.Any(sh => sh.STOK_ID == id);
-
-                if (hasReferences)
-                {
-                    stok.STATU = false; 
-                    stokdata.Entry(stok).State = System.Data.Entity.EntityState.Modified;
-                    TempData["SuccessMessage"] = "Stok başarıyla pasif duruma çekildi.";
-                }
-                else
-                {
-                    stokdata.STOK.Remove(stok);
-                    TempData["SuccessMessage"] = "Stok başarıyla silindi.";
-                }
-
-                stokdata.SaveChanges();
-            }
+            stokdata.STOK.Remove(stok);
+            stokdata.SaveChanges();
+            TempData["SuccessMessage"] = "Stok başarıyla silindi.";
 
             return RedirectToAction("StokListele");
         }
-
 
         public ActionResult Cikis()
         {
