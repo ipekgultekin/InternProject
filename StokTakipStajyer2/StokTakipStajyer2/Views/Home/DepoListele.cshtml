@@ -26,6 +26,10 @@
         <tr>
             <th>Depo Adı</th>
             <th>Statü</th>
+            <th>Oluşturan Kullanıcı</th>
+            <th>Oluşturma Tarihi</th>
+            <th>Güncelleyen Kullanıcı</th>
+            <th>Güncelleme Tarihi</th>
             <th>İşlemler</th>
         </tr>
     </thead>
@@ -35,6 +39,10 @@
             <tr>
                 <td>@depo.DEPO_ADI</td>
                 <td>@(depo.STATU == "true" ? "True" : "False")</td>
+                <td>@depo.OLUSTURAN_KULLANICI</td>
+                <td>@depo.OLUSTURMA_TARIHI</td>
+                <td>@depo.GUNCELLEYEN_KULLANICI</td>
+                <td>@depo.GUNCELLEME_TARIHI</td>
                 <td>
                     @Html.ActionLink("Düzenle", "DepoGuncelle", new { id = depo.DEPO_ID }, new { @class = "btn btn-primary" })
                     @Html.ActionLink("Sil", "DepoSil", new { id = depo.DEPO_ID }, new { @class = "btn btn-danger", onclick = "return confirm('Bu depoyu silmek istediğinize emin misiniz?');" })

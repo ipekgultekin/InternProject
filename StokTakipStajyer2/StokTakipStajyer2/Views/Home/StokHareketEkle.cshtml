@@ -1,0 +1,65 @@
+﻿@model StokTakipStajyer2.Models.STOK_HAREKET
+
+@{
+    ViewBag.Title = "Stok Hareketi Ekle";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        <div class="form-group">
+            @Html.Label("Stok Seçiniz")
+            @Html.DropDownList("STOK_ID", (SelectList)ViewBag.stoklar, "Stok Seçiniz", new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Depo Seçiniz")
+            @Html.DropDownList("DEPO_ESLESTIRME_ID", (SelectList)ViewBag.eslesmeler, "Depo Eşleşmesi Seçiniz", new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Sorumlu Seçiniz")
+            @Html.DropDownList("SORUMLU_ID", (SelectList)ViewBag.sorumlular, "Sorumlu Seçiniz", new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Hareket Tipi Seçiniz")
+            @Html.DropDownList("HAREKET_TIP_ID", (SelectList)ViewBag.harekettip, "Hareket Tipi Seçiniz", new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ACIKLAMA, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ACIKLAMA, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ACIKLAMA, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HAREKET_MIKTAR, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.HAREKET_MIKTAR, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.HAREKET_MIKTAR, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HAREKET_TARIHI, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.HAREKET_TARIHI, new { @class = "form-control", @type = "date" })
+                @Html.ValidationMessageFor(model => model.HAREKET_TARIHI, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Ekle" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}

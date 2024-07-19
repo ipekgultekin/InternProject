@@ -1,0 +1,63 @@
+﻿@model StokTakipStajyer2.Models.STOK_HAREKET
+
+@{
+    ViewBag.Title = "Stok Hareketi Güncelle";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("StokHareketiGuncelle", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @Html.HiddenFor(model => model.HAREKET_ID)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DEPO_ESLESTIRME.DEPO_ID, htmlAttributes: new { @class = "control-label" })
+        @Html.DropDownListFor(model => model.DEPO_ESLESTIRME.DEPO_ID, (SelectList)ViewBag.Depolar, "Depo Seçiniz", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.DEPO_ESLESTIRME.DEPO_ID, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SORUMLU.SORUMLU_ADI, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.SORUMLU.SORUMLU_ADI, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.SORUMLU.SORUMLU_ADI, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.HAREKET_TIP, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.HAREKET_TIP, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.HAREKET_TIP, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ACIKLAMA, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.ACIKLAMA, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.ACIKLAMA, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.HAREKET_MIKTAR, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.HAREKET_MIKTAR, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.HAREKET_MIKTAR, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.HAREKET_TARIHI, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.HAREKET_TARIHI, new { @class = "form-control", @type = "date" })
+            @Html.ValidationMessageFor(model => model.HAREKET_TARIHI, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Güncelle" class="btn btn-primary" />
+        @Html.ActionLink("Geri", "StokHareketListele", null, new { @class = "btn btn-default" })
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

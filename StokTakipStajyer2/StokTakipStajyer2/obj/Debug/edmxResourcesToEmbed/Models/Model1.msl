@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="StokTakipDBModelStoreContainer" CdmEntityContainer="StokTakipDBEntities">
+  <EntityContainerMapping StorageEntityContainer="StokTakipDBModelStoreContainer" CdmEntityContainer="StokTakipDBEntities2">
     <EntitySetMapping Name="ALT_DEPO">
       <EntityTypeMapping TypeName="StokTakipDBModel.ALT_DEPO">
         <MappingFragment StoreEntitySet="ALT_DEPO">

@@ -14,6 +14,12 @@ namespace StokTakipStajyer2.Models
     
     public partial class HAREKET_TIP
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public HAREKET_TIP()
+        {
+            this.STOK_HAREKET = new HashSet<STOK_HAREKET>();
+        }
+    
         public int HAREKET_TIP_ID { get; set; }
         public string HAREKET_TIP_ADI { get; set; }
         public Nullable<bool> ISLEM_GOSTERGESI { get; set; }
@@ -23,6 +29,7 @@ namespace StokTakipStajyer2.Models
         public Nullable<int> GUNCELLEYEN_KULLANICI { get; set; }
         public Nullable<System.DateTime> GUNCELLEME_TARIHI { get; set; }
     
-        public virtual STOK_HAREKET STOK_HAREKET { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<STOK_HAREKET> STOK_HAREKET { get; set; }
     }
 }

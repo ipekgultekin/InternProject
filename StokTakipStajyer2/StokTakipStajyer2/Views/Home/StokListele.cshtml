@@ -17,7 +17,7 @@
         <input type="text" class="form-control mr-2" id="searchString" name="searchString" placeholder="Ara" value="@Request.QueryString["searchString"]" />
         <button type="submit" class="btn btn-primary">Ara</button>
     </form>
-    @Html.ActionLink("Excel'e Aktar", "ExportDepoToExcel", "Home", new { area = "" }, new { @class = "btn btn-success" })
+    @Html.ActionLink("Excel'e Aktar", "ExportStokToExcel", "Home", new { area = "" }, new { @class = "btn btn-success" })
 </div>
 
 <table class="table">
@@ -29,6 +29,10 @@
             <th>Detay</th>
             <th>Minimum Miktar</th>
             <th>Statü</th>
+            <th>Oluşturan Kullanıcı</th>
+            <th>Oluşturma Tarihi</th>
+            <th>Güncelleyen Kullanıcı</th>
+            <th>Güncelleme Tarihi</th>
             <th>İşlemler</th>
         </tr>
     </thead>
@@ -42,6 +46,10 @@
                 <td>@stok.STOK_DETAY</td>
                 <td>@stok.MIN_MIKTAR</td>
                 <td>@stok.STATU</td>
+                <td>@stok.OLUSTURAN_KULLANICI</td>
+                <td>@stok.OLUSTURMA_TARIHI</td>
+                <td>@stok.GUNCELLEYEN_KULLANICI</td>
+                <td>@stok.GUNCELLEME_TARIHI</td>
 
                 <td>
                     @Html.ActionLink("Düzenle", "StokGuncelle", new { id = stok.STOK_ID }, new { @class = "btn btn-primary" })

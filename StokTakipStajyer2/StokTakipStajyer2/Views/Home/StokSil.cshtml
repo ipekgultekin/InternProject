@@ -15,7 +15,7 @@
         <dd>Model Adı</dd>
 
         <dt>Statü</dt>
-        <dd>@(Model.STATU.HasValue ? (Model.STATU.Value ? "Aktif" : "Pasif") : "Belirtilmemiş")</dd>
+        <dd>@(Model.STATU.HasValue ? (Model.STATU.Value ? "True" : "False") : "Belirtilmemiş")</dd>
     </dl>
 
     @using (Html.BeginForm())

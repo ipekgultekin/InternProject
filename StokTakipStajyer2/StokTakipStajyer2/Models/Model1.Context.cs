@@ -13,10 +13,10 @@ namespace StokTakipStajyer2.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class StokTakipDBEntities : DbContext
+    public partial class StokTakipDBEntities2 : DbContext
     {
-        public StokTakipDBEntities()
-            : base("name=StokTakipDBEntities")
+        public StokTakipDBEntities2()
+            : base("name=StokTakipDBEntities2")
         {
         }
     

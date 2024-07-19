@@ -191,14 +191,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_HAREKET_TIP_HAREKET_TIP_ID">
-          <End Role="HAREKET_TIP" Type="Self.HAREKET_TIP" Multiplicity="1" />
-          <End Role="STOK_HAREKET" Type="Self.STOK_HAREKET" Multiplicity="0..1" />
+          <End Role="HAREKET_TIP" Type="Self.HAREKET_TIP" Multiplicity="0..1" />
+          <End Role="STOK_HAREKET" Type="Self.STOK_HAREKET" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="HAREKET_TIP">
               <PropertyRef Name="HAREKET_TIP_ID" />
             </Principal>
             <Dependent Role="STOK_HAREKET">
-              <PropertyRef Name="HAREKET_ID" />
+              <PropertyRef Name="HAREKET_TIP" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -235,6 +235,18 @@
             </Principal>
             <Dependent Role="STOK_HAREKET">
               <PropertyRef Name="SORUMLU_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STOK_HAREKET_STOK">
+          <End Role="STOK" Type="Self.STOK" Multiplicity="0..1" />
+          <End Role="STOK_HAREKET" Type="Self.STOK_HAREKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STOK">
+              <PropertyRef Name="STOK_ID" />
+            </Principal>
+            <Dependent Role="STOK_HAREKET">
+              <PropertyRef Name="STOK_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -288,6 +300,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_SORUMLU_SORUMLU_ID" Association="Self.FK_SORUMLU_SORUMLU_ID">
             <End Role="SORUMLU" EntitySet="SORUMLU" />
+            <End Role="STOK_HAREKET" EntitySet="STOK_HAREKET" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STOK_HAREKET_STOK" Association="Self.FK_STOK_HAREKET_STOK">
+            <End Role="STOK" EntitySet="STOK" />
             <End Role="STOK_HAREKET" EntitySet="STOK_HAREKET" />
           </AssociationSet>
           <AssociationSet Name="FK_STOK_STOK_ID" Association="Self.FK_STOK_STOK_ID">
@@ -429,6 +445,7 @@
           <Property Name="GUNCELLEYEN_KULLANICI" Type="Int32" />
           <Property Name="GUNCELLEME_TARIHI" Type="DateTime" Precision="3" />
           <NavigationProperty Name="OLCU_BIRIM" Relationship="Self.FK_OLCU_BIRIMI_OLCU_BIRIMI_ID" FromRole="STOK" ToRole="OLCU_BIRIM" />
+          <NavigationProperty Name="STOK_HAREKET" Relationship="Self.FK_STOK_HAREKET_STOK" FromRole="STOK" ToRole="STOK_HAREKET" />
           <NavigationProperty Name="STOK_DURUM" Relationship="Self.FK_STOK_STOK_ID" FromRole="STOK" ToRole="STOK_DURUM" />
         </EntityType>
         <EntityType Name="STOK_DURUM">
@@ -464,6 +481,7 @@
           <NavigationProperty Name="DEPO_ESLESTIRME" Relationship="Self.FK_DEPO_ESLESTIRME_DEPO_ESLESTIRME_ID" FromRole="STOK_HAREKET" ToRole="DEPO_ESLESTIRME" />
           <NavigationProperty Name="HAREKET_TIP1" Relationship="Self.FK_HAREKET_TIP_HAREKET_TIP_ID" FromRole="STOK_HAREKET" ToRole="HAREKET_TIP" />
           <NavigationProperty Name="SORUMLU" Relationship="Self.FK_SORUMLU_SORUMLU_ID" FromRole="STOK_HAREKET" ToRole="SORUMLU" />
+          <NavigationProperty Name="STOK" Relationship="Self.FK_STOK_HAREKET_STOK" FromRole="STOK_HAREKET" ToRole="STOK" />
         </EntityType>
         <Association Name="FK_ALT_DEPO_ALT_DEPO_ID">
           <End Role="ALT_DEPO" Type="Self.ALT_DEPO" Multiplicity="0..1" />
@@ -502,14 +520,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_HAREKET_TIP_HAREKET_TIP_ID">
-          <End Role="HAREKET_TIP" Type="Self.HAREKET_TIP" Multiplicity="1" />
-          <End Role="STOK_HAREKET" Type="Self.STOK_HAREKET" Multiplicity="0..1" />
+          <End Role="HAREKET_TIP" Type="Self.HAREKET_TIP" Multiplicity="0..1" />
+          <End Role="STOK_HAREKET" Type="Self.STOK_HAREKET" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="HAREKET_TIP">
               <PropertyRef Name="HAREKET_TIP_ID" />
             </Principal>
             <Dependent Role="STOK_HAREKET">
-              <PropertyRef Name="HAREKET_ID" />
+              <PropertyRef Name="HAREKET_TIP" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -549,6 +567,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_STOK_HAREKET_STOK">
+          <End Role="STOK" Type="Self.STOK" Multiplicity="0..1" />
+          <End Role="STOK_HAREKET" Type="Self.STOK_HAREKET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STOK">
+              <PropertyRef Name="STOK_ID" />
+            </Principal>
+            <Dependent Role="STOK_HAREKET">
+              <PropertyRef Name="STOK_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_STOK_STOK_ID">
           <End Role="STOK" Type="Self.STOK" Multiplicity="1" />
           <End Role="STOK_DURUM" Type="Self.STOK_DURUM" Multiplicity="0..1" />
@@ -561,7 +591,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="StokTakipDBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="StokTakipDBEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ALT_DEPO" EntityType="Self.ALT_DEPO" />
           <EntitySet Name="DEPO" EntityType="Self.DEPO" />
           <EntitySet Name="DEPO_ESLESTIRME" EntityType="Self.DEPO_ESLESTIRME" />
@@ -601,6 +631,10 @@
             <End Role="SORUMLU" EntitySet="SORUMLU" />
             <End Role="STOK_HAREKET" EntitySet="STOK_HAREKET" />
           </AssociationSet>
+          <AssociationSet Name="FK_STOK_HAREKET_STOK" Association="Self.FK_STOK_HAREKET_STOK">
+            <End Role="STOK" EntitySet="STOK" />
+            <End Role="STOK_HAREKET" EntitySet="STOK_HAREKET" />
+          </AssociationSet>
           <AssociationSet Name="FK_STOK_STOK_ID" Association="Self.FK_STOK_STOK_ID">
             <End Role="STOK" EntitySet="STOK" />
             <End Role="STOK_DURUM" EntitySet="STOK_DURUM" />
@@ -611,7 +645,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="StokTakipDBModelStoreContainer" CdmEntityContainer="StokTakipDBEntities">
+        <EntityContainerMapping StorageEntityContainer="StokTakipDBModelStoreContainer" CdmEntityContainer="StokTakipDBEntities2">
           <EntitySetMapping Name="ALT_DEPO">
             <EntityTypeMapping TypeName="StokTakipDBModel.ALT_DEPO">
               <MappingFragment StoreEntitySet="ALT_DEPO">

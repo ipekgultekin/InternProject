@@ -23,11 +23,6 @@ namespace StokTakipStajyer2.Models
         public int DEPO_ID { get; set; }
         public string DEPO_ADI { get; set; }
         public string STATU { get; set; }
-        //sil
-        public int OLCU_BIRIMI_ID { get; set; }
-
-        public virtual OLCU_BIRIM OLCU_BIRIM { get; set; }
-        //
         public Nullable<int> OLUSTURAN_KULLANICI { get; set; }
         public Nullable<System.DateTime> OLUSTURMA_TARIHI { get; set; }
         public Nullable<int> GUNCELLEYEN_KULLANICI { get; set; }

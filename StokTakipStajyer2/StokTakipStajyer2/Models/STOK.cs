@@ -14,6 +14,12 @@ namespace StokTakipStajyer2.Models
     
     public partial class STOK
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public STOK()
+        {
+            this.STOK_HAREKET = new HashSet<STOK_HAREKET>();
+        }
+    
         public int STOK_ID { get; set; }
         public string STOK_AD { get; set; }
         public Nullable<int> STOK_OLCUBIRIM { get; set; }
@@ -28,6 +34,8 @@ namespace StokTakipStajyer2.Models
         public Nullable<System.DateTime> GUNCELLEME_TARIHI { get; set; }
     
         public virtual OLCU_BIRIM OLCU_BIRIM { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<STOK_HAREKET> STOK_HAREKET { get; set; }
         public virtual STOK_DURUM STOK_DURUM { get; set; }
     }
 }

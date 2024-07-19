@@ -30,5 +30,6 @@ namespace StokTakipStajyer2.Models
         public virtual DEPO_ESLESTIRME DEPO_ESLESTIRME { get; set; }
         public virtual HAREKET_TIP HAREKET_TIP1 { get; set; }
         public virtual SORUMLU SORUMLU { get; set; }
+        public virtual STOK STOK { get; set; }
     }
 }

@@ -24,9 +24,13 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Alt Depo Adı</th>
-            <th>Statü</th>
-            <th>İşlemler</th>
+             <th>Alt Depo Adı</th>
+             <th>Statü</th>
+             <th>Oluşturan Kullanıcı</th>
+             <th>Oluşturma Tarihi</th>
+             <th>Güncelleyen Kullanıcı</th>
+             <th>Güncelleme Tarihi</th>
+             <th>İşlemler</th>
         </tr>
     </thead>
     <tbody>
@@ -35,6 +39,10 @@
             <tr>
                 <td>@altdepo.ALT_DEPO_ADI</td>
                 <td>@(altdepo.STATU == true ? "True" : "False")</td>
+                <td>@altdepo.OLUSTURAN_KULLANICI</td>
+                <td>@altdepo.OLUSTURMA_TARIHI</td>
+                <td>@altdepo.GUNCELLEYEN_KULLANICI</td>
+                <td>@altdepo.GUNCELLEME_TARIHI</td>
                 <td>
                     @Html.ActionLink("Düzenle", "AltDepoGuncelle", new { id = altdepo.ALT_DEPO_ID }, new { @class = "btn btn-primary" })
                     @Html.ActionLink("Sil", "AltDepoSil", new { id = altdepo.ALT_DEPO_ID }, new { @class = "btn btn-danger", onclick = "return confirm('Bu alt depoyu silmek istediğinize emin misiniz?');" })

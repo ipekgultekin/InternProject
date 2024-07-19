@@ -26,6 +26,10 @@
             <th>Depo Adı</th>
             <th>Alt Depo Adı</th>
             <th>Statü</th>
+            <th>Oluşturan Kullanıcı</th>
+            <th>Oluşturma Tarihi</th>
+            <th>Güncelleyen Kullanıcı</th>
+            <th>Güncelleme Tarihi</th>
             <th>İşlemler</th>
         </tr>
     </thead>
@@ -35,7 +39,11 @@
             <tr>
                 <td>@eslestirme.DEPO.DEPO_ADI</td>
                 <td>@eslestirme.ALT_DEPO.ALT_DEPO_ADI</td>
-                <td>@(eslestirme.STATU.HasValue ? (eslestirme.STATU.Value ? "Aktif" : "Pasif") : "Belirtilmemiş")</td>
+                <td>@(eslestirme.STATU.HasValue ? (eslestirme.STATU.Value ? "True" : "False") : "Belirtilmemiş")</td>
+                <td>@eslestirme.OLUSTURAN_KULLANICI</td>
+                <td>@eslestirme.OLUSTURMA_TARIHI</td>
+                <td>@eslestirme.GUNCELLEYEN_KULLANICI</td>
+                <td>@eslestirme.GUNCELLEME_TARIHI</td>
                 <td>
                     @Html.ActionLink("Düzenle", "DepoAltdepoGuncelle", new { id = eslestirme.DEPO_ESLESTIRME_ID }, new { @class = "btn btn-primary" })
                     @Html.ActionLink("Sil", "DepoAltdepoSil", new { id = eslestirme.DEPO_ESLESTIRME_ID }, new { @class = "btn btn-danger", onclick = "return confirm('Bu eşleştirmeyi silmek istediğinize emin misiniz?');" })

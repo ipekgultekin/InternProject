@@ -14,7 +14,6 @@ namespace StokTakipStajyer2.Models
     
     public partial class KULLANICI
     {
-
         public int KUL_ID { get; set; }
         public string KUL_USERNAME { get; set; }
         public string KUL_SIFRE { get; set; }
