@@ -133,7 +133,7 @@ namespace StokTakipStajyer2.Controllers
             {
                 var worksheet = package.Workbook.Worksheets.Add("Kullanıcı Listesi");
 
-               
+
                 worksheet.Cells[1, 1].Value = "Kullanıcı ID";
                 worksheet.Cells[1, 2].Value = "Kullanıcı Adı";
                 worksheet.Cells[1, 3].Value = "Soyadı";
@@ -144,7 +144,7 @@ namespace StokTakipStajyer2.Controllers
                 worksheet.Cells[1, 8].Value = "Güncelleyen Kullanıcı";
                 worksheet.Cells[1, 9].Value = "Güncelleme Tarihi";
 
-              
+
                 for (int i = 0; i < kullanicilar.Count; i++)
                 {
                     var row = i + 2;
@@ -159,7 +159,7 @@ namespace StokTakipStajyer2.Controllers
                     worksheet.Cells[row, 9].Value = kullanicilar[i].GUNCELLEME_TARIHI.HasValue ? kullanicilar[i].GUNCELLEME_TARIHI.Value.ToString("dd.MM.yyyy HH:mm:ss") : "N/A";
                 }
 
-               
+
                 using (var range = worksheet.Cells[1, 1, 1, 9])
                 {
                     range.Style.Font.Bold = true;
@@ -168,7 +168,7 @@ namespace StokTakipStajyer2.Controllers
                     range.Style.Font.Color.SetColor(Color.White);
                 }
 
-              
+
                 worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
 
                 var stream = new MemoryStream();
@@ -327,7 +327,7 @@ namespace StokTakipStajyer2.Controllers
                 worksheet.Cells[1, 6].Value = "Güncelleyen Kullanıcı";
                 worksheet.Cells[1, 7].Value = "Güncelleme Tarihi";
 
-           
+
                 for (int i = 0; i < depolar.Count; i++)
                 {
                     var row = i + 2;
@@ -340,7 +340,7 @@ namespace StokTakipStajyer2.Controllers
                     worksheet.Cells[row, 7].Value = depolar[i].GUNCELLEME_TARIHI.HasValue ? depolar[i].GUNCELLEME_TARIHI.Value.ToString("dd.MM.yyyy HH:mm:ss") : "N/A";
                 }
 
-              
+
                 using (var range = worksheet.Cells[1, 1, 1, 7])
                 {
                     range.Style.Font.Bold = true;
@@ -542,7 +542,7 @@ namespace StokTakipStajyer2.Controllers
             {
                 var worksheet = package.Workbook.Worksheets.Add("Alt Depo Listesi");
 
-              
+
                 worksheet.Cells[1, 1].Value = "Alt Depo ID";
                 worksheet.Cells[1, 2].Value = "Alt Depo Adı";
                 worksheet.Cells[1, 3].Value = "Statü";
@@ -551,7 +551,7 @@ namespace StokTakipStajyer2.Controllers
                 worksheet.Cells[1, 6].Value = "Güncelleyen Kullanıcı";
                 worksheet.Cells[1, 7].Value = "Güncelleme Tarihi";
 
-             
+
                 for (int i = 0; i < altDepolar.Count; i++)
                 {
                     var row = i + 2;
@@ -572,7 +572,7 @@ namespace StokTakipStajyer2.Controllers
                     range.Style.Font.Color.SetColor(Color.White);
                 }
 
-            
+
                 worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
 
                 var stream = new MemoryStream();
@@ -790,56 +790,56 @@ namespace StokTakipStajyer2.Controllers
 
 
         [HttpGet]
-public ActionResult StokGuncelle(int id)
-{
-    if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 1)
-    {
-        return RedirectToAction("Giris");
-    }
-
-    var stok = stokdata.STOK.Include(s => s.OLCU_BIRIM).FirstOrDefault(s => s.STOK_ID == id);
-    if (stok == null)
-    {
-        return HttpNotFound();
-    }
-
-    ViewBag.OlcuBirimleri = new SelectList(stokdata.OLCU_BIRIM.ToList(), "OLCUBIRIM_ID", "OLCUBIRIM_ADI", stok.STOK_OLCUBIRIM);
-
-    return View(stok);
-}
-
-[HttpPost]
-public ActionResult StokGuncelle(STOK stok)
-{
-    if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 1)
-    {
-        return RedirectToAction("Giris");
-    }
-
-    if (ModelState.IsValid)
-    {
-        var updateStok = stokdata.STOK.Find(stok.STOK_ID);
-        if (updateStok != null)
+        public ActionResult StokGuncelle(int id)
         {
-            updateStok.STOK_AD = stok.STOK_AD;
-            updateStok.STOK_DETAY = stok.STOK_DETAY;
-            updateStok.STOK_MARKA = stok.STOK_MARKA;
-            updateStok.STOK_OLCUBIRIM = stok.STOK_OLCUBIRIM;
-            updateStok.MIN_MIKTAR = stok.MIN_MIKTAR;
-            updateStok.STATU = stok.STATU;
-            updateStok.GUNCELLEYEN_KULLANICI = Convert.ToInt32(Session["ID"]);
-            updateStok.GUNCELLEME_TARIHI = DateTime.Now;
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 1)
+            {
+                return RedirectToAction("Giris");
+            }
 
-            stokdata.SaveChanges();
-            TempData["SuccessMessage"] = "Stok başarıyla güncellendi.";
+            var stok = stokdata.STOK.Include(s => s.OLCU_BIRIM).FirstOrDefault(s => s.STOK_ID == id);
+            if (stok == null)
+            {
+                return HttpNotFound();
+            }
 
-            return RedirectToAction("StokListele");
+            ViewBag.OlcuBirimleri = new SelectList(stokdata.OLCU_BIRIM.ToList(), "OLCUBIRIM_ID", "OLCUBIRIM_ADI", stok.STOK_OLCUBIRIM);
+
+            return View(stok);
         }
-    }
 
-    ViewBag.OlcuBirimleri = new SelectList(stokdata.OLCU_BIRIM.ToList(), "OLCUBIRIM_ID", "OLCUBIRIM_ADI", stok.STOK_OLCUBIRIM);
-    return View(stok);
-}
+        [HttpPost]
+        public ActionResult StokGuncelle(STOK stok)
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 1)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            if (ModelState.IsValid)
+            {
+                var updateStok = stokdata.STOK.Find(stok.STOK_ID);
+                if (updateStok != null)
+                {
+                    updateStok.STOK_AD = stok.STOK_AD;
+                    updateStok.STOK_DETAY = stok.STOK_DETAY;
+                    updateStok.STOK_MARKA = stok.STOK_MARKA;
+                    updateStok.STOK_OLCUBIRIM = stok.STOK_OLCUBIRIM;
+                    updateStok.MIN_MIKTAR = stok.MIN_MIKTAR;
+                    updateStok.STATU = stok.STATU;
+                    updateStok.GUNCELLEYEN_KULLANICI = Convert.ToInt32(Session["ID"]);
+                    updateStok.GUNCELLEME_TARIHI = DateTime.Now;
+
+                    stokdata.SaveChanges();
+                    TempData["SuccessMessage"] = "Stok başarıyla güncellendi.";
+
+                    return RedirectToAction("StokListele");
+                }
+            }
+
+            ViewBag.OlcuBirimleri = new SelectList(stokdata.OLCU_BIRIM.ToList(), "OLCUBIRIM_ID", "OLCUBIRIM_ADI", stok.STOK_OLCUBIRIM);
+            return View(stok);
+        }
 
         [HttpGet]
         public ActionResult StokListele(string searchString = null)
@@ -873,7 +873,7 @@ public ActionResult StokGuncelle(STOK stok)
             {
                 var worksheet = package.Workbook.Worksheets.Add("Stok Listesi");
 
-              
+
                 worksheet.Cells[1, 1].Value = "Stok ID";
                 worksheet.Cells[1, 2].Value = "Ad";
                 worksheet.Cells[1, 3].Value = "Ölçü Birimi";
@@ -886,7 +886,7 @@ public ActionResult StokGuncelle(STOK stok)
                 worksheet.Cells[1, 10].Value = "Güncelleyen Kullanıcı";
                 worksheet.Cells[1, 11].Value = "Güncelleme Tarihi";
 
-              
+
                 for (int i = 0; i < stoklar.Count; i++)
                 {
                     var row = i + 2;
@@ -903,7 +903,7 @@ public ActionResult StokGuncelle(STOK stok)
                     worksheet.Cells[row, 11].Value = stoklar[i].GUNCELLEME_TARIHI.HasValue ? stoklar[i].GUNCELLEME_TARIHI.Value.ToString("dd.MM.yyyy HH:mm:ss") : "N/A";
                 }
 
-               
+
                 using (var range = worksheet.Cells[1, 1, 1, 11])
                 {
                     range.Style.Font.Bold = true;
@@ -912,7 +912,7 @@ public ActionResult StokGuncelle(STOK stok)
                     range.Style.Font.Color.SetColor(Color.White);
                 }
 
-               
+
                 worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
 
                 var stream = new MemoryStream();
@@ -936,7 +936,7 @@ public ActionResult StokGuncelle(STOK stok)
             {
                 return HttpNotFound();
             }
-   
+
 
             stokdata.STOK.Remove(stok);
             stokdata.SaveChanges();
@@ -963,12 +963,12 @@ public ActionResult StokGuncelle(STOK stok)
 
             return View();
 
-      
+
         }
 
         [HttpPost]
         public ActionResult StokHareketEkle(STOK_HAREKET stokHareket)
-        { 
+        {
 
             if (Session["ID"] == null)
             {
@@ -1006,15 +1006,14 @@ public ActionResult StokGuncelle(STOK stok)
         {
             var stokHareketleri = stokdata.STOK_HAREKET
                 .Include(s => s.DEPO_ESLESTIRME)
-              
                 .Include(s => s.SORUMLU);
 
             if (!String.IsNullOrEmpty(searchString))
             {
                 stokHareketleri = stokHareketleri.Where(s =>
-                    (s.DEPO_ESLESTIRME.DEPO_ID.HasValue && s.DEPO_ESLESTIRME.DEPO_ID.Value.ToString().Contains(searchString))
-                    || (s.HAREKET_TIP1.HAREKET_TIP_ADI != null && s.HAREKET_TIP1.HAREKET_TIP_ADI.Contains(searchString))
-                    || (s.SORUMLU != null && s.SORUMLU.SORUMLU_ADI.Contains(searchString)));
+                    (s.DEPO_ESLESTIRME != null && s.DEPO_ESLESTIRME.DEPO_ID.HasValue && s.DEPO_ESLESTIRME.DEPO_ID.Value.ToString().Contains(searchString))
+                    || (s.HAREKET_TIP1 != null && s.HAREKET_TIP1.HAREKET_TIP_ADI != null && s.HAREKET_TIP1.HAREKET_TIP_ADI.Contains(searchString))
+                    || (s.SORUMLU != null && s.SORUMLU.SORUMLU_ADI != null && s.SORUMLU.SORUMLU_ADI.Contains(searchString)));
             }
 
             var stokHareketListesi = stokHareketleri.ToList();
@@ -1147,7 +1146,7 @@ public ActionResult StokGuncelle(STOK stok)
                 return HttpNotFound();
             }
 
-             ViewBag.Depolar = new SelectList(stokdata.DEPO, "DEPO_ID", "DEPO_ADI", stokHareket.DEPO_ESLESTIRME.DEPO_ID);
+            ViewBag.Depolar = new SelectList(stokdata.DEPO, "DEPO_ID", "DEPO_ADI", stokHareket.DEPO_ESLESTIRME.DEPO_ID);
 
             return View(stokHareket);
         }

@@ -39,8 +39,8 @@
                 <tr>
                     <td>@item.HAREKET_ID</td>
                     <td>@item.STOK_ID</td>
-                    <td>@item.DEPO_ESLESTIRME.DEPO_ID</td>
-                    <td>@item.SORUMLU.SORUMLU_ADI</td>
+                    <td>@(item.DEPO_ESLESTIRME != null ? item.DEPO_ESLESTIRME.DEPO_ID.ToString() : "N/A")</td>
+                    <td>@(item.SORUMLU != null ? item.SORUMLU.SORUMLU_ADI : "N/A")</td>
                     <td>@item.HAREKET_TIP</td>
                     <td>@item.ACIKLAMA</td>
                     <td>@item.HAREKET_MIKTAR</td>
@@ -49,7 +49,6 @@
                     <td>@item.OLUSTURMA_TARIHI</td>
                     <td>@item.GUNCELLEYEN_KULLANICI</td>
                     <td>@item.GUNCELLEME_TARIHI</td>
-
                     <td>
                         @Html.ActionLink("Düzenle", "StokHareketiGuncelle", new { id = item.HAREKET_ID }, new { @class = "btn btn-primary" })
                         @Html.ActionLink("Sil", "StokHareketSil", new { id = item.HAREKET_ID }, new { @class = "btn btn-danger", onclick = "return confirm('Bu hareketi silmek istediğinize emin misiniz?');" })

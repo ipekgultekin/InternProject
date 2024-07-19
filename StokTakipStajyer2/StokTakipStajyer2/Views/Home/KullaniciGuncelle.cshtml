@@ -47,15 +47,19 @@
         @Html.DropDownListFor(m => m.KUL_TIP, tipOptions, "Seçiniz")
         @Html.ValidationMessageFor(m => m.KUL_TIP, "", new { @class = "text-danger" })
     </div>
-    <button type="submit">Güncelle</button>
-}
 
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+}
 @if (ViewBag.Message != null)
 {
-    <p>@ViewBag.Message</p>
+    <div class="alert alert-success">
+        @ViewBag.Message
+    </div>
 }
 
 @if (ViewBag.ErrorMessage != null)
 {
-    <p>@ViewBag.ErrorMessage</p>
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
 }
