@@ -12,7 +12,7 @@
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
-            @Html.ActionLink("Stajyer Stok Takip", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Stok Takip", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -57,7 +57,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="stokDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Stok
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="stokDropdown">
+                            <div class="dropdown-menu" aria-labelledby="altDepoDropdown">
                                 @Html.ActionLink("Stok Ekle", "StokEkle", "Home", new { area = "" }, new { @class = "dropdown-item" })
                                 @Html.ActionLink("Stok Listesi", "StokListele", "Home", new { area = "" }, new { @class = "dropdown-item" })
                             </div>
@@ -93,19 +93,30 @@
                             <div class="dropdown-menu" aria-labelledby="kullaniciRaporKullanicisiDropdown">
                                 @Html.ActionLink("Kullanıcı Ekle", "KullaniciEkleRaporKullanicisi", "Home", new { area = "" }, new { @class = "dropdown-item" })
                                 @Html.ActionLink("Kullanıcı Listesi", "KullaniciListeleRaporKullanicisi", "Home", new { area = "" }, new { @class = "dropdown-item" })
-                                @Html.ActionLink("Stok Hareket Raporu Listele", "StokHareketRaporuListele", "Home", new { area = "" }, new { @class = "dropdown-item" })
-                            </div>
 
+                            </div>
                         </li>
+
+                        <li class="nav-item">
+                                @Html.ActionLink("Stok Hareket Raporu Listele", "StokHareketRaporuListele", "Home", new { area = "" }, new { @class = "nav-link" }) 
+                     </li>
+                        
                     }
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     @if (Session["ID"] != null)
                     {
-                        <li class="nav-item">
-                            @Html.ActionLink("Çıkış", "Cikis", "Home", new { area = "" }, new { @class = "nav-link btn btn-danger text-white" })
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="kullaniciBilgisiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @ViewBag.KullaniciAdi
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="kullaniciBilgisiDropdown">
+                                @Html.ActionLink("Bilgilerim", "KullaniciBilgileri", "Home", new { area = "" }, new { @class = "dropdown-item" })
+                                @Html.ActionLink("Çıkış", "Cikis", "Home", new { area = "" }, new { @class = "dropdown-item" })
+                            </div>
                         </li>
                     }
+                  
                 </ul>
             </div>
         </div>

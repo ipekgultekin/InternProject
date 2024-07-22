@@ -4,18 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2a33d3b33e754df29c62c4cdbd0ca0da" Name="Diagram1">
-        <EntityTypeShape EntityType="StokTakipDBModel.ALT_DEPO" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="StokTakipDBModel.DEPO" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="StokTakipDBModel.DEPO_ESLESTIRME" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="StokTakipDBModel.HAREKET_TIP" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="StokTakipDBModel.KULLANICI" Width="1.5" PointX="8" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="StokTakipDBModel.KULLANICI_TIP" Width="1.5" PointX="5.75" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="StokTakipDBModel.OLCU_BIRIM" Width="1.5" PointX="0.75" PointY="14" IsExpanded="true" />
-        <EntityTypeShape EntityType="StokTakipDBModel.SORUMLU" Width="1.5" PointX="3" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="StokTakipDBModel.STOK" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="StokTakipDBModel.STOK_DURUM" Width="1.5" PointX="5.25" PointY="14" IsExpanded="true" />
-        <EntityTypeShape EntityType="StokTakipDBModel.STOK_HAREKET" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+      <Diagram DiagramId="2a33d3b33e754df29c62c4cdbd0ca0da" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="StokTakipDBModel.ALT_DEPO" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StokTakipDBModel.DEPO" Width="1.5" PointX="0.5" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StokTakipDBModel.DEPO_ESLESTIRME" Width="1.5" PointX="2.375" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StokTakipDBModel.HAREKET_TIP" Width="1.5" PointX="6.375" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StokTakipDBModel.KULLANICI" Width="1.5" PointX="8.375" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StokTakipDBModel.KULLANICI_TIP" Width="1.5" PointX="6.5" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StokTakipDBModel.OLCU_BIRIM" Width="1.5" PointX="4.5" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="StokTakipDBModel.SORUMLU" Width="1.5" PointX="2.25" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StokTakipDBModel.STOK" Width="1.5" PointX="10" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StokTakipDBModel.STOK_DURUM" Width="1.5" PointX="8.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StokTakipDBModel.STOK_HAREKET" Width="1.5" PointX="4.5" PointY="0.5" IsExpanded="true" />
         <AssociationConnector Association="StokTakipDBModel.FK_ALT_DEPO_ALT_DEPO_ID" ManuallyRouted="false" />
         <AssociationConnector Association="StokTakipDBModel.FK_DEPO_DEPO_ID" ManuallyRouted="false" />
         <AssociationConnector Association="StokTakipDBModel.FK_DEPO_ESLESTIRME_DEPO_ESLESTIRME_ID" ManuallyRouted="false" />

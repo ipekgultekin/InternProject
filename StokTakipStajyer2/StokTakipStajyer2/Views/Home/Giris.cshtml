@@ -1,28 +1,35 @@
 ﻿@model StokTakipStajyer2.Models.KULLANICI
 @{
-    ViewBag.Title = "Giriş Yap";
+    ViewBag.Title = "Giriş";
 }
 
-<h2 class="text-center">@ViewBag.Title</h2>
+<h2>@ViewBag.Title</h2>
 
-<div class="d-flex justify-content-center">
-    <div class="col-md-6">
-        @using (Html.BeginForm("Giris", "Home", FormMethod.Post))
-        {
-            <div class="form-group">
-                <label for="KUL_USERNAME">Kullanıcı Adı</label>
-                @Html.TextBoxFor(m => m.KUL_USERNAME, new { @class = "form-control" })
-            </div>
-            <div class="form-group">
-                <label for="KUL_SIFRE">Şifre</label>
-                @Html.PasswordFor(m => m.KUL_SIFRE, new { @class = "form-control" })
-            </div>
-            <button type="submit" class="btn btn-primary">Giriş Yap</button>
+@using (Html.BeginForm("Giris", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
 
-            if (ViewBag.Message != null)
-            {
-                <p class="text-danger mt-3">@ViewBag.Message</p>
-            }
-        }
-    </div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<div class="form-group">
+    <label>Username</label><br />
+    @Html.TextBoxFor(m => m.KUL_USERNAME)
+    @Html.ValidationMessageFor(m => m.KUL_USERNAME)
 </div>
+
+<div class="form-group">
+    <label>Şifre</label><br />
+    @Html.PasswordFor(m => m.KUL_SIFRE)
+    @Html.ValidationMessageFor(m => m.KUL_SIFRE)
+</div>
+
+    <button type="submit" class="btn btn-primary">Giriş Yap</button>
+
+    if (ViewBag.Mesaj != null)
+    {
+        <div class="alert alert-danger mt-2">
+            @ViewBag.Mesaj
+        </div>
+    }
+}
+

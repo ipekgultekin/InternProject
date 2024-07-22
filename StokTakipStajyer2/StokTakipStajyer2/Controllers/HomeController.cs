@@ -25,10 +25,23 @@ namespace StokTakipStajyer2.Controllers
             return View();
         }
 
-        public ActionResult Admin()
+        public ActionResult KullaniciBilgileri()
         {
-            return View();
+            if (Session["ID"] != null)
+            {
+                int kullaniciId = Convert.ToInt32(Session["ID"]);
+                
+                var kullanici = stokdata.KULLANICI.Find(kullaniciId); 
+                if (kullanici != null)
+                {
+                    return View(kullanici);
+                }
+            }
+            return RedirectToAction("Giris", "Home");
         }
+
+
+
 
         [HttpGet]
         public ActionResult Giris()
@@ -36,26 +49,26 @@ namespace StokTakipStajyer2.Controllers
             return View();
         }
 
+
         [HttpPost]
-        public ActionResult Giris(KULLANICI fc)
+        public ActionResult Giris(KULLANICI kul)
         {
-            var info = stokdata.KULLANICI.FirstOrDefault(x => x.KUL_USERNAME == fc.KUL_USERNAME && x.KUL_SIFRE == fc.KUL_SIFRE);
-
-            if (info != null)
+            var kullanici = stokdata.KULLANICI.FirstOrDefault(k => k.KUL_USERNAME == kul.KUL_USERNAME && k.KUL_SIFRE == kul.KUL_SIFRE);
+            if (kullanici != null)
             {
-                FormsAuthentication.SetAuthCookie(info.KUL_USERNAME, false);
-                Session["ID"] = info.KUL_ID.ToString();
-                Session["KullaniciTipi"] = info.KUL_TIP;
-                ViewBag.ErrorMessage = "Kullanıcı girişi başarılı.";
+                Session["ID"] = kullanici.KUL_ID;
+                Session["KullaniciAdi"] = kullanici.KUL_AD;
+                Session["KullaniciTipi"] = kullanici.KUL_TIP;
 
-                return RedirectToAction("KullaniciEkle");
+                return RedirectToAction("KullaniciBilgileri", "Home");
             }
             else
             {
-                ViewBag.ErrorMessage = "Geçersiz kullanıcı adı veya şifre.";
+                ViewBag.Mesaj = "Geçersiz kullanıcı adı veya şifre";
                 return View();
             }
         }
+
 
         [HttpGet]
         public ActionResult KullaniciEkle()
@@ -426,7 +439,7 @@ namespace StokTakipStajyer2.Controllers
         }
 
         [HttpPost]
-        public ActionResult DepoGuncelle(DEPO depo)
+        public ActionResult DepoGuncelle(DEPO depo, int id)
         {
             if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 1)
             {
@@ -434,7 +447,7 @@ namespace StokTakipStajyer2.Controllers
             }
             if (ModelState.IsValid)
             {
-                var updateDepo = stokdata.DEPO.Find(depo.DEPO_ID);
+                var updateDepo = stokdata.DEPO.Find(id);
 
                 if (updateDepo != null)
                 {
