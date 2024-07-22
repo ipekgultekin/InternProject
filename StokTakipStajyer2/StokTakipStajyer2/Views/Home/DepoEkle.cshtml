@@ -9,25 +9,72 @@
     };
 }
 
-<h2>Depo Ekle</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - ASP.NET Uygulamam</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-@using (Html.BeginForm("DepoEkle", "Home", FormMethod.Post))
-{
-    <div class="form-group">
-        <label for="DEPO_ADI">Depo Adı</label>
-        @Html.TextBoxFor(m => m.DEPO_ADI, new { @class = "form-control", @placeholder = "Depo Adı" })
-    </div>
-    <div class="form-group">
-        <label for="STATU">Statü</label>
-        @Html.DropDownListFor(m => m.STATU, statuOptions, "Seçiniz", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.STATU, "", new { @class = "text-danger" })
-    </div>
-    <button type="submit" class="btn btn-primary">Depo Ekle</button>
-}
+        .form-box {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-box">
+            <h2 class="text-center">Depo Ekle</h2>
 
-@if (ViewBag.Message != null)
-{
-    <div class="alert alert-success mt-3">
-        @ViewBag.Message
+            @using (Html.BeginForm("DepoEkle", "Home", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    <label for="DEPO_ADI">Depo Adı</label>
+                    @Html.TextBoxFor(m => m.DEPO_ADI, new { @class = "form-control", @placeholder = "Depo Adı" })
+                </div>
+                <div class="form-group">
+                    <label for="STATU">Statü</label>
+                    @Html.DropDownListFor(m => m.STATU, statuOptions, "Seçiniz", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.STATU, "", new { @class = "text-danger" })
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Depo Ekle</button>
+            }
+
+            @if (ViewBag.Message != null)
+            {
+                <div class="alert alert-success mt-2">
+                    @ViewBag.Message
+                </div>
+            }
+
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="alert alert-danger mt-2">
+                    @ViewBag.ErrorMessage
+                </div>
+            }
+        </div>
     </div>
-}
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

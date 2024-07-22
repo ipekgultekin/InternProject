@@ -10,48 +10,87 @@
     };
 }
 
-<h2>Stok Ekle</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - ASP.NET Uygulamam</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-@using (Html.BeginForm("StokEkle", "Home", FormMethod.Post))
-{
-    <div class="form-group">
-        <label for="STOK_AD">Stok Adı</label><br />
-        @Html.TextBoxFor(m => m.STOK_AD, new { @class = "form-control", @placeholder = "Stok Adı" })
-    </div>
-    <div class="form-group">
-        <label for="STOK_DETAY">Stok Detay</label><br />
-        @Html.TextBoxFor(m => m.STOK_DETAY, new { @class = "form-control", @placeholder = "Stok Detay" })
-    </div>
-    <div class="form-group">
-        <label for="STOK_MARKA">Stok Marka</label><br />
-        @Html.TextBoxFor(m => m.STOK_MARKA, new { @class = "form-control", @placeholder = "Stok Marka" })
-    </div>
-    <div class="form-group">
-        <label for="STOK_OLCUBIRIM">Ölçü Birimi</label><br />
-        @Html.DropDownListFor(m => m.STOK_OLCUBIRIM, (SelectList)ViewBag.OlcuBirimleri, "Seçiniz", new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        <label for="MIN_MIKTAR">Minimum Miktar</label><br />
-        @Html.TextBoxFor(m => m.MIN_MIKTAR, new { @class = "form-control", @placeholder = "Minimum Miktar" })
-    </div>
-    <div class="form-group">
-        <label for="STATÜ">Statü</label><br />
-        @Html.DropDownListFor(m => m.STATU, statuOptions, "Seçiniz", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.STATU, "", new { @class = "text-danger" })
-    </div>
-    <button type="submit" class="btn btn-primary">Stok Ekle</button>
-}
+        .form-box {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-box">
+            <h2 class="text-center">Stok Ekle</h2>
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success mt-3">
-        @TempData["SuccessMessage"]
-    </div>
-}
+            @using (Html.BeginForm("StokEkle", "Home", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger mt-3">
-        @TempData["ErrorMessage"]
+                <div class="form-group">
+                    <label for="STOK_AD">Stok Adı</label>
+                    @Html.TextBoxFor(m => m.STOK_AD, new { @class = "form-control", @placeholder = "Stok Adı" })
+                </div>
+                <div class="form-group">
+                    <label for="STOK_DETAY">Stok Detay</label>
+                    @Html.TextBoxFor(m => m.STOK_DETAY, new { @class = "form-control", @placeholder = "Stok Detay" })
+                </div>
+                <div class="form-group">
+                    <label for="STOK_MARKA">Stok Marka</label>
+                    @Html.TextBoxFor(m => m.STOK_MARKA, new { @class = "form-control", @placeholder = "Stok Marka" })
+                </div>
+                <div class="form-group">
+                    <label for="STOK_OLCUBIRIM">Ölçü Birimi</label>
+                    @Html.DropDownListFor(m => m.STOK_OLCUBIRIM, (SelectList)ViewBag.OlcuBirimleri, "Seçiniz", new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label for="MIN_MIKTAR">Minimum Miktar</label>
+                    @Html.TextBoxFor(m => m.MIN_MIKTAR, new { @class = "form-control", @placeholder = "Minimum Miktar" })
+                </div>
+                <div class="form-group">
+                    <label for="STATÜ">Statü</label>
+                    @Html.DropDownListFor(m => m.STATU, statuOptions, "Seçiniz", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.STATU, "", new { @class = "text-danger" })
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Stok Ekle</button>
+            }
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success mt-3">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger mt-3">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+        </div>
     </div>
-}
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -41,7 +41,7 @@
         {
             <tr>
                 <td>@stok.STOK_AD</td>
-                <td>@stok.OLCU_BIRIM.OLCUBIRIM_ADI</td>
+                <td>@(stok.OLCU_BIRIM != null ? stok.OLCU_BIRIM.OLCUBIRIM_ADI : "Belirtilmemiş")</td>
                 <td>@stok.STOK_MARKA</td>
                 <td>@stok.STOK_DETAY</td>
                 <td>@stok.MIN_MIKTAR</td>
