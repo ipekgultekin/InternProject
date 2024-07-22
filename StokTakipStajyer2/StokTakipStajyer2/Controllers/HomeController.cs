@@ -282,7 +282,6 @@ namespace StokTakipStajyer2.Controllers
                 stokdata.DEPO.Add(depoModel);
                 stokdata.SaveChanges();
                 TempData["SuccessMessage"] = "Depo başarıyla eklendi.";
-
                 return RedirectToAction("DepoListele");
             }
 
@@ -392,7 +391,7 @@ namespace StokTakipStajyer2.Controllers
 
                 if (hasReferences)
                 {
-                    depo.STATU = "false"; // Ensure this is correctly assigned
+                    depo.STATU = "false"; 
                     stokdata.Entry(depo).State = System.Data.Entity.EntityState.Modified;
                     TempData["SuccessMessage"] = "Depo başarıyla pasif duruma çekildi.";
                 }
@@ -441,6 +440,9 @@ namespace StokTakipStajyer2.Controllers
                 {
                     updateDepo.DEPO_ADI = depo.DEPO_ADI;
                     updateDepo.STATU = depo.STATU;
+                    updateDepo.GUNCELLEME_TARIHI = DateTime.Now; 
+                    updateDepo.GUNCELLEYEN_KULLANICI = Convert.ToInt32(Session["ID"]); 
+
 
                     stokdata.SaveChanges();
                     TempData["SuccessMessage"] = "Depo başarıyla güncellendi.";
@@ -504,11 +506,11 @@ namespace StokTakipStajyer2.Controllers
                 stokdata.SaveChanges();
 
                 TempData["SuccessMessage"] = "Alt depo başarıyla eklendi.";
-
                 return RedirectToAction("AltDepoListele");
             }
 
             ViewBag.Depolar = new SelectList(stokdata.DEPO.ToList(), "DEPO_ID", "DEPO_ADI");
+
             return View(depo);
         }
 
@@ -667,7 +669,7 @@ namespace StokTakipStajyer2.Controllers
                     updateDepo.STATU = depo.STATU;
 
                     stokdata.SaveChanges();
-                    TempData["SuccessMessage"] = "Depo başarıyla güncellendi.";
+                    TempData["SuccessMessage"] = "Alt depo başarıyla güncellendi.";
                     return RedirectToAction("AltDepoListele");
                 }
             }
@@ -772,6 +774,7 @@ namespace StokTakipStajyer2.Controllers
 
             if (ModelState.IsValid)
             {
+                stok.OLUSTURMA_TARIHI = DateTime.Now;
                 stok.OLUSTURAN_KULLANICI = Convert.ToInt32(Session["ID"]);
                 stok.KAYIT_TARIHI = true;
                 stok.GUNCELLEYEN_KULLANICI = Convert.ToInt32(Session["ID"]);
@@ -1184,6 +1187,491 @@ namespace StokTakipStajyer2.Controllers
             return View(stokHareket);
         }
 
+
+        [HttpGet]
+        public ActionResult KullaniciEkleDepoYetkilisi()
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 2)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            var model = new KULLANICI();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult KullaniciEkleDepoYetkilisi(KULLANICI kullanici)
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 2)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            if (ModelState.IsValid)
+            {
+            
+                if (kullanici.KUL_TIP != 2)
+                {
+                    ModelState.AddModelError("", "Sadece Depo Yetkilisi ekleyebilirsiniz.");
+                    return View(kullanici);
+                }
+
+                var model = new KULLANICI()
+                {
+                    KUL_USERNAME = kullanici.KUL_USERNAME,
+                    KUL_AD = kullanici.KUL_AD,
+                    KUL_SOYAD = kullanici.KUL_SOYAD,
+                    KUL_SIFRE = kullanici.KUL_SIFRE,
+                    KUL_TIP = kullanici.KUL_TIP,
+                    STATU = kullanici.STATU,
+                    OLUSTURAN_KULLANICI = Convert.ToInt32(Session["ID"]),
+                    OLUSTURMA_TARIHI = DateTime.Now,
+                    GUNCELLEME_TARIHI = DateTime.Now,
+                    GUNCELLEYEN_KULLANICI = Convert.ToInt32(Session["ID"]),
+                };
+
+                stokdata.KULLANICI.Add(model);
+                stokdata.SaveChanges();
+                TempData["SuccessMessage"] = "Kullanıcı başarıyla eklendi.";
+                return RedirectToAction("KullaniciListeleDepoYetkilisi");
+            }
+
+            return View(kullanici);
+        }
+
+        [HttpGet]
+        public ActionResult KullaniciListeleDepoYetkilisi(string searchString = null)
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 2)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            int currentUserId = Convert.ToInt32(Session["ID"]);
+            var kullanicilar = stokdata.KULLANICI.Where(k => k.OLUSTURAN_KULLANICI == currentUserId && k.KUL_TIP == 2);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                kullanicilar = kullanicilar.Where(s => s.KUL_USERNAME.Contains(searchString) ||
+                                                       s.KUL_AD.Contains(searchString) ||
+                                                       s.KUL_SOYAD.Contains(searchString) ||
+                                                       s.KUL_ID.ToString().Contains(searchString) ||
+                                                       s.KUL_TIP.ToString().Contains(searchString) ||
+                                                       (s.STATU == true ? "true" : "false").Contains(searchString));
+            }
+
+            return View(kullanicilar.ToList());
+        }
+
+
+        public ActionResult ExportKullaniciDepoYetkilisiToExcel()
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 2)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            int currentUserId = Convert.ToInt32(Session["ID"]);
+            var kullanicilar = stokdata.KULLANICI.Where(k => k.OLUSTURAN_KULLANICI == currentUserId && k.KUL_TIP == 2).ToList();
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Kullanıcı Listesi");
+
+                worksheet.Cells[1, 1].Value = "Kullanıcı ID";
+                worksheet.Cells[1, 2].Value = "Kullanıcı Adı";
+                worksheet.Cells[1, 3].Value = "Soyadı";
+                worksheet.Cells[1, 4].Value = "Kullanıcı Tipi";
+                worksheet.Cells[1, 5].Value = "Statü";
+                worksheet.Cells[1, 6].Value = "Oluşturan Kullanıcı";
+                worksheet.Cells[1, 7].Value = "Oluşturma Tarihi";
+                worksheet.Cells[1, 8].Value = "Güncelleyen Kullanıcı";
+                worksheet.Cells[1, 9].Value = "Güncelleme Tarihi";
+
+                for (int i = 0; i < kullanicilar.Count; i++)
+                {
+                    var row = i + 2;
+                    worksheet.Cells[row, 1].Value = kullanicilar[i].KUL_ID;
+                    worksheet.Cells[row, 2].Value = kullanicilar[i].KUL_AD;
+                    worksheet.Cells[row, 3].Value = kullanicilar[i].KUL_SOYAD;
+                    worksheet.Cells[row, 4].Value = kullanicilar[i].KUL_TIP;
+                    worksheet.Cells[row, 5].Value = kullanicilar[i].STATU == true ? "True" : "False";
+                    worksheet.Cells[row, 6].Value = kullanicilar[i].OLUSTURAN_KULLANICI;
+                    worksheet.Cells[row, 7].Value = kullanicilar[i].OLUSTURMA_TARIHI.HasValue ? kullanicilar[i].OLUSTURMA_TARIHI.Value.ToString("dd.MM.yyyy HH:mm:ss") : "N/A";
+                    worksheet.Cells[row, 8].Value = kullanicilar[i].GUNCELLEYEN_KULLANICI;
+                    worksheet.Cells[row, 9].Value = kullanicilar[i].GUNCELLEME_TARIHI.HasValue ? kullanicilar[i].GUNCELLEME_TARIHI.Value.ToString("dd.MM.yyyy HH:mm:ss") : "N/A";
+                }
+
+                using (var range = worksheet.Cells[1, 1, 1, 9])
+                {
+                    range.Style.Font.Bold = true;
+                    range.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    range.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(79, 129, 189));
+                    range.Style.Font.Color.SetColor(Color.White);
+                }
+
+                worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
+                var stream = new MemoryStream();
+                package.SaveAs(stream);
+                var content = stream.ToArray();
+
+                return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "KullaniciListeleDepoYetkilisi.xlsx");
+            }
+        }
+
+
+
+        [HttpGet]
+        public ActionResult KullaniciGuncelleDepoYetkilisi(int id)
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 2)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            var kullanici = stokdata.KULLANICI.Find(id);
+            if (kullanici == null || kullanici.OLUSTURAN_KULLANICI != Convert.ToInt32(Session["ID"]))
+            {
+                return HttpNotFound();
+            }
+
+            return View(kullanici);
+        }
+
+        [HttpPost]
+        public ActionResult KullaniciGuncelleDepoYetkilisi(KULLANICI kullanici)
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 2)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            if (ModelState.IsValid)
+            {
+                var updateKullanici = stokdata.KULLANICI.Find(kullanici.KUL_ID);
+                if (updateKullanici != null && updateKullanici.OLUSTURAN_KULLANICI == Convert.ToInt32(Session["ID"]))
+                {
+                    updateKullanici.KUL_USERNAME = kullanici.KUL_USERNAME;
+                    updateKullanici.KUL_AD = kullanici.KUL_AD;
+                    updateKullanici.KUL_SOYAD = kullanici.KUL_SOYAD;
+                    updateKullanici.KUL_SIFRE = kullanici.KUL_SIFRE;
+                    updateKullanici.KUL_TIP = kullanici.KUL_TIP;
+                    updateKullanici.STATU = kullanici.STATU;
+
+                    stokdata.SaveChanges();
+                    TempData["SuccessMessage"] = "Kullanıcı başarıyla güncellendi.";
+                    return RedirectToAction("KullaniciListeleDepoYetkilisi");
+                }
+            }
+
+            return View(kullanici);
+        }
+
+        [HttpGet]
+        public ActionResult KullaniciSilDepoYetkilisi(int id)
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 2)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            var kullanici = stokdata.KULLANICI.Find(id);
+            if (kullanici == null || kullanici.OLUSTURAN_KULLANICI != Convert.ToInt32(Session["ID"]))
+            {
+                return HttpNotFound();
+            }
+
+            stokdata.KULLANICI.Remove(kullanici);
+            stokdata.SaveChanges();
+            TempData["SuccessMessage"] = "Kullanıcı başarıyla silindi.";
+            return RedirectToAction("KullaniciListeleDepoYetkilisi");
+        }
+
+
+        [HttpGet]
+        public ActionResult KullaniciEkleRaporKullanicisi()
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 3)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            var model = new KULLANICI();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult KullaniciEkleRaporKullanicisi(KULLANICI kullanici)
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 3)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            if (ModelState.IsValid)
+            {
+
+                if (kullanici.KUL_TIP != 3)
+                {
+                    ModelState.AddModelError("", "Sadece Rapor Kullanıcısı ekleyebilirsiniz.");
+                    return View(kullanici);
+                }
+
+                var model = new KULLANICI()
+                {
+                    KUL_USERNAME = kullanici.KUL_USERNAME,
+                    KUL_AD = kullanici.KUL_AD,
+                    KUL_SOYAD = kullanici.KUL_SOYAD,
+                    KUL_SIFRE = kullanici.KUL_SIFRE,
+                    KUL_TIP = kullanici.KUL_TIP,
+                    STATU = kullanici.STATU,
+                    OLUSTURAN_KULLANICI = Convert.ToInt32(Session["ID"]),
+                    OLUSTURMA_TARIHI = DateTime.Now,
+                    GUNCELLEME_TARIHI = DateTime.Now,
+                    GUNCELLEYEN_KULLANICI = Convert.ToInt32(Session["ID"]),
+                };
+
+                stokdata.KULLANICI.Add(model);
+                stokdata.SaveChanges();
+                TempData["SuccessMessage"] = "Kullanıcı başarıyla eklendi.";
+                return RedirectToAction("KullaniciListeleRaporKullanicisi");
+            }
+
+            return View(kullanici);
+        }
+
+        [HttpGet]
+        public ActionResult KullaniciListeleRaporKullanicisi(string searchString = null)
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 3)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            int currentUserId = Convert.ToInt32(Session["ID"]);
+            var kullanicilar = stokdata.KULLANICI.Where(k => k.OLUSTURAN_KULLANICI == currentUserId && k.KUL_TIP == 3);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                kullanicilar = kullanicilar.Where(s => s.KUL_USERNAME.Contains(searchString) ||
+                                                       s.KUL_AD.Contains(searchString) ||
+                                                       s.KUL_SOYAD.Contains(searchString) ||
+                                                       s.KUL_ID.ToString().Contains(searchString) ||
+                                                       s.KUL_TIP.ToString().Contains(searchString) ||
+                                                       (s.STATU == true ? "true" : "false").Contains(searchString));
+            }
+
+            return View(kullanicilar.ToList());
+        }
+
+
+        public ActionResult ExportKullaniciRaporKullanicisiToExcel()
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 3)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            int currentUserId = Convert.ToInt32(Session["ID"]);
+            var kullanicilar = stokdata.KULLANICI.Where(k => k.OLUSTURAN_KULLANICI == currentUserId && k.KUL_TIP == 3).ToList();
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Kullanıcı Listesi");
+
+                worksheet.Cells[1, 1].Value = "Kullanıcı ID";
+                worksheet.Cells[1, 2].Value = "Kullanıcı Adı";
+                worksheet.Cells[1, 3].Value = "Soyadı";
+                worksheet.Cells[1, 4].Value = "Kullanıcı Tipi";
+                worksheet.Cells[1, 5].Value = "Statü";
+                worksheet.Cells[1, 6].Value = "Oluşturan Kullanıcı";
+                worksheet.Cells[1, 7].Value = "Oluşturma Tarihi";
+                worksheet.Cells[1, 8].Value = "Güncelleyen Kullanıcı";
+                worksheet.Cells[1, 9].Value = "Güncelleme Tarihi";
+
+                for (int i = 0; i < kullanicilar.Count; i++)
+                {
+                    var row = i + 2;
+                    worksheet.Cells[row, 1].Value = kullanicilar[i].KUL_ID;
+                    worksheet.Cells[row, 2].Value = kullanicilar[i].KUL_AD;
+                    worksheet.Cells[row, 3].Value = kullanicilar[i].KUL_SOYAD;
+                    worksheet.Cells[row, 4].Value = kullanicilar[i].KUL_TIP;
+                    worksheet.Cells[row, 5].Value = kullanicilar[i].STATU == true ? "True" : "False";
+                    worksheet.Cells[row, 6].Value = kullanicilar[i].OLUSTURAN_KULLANICI;
+                    worksheet.Cells[row, 7].Value = kullanicilar[i].OLUSTURMA_TARIHI.HasValue ? kullanicilar[i].OLUSTURMA_TARIHI.Value.ToString("dd.MM.yyyy HH:mm:ss") : "N/A";
+                    worksheet.Cells[row, 8].Value = kullanicilar[i].GUNCELLEYEN_KULLANICI;
+                    worksheet.Cells[row, 9].Value = kullanicilar[i].GUNCELLEME_TARIHI.HasValue ? kullanicilar[i].GUNCELLEME_TARIHI.Value.ToString("dd.MM.yyyy HH:mm:ss") : "N/A";
+                }
+
+                using (var range = worksheet.Cells[1, 1, 1, 9])
+                {
+                    range.Style.Font.Bold = true;
+                    range.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    range.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(79, 129, 189));
+                    range.Style.Font.Color.SetColor(Color.White);
+                }
+
+                worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
+                var stream = new MemoryStream();
+                package.SaveAs(stream);
+                var content = stream.ToArray();
+
+                return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "KullaniciListeleRaporKullanicisi.xlsx");
+            }
+        }
+
+
+
+        [HttpGet]
+        public ActionResult KullaniciGuncelleRaporKullanicisi(int id)
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 3)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            var kullanici = stokdata.KULLANICI.Find(id);
+            if (kullanici == null || kullanici.OLUSTURAN_KULLANICI != Convert.ToInt32(Session["ID"]))
+            {
+                return HttpNotFound();
+            }
+
+            return View(kullanici);
+        }
+
+        [HttpPost]
+        public ActionResult KullaniciGuncelleRaporKullanicisi(KULLANICI kullanici)
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 3)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            if (ModelState.IsValid)
+            {
+                var updateKullanici = stokdata.KULLANICI.Find(kullanici.KUL_ID);
+                if (updateKullanici != null && updateKullanici.OLUSTURAN_KULLANICI == Convert.ToInt32(Session["ID"]))
+                {
+                    updateKullanici.KUL_USERNAME = kullanici.KUL_USERNAME;
+                    updateKullanici.KUL_AD = kullanici.KUL_AD;
+                    updateKullanici.KUL_SOYAD = kullanici.KUL_SOYAD;
+                    updateKullanici.KUL_SIFRE = kullanici.KUL_SIFRE;
+                    updateKullanici.KUL_TIP = kullanici.KUL_TIP;
+                    updateKullanici.STATU = kullanici.STATU;
+
+                    stokdata.SaveChanges();
+                    TempData["SuccessMessage"] = "Kullanıcı başarıyla güncellendi.";
+                    return RedirectToAction("KullaniciListeleRaporKullanicisi");
+                }
+            }
+
+            return View(kullanici);
+        }
+
+        [HttpGet]
+        public ActionResult KullaniciSilRaporKullanicisi(int id)
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 3)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            var kullanici = stokdata.KULLANICI.Find(id);
+            if (kullanici == null || kullanici.OLUSTURAN_KULLANICI != Convert.ToInt32(Session["ID"]))
+            {
+                return HttpNotFound();
+            }
+
+            stokdata.KULLANICI.Remove(kullanici);
+            stokdata.SaveChanges();
+            TempData["SuccessMessage"] = "Kullanıcı başarıyla silindi.";
+            return RedirectToAction("KullaniciListeleRaporKullanicisi");
+        }
+
+
+        public ActionResult StokHareketRaporuListele(string searchString)
+        {
+            var stokHareketleri = stokdata.STOK_HAREKET
+                .Include(s => s.DEPO_ESLESTIRME)
+                .Include(s => s.SORUMLU);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                stokHareketleri = stokHareketleri.Where(s =>
+                    (s.DEPO_ESLESTIRME != null && s.DEPO_ESLESTIRME.DEPO_ID.HasValue && s.DEPO_ESLESTIRME.DEPO_ID.Value.ToString().Contains(searchString))
+                    || (s.HAREKET_TIP1 != null && s.HAREKET_TIP1.HAREKET_TIP_ADI != null && s.HAREKET_TIP1.HAREKET_TIP_ADI.Contains(searchString))
+                    || (s.SORUMLU != null && s.SORUMLU.SORUMLU_ADI != null && s.SORUMLU.SORUMLU_ADI.Contains(searchString)));
+            }
+
+            var stokHareketListesi = stokHareketleri.ToList();
+
+            return View(stokHareketListesi);
+        }
+
+
+
+        public ActionResult ExportStokHareketRaporuToExcel()
+        {
+            var stoklar = stokdata.STOK_HAREKET.ToList();
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Stok Hareket Raporu Listesi");
+
+
+                worksheet.Cells[1, 1].Value = "Hareket ID";
+                worksheet.Cells[1, 2].Value = "Stok Adı";
+                worksheet.Cells[1, 3].Value = "Depo Adı";
+                worksheet.Cells[1, 4].Value = "Sorumlu Adı";
+                worksheet.Cells[1, 5].Value = "Hareket Tipi";
+                worksheet.Cells[1, 6].Value = "Açıklama";
+                worksheet.Cells[1, 7].Value = "Hareket Miktarı";
+                worksheet.Cells[1, 8].Value = "Hareket Tarihi";
+                worksheet.Cells[1, 8].Value = "Oluşturan Kullanıcı";
+                worksheet.Cells[1, 9].Value = "Oluşturma Tarihi";
+                worksheet.Cells[1, 10].Value = "Güncelleyen Kullanıcı";
+                worksheet.Cells[1, 11].Value = "Güncelleme Tarihi";
+
+
+                for (int i = 0; i < stoklar.Count; i++)
+                {
+                    var row = i + 2;
+                    worksheet.Cells[row, 1].Value = stoklar[i].HAREKET_ID;
+                    worksheet.Cells[row, 2].Value = stoklar[i].STOK_ID;
+                    worksheet.Cells[row, 3].Value = stoklar[i].DEPO_ESLESTIRME.DEPO_ID;
+                    worksheet.Cells[row, 4].Value = stoklar[i].SORUMLU.SORUMLU_ADI;
+                    worksheet.Cells[row, 5].Value = stoklar[i].HAREKET_TIP;
+                    worksheet.Cells[row, 6].Value = stoklar[i].ACIKLAMA;
+                    worksheet.Cells[row, 7].Value = stoklar[i].HAREKET_MIKTAR;
+                    worksheet.Cells[row, 8].Value = stoklar[i].HAREKET_TARIHI;
+                    worksheet.Cells[row, 9].Value = stoklar[i].OLUSTURAN_KULLANICI;
+                    worksheet.Cells[row, 10].Value = stoklar[i].OLUSTURMA_TARIHI.HasValue ? stoklar[i].OLUSTURMA_TARIHI.Value.ToString("dd.MM.yyyy HH:mm:ss") : "N/A";
+                    worksheet.Cells[row, 11].Value = stoklar[i].GUNCELLEYEN_KULLANICI;
+                    worksheet.Cells[row, 12].Value = stoklar[i].GUNCELLEME_TARIHI.HasValue ? stoklar[i].GUNCELLEME_TARIHI.Value.ToString("dd.MM.yyyy HH:mm:ss") : "N/A";
+                }
+
+
+                using (var range = worksheet.Cells[1, 1, 1, 11])
+                {
+                    range.Style.Font.Bold = true;
+                    range.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    range.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(79, 129, 189));
+                    range.Style.Font.Color.SetColor(Color.White);
+                }
+
+
+                worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
+                var stream = new MemoryStream();
+                package.SaveAs(stream);
+                var content = stream.ToArray();
+
+                return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "StokHareketRaporuListesi.xlsx");
+            }
+        }
 
 
         public ActionResult Cikis()

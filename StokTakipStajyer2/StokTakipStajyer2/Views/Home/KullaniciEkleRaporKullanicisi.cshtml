@@ -1,0 +1,63 @@
+﻿@model StokTakipStajyer2.Models.KULLANICI
+
+@{
+    ViewBag.Title = "Kullanıcı Ekle";
+    var statuOptions = new List<SelectListItem>
+{
+        new SelectListItem { Text = "True", Value = "true" },
+        new SelectListItem { Text = "False", Value = "false" }
+    };
+
+    var tipOptions = new List<SelectListItem>
+{
+        new SelectListItem { Text = "Rapor Kullanıcısı", Value = "3" },
+    };
+}
+
+<h2>Kullanıcı Ekle</h2>
+
+@using (Html.BeginForm("KullaniciEkleRaporKullanicisi", "Home", FormMethod.Post))
+{
+    <div class="form-group">
+        <label for="KUL_USERNAME">Username</label><br />
+        @Html.TextBoxFor(m => m.KUL_USERNAME, new { @class = "form-control", @placeholder = "Kullanıcı Adı" })
+    </div>
+    <div class="form-group">
+        <label for="KUL_SIFRE">Şifre</label><br />
+        @Html.PasswordFor(m => m.KUL_SIFRE, new { @class = "form-control", @placeholder = "Şifre" })
+    </div>
+    <div class="form-group">
+        <label for="KUL_AD">Kullanıcı Adı</label><br />
+        @Html.TextBoxFor(m => m.KUL_AD, new { @class = "form-control", @placeholder = "Kullanıcı Adı" })
+    </div>
+    <div class="form-group">
+        <label for="KUL_SOYAD">Soyadı</label><br />
+        @Html.TextBoxFor(m => m.KUL_SOYAD, new { @class = "form-control", @placeholder = "Soyadı" })
+    </div>
+    <div class="form-group">
+        <label for="STATU">Kullanıcı Statüsü</label><br />
+        @Html.DropDownListFor(m => m.STATU, statuOptions, "Seçiniz", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.STATU, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label for="KUL_TIP">Kullanıcı Tipi</label><br />
+        @Html.DropDownListFor(m => m.KUL_TIP, tipOptions, "Seçiniz", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.KUL_TIP, "", new { @class = "text-danger" })
+    </div>
+    <button type="submit" class="btn btn-primary">Kullanıcı Ekle</button>
+}
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.Message
+    </div>
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+

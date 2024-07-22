@@ -302,6 +302,15 @@
     <Content Include="Views\Home\StokHareketListele.cshtml" />
     <Content Include="Views\Home\StokHareketiGuncelle.cshtml" />
     <Content Include="Views\Home\StokHareketSil.cshtml" />
+    <Content Include="Views\Home\KullaniciGuncelleDepoYetkilisi.cshtml" />
+    <Content Include="Views\Home\KullaniciSilDepoYetkilisi.cshtml" />
+    <Content Include="Views\Home\KullaniciListeleDepoYetkilisi.cshtml" />
+    <Content Include="Views\Home\KullaniciEkleDepoYetkilisi.cshtml" />
+    <Content Include="Views\Home\KullaniciEkleRaporKullanicisi.cshtml" />
+    <Content Include="Views\Home\KullaniciListeleRaporKullanicisi.cshtml" />
+    <Content Include="Views\Home\KullaniciGuncelleRaporKullanicisi.cshtml" />
+    <Content Include="Views\Home\KullaniciSilRaporKullanicisi.cshtml" />
+    <Content Include="Views\Home\StokHareketRaporuListele.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

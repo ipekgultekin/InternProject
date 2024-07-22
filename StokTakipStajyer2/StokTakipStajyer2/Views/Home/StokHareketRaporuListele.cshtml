@@ -1,0 +1,55 @@
+﻿@model IEnumerable<StokTakipStajyer2.Models.STOK_HAREKET>
+
+@{
+    ViewBag.Title = "Stok Hareketleri Listesi";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="container">
+    <div class="d-flex justify-content-between mb-3">
+        <form class="form-inline" method="get" action="@Url.Action("StokHareketRaporuListele", "Home")">
+            <input type="text" class="form-control mr-2" id="searchString" name="searchString" placeholder="Ara" value="@Request.QueryString["searchString"]" />
+            <button type="submit" class="btn btn-primary">Ara</button>
+        </form>
+        @Html.ActionLink("Excel'e Aktar", "ExportStokHareketRaporuToExcel", "Home", new { area = "" }, new { @class = "btn btn-success" })
+    </div>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Hareket ID</th>
+                <th>Stok Adı</th>
+                <th>Depo Adı</th>
+                <th>Sorumlu Adı</th>
+                <th>Hareket Tipi</th>
+                <th>Açıklama</th>
+                <th>Hareket Miktarı</th>
+                <th>Hareket Tarihi</th>
+                <th>Oluşturan Kullanıcı</th>
+                <th>Oluşturma Tarihi</th>
+                <th>Güncelleyen Kullanıcı</th>
+                <th>Güncelleme Tarihi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.HAREKET_ID</td>
+                    <td>@item.STOK_ID</td>
+                    <td>@(item.DEPO_ESLESTIRME != null ? item.DEPO_ESLESTIRME.DEPO_ID.ToString() : "N/A")</td>
+                    <td>@(item.SORUMLU != null ? item.SORUMLU.SORUMLU_ADI : "N/A")</td>
+                    <td>@item.HAREKET_TIP</td>
+                    <td>@item.ACIKLAMA</td>
+                    <td>@item.HAREKET_MIKTAR</td>
+                    <td>@item.HAREKET_TARIHI</td>
+                    <td>@item.OLUSTURAN_KULLANICI</td>
+                    <td>@item.OLUSTURMA_TARIHI</td>
+                    <td>@item.GUNCELLEYEN_KULLANICI</td>
+                    <td>@item.GUNCELLEME_TARIHI</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

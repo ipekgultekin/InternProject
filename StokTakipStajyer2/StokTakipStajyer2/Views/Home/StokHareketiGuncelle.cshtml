@@ -15,37 +15,37 @@
     @Html.HiddenFor(model => model.HAREKET_ID)
 
     <div class="form-group">
-        @Html.LabelFor(model => model.DEPO_ESLESTIRME.DEPO_ID, htmlAttributes: new { @class = "control-label" })
+        @Html.Label("Depo Seçiniz", htmlAttributes: new { @class = "control-label" })
         @Html.DropDownListFor(model => model.DEPO_ESLESTIRME.DEPO_ID, (SelectList)ViewBag.Depolar, "Depo Seçiniz", new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.DEPO_ESLESTIRME.DEPO_ID, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.SORUMLU.SORUMLU_ADI, htmlAttributes: new { @class = "control-label" })
+        @Html.Label("Sorumlu Adı", htmlAttributes: new { @class = "control-label" })
         @Html.EditorFor(model => model.SORUMLU.SORUMLU_ADI, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.SORUMLU.SORUMLU_ADI, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.HAREKET_TIP, htmlAttributes: new { @class = "control-label" })
+        @Html.Label("Hareket Tipi", htmlAttributes: new { @class = "control-label" })
         @Html.EditorFor(model => model.HAREKET_TIP, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.HAREKET_TIP, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.ACIKLAMA, htmlAttributes: new { @class = "control-label" })
+        @Html.Label("Açıklama", htmlAttributes: new { @class = "control-label" })
         @Html.EditorFor(model => model.ACIKLAMA, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.ACIKLAMA, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.HAREKET_MIKTAR, htmlAttributes: new { @class = "control-label" })
+        @Html.Label("Hareket Miktarı", htmlAttributes: new { @class = "control-label" })
         @Html.EditorFor(model => model.HAREKET_MIKTAR, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.HAREKET_MIKTAR, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.HAREKET_TARIHI, htmlAttributes: new { @class = "control-label" })
+        @Html.Label("Hareket Tarihi", htmlAttributes: new { @class = "control-label" })
         @Html.EditorFor(model => model.HAREKET_TARIHI, new { htmlAttributes = new { @class = "form-control", type = "date" } })
         @Html.ValidationMessageFor(model => model.HAREKET_TARIHI, "", new { @class = "text-danger" })
     </div>

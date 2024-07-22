@@ -11,15 +11,13 @@
 
     var tipOptions = new List<SelectListItem>
 {
-        new SelectListItem { Text = "Admin", Value = "1" },
-        new SelectListItem { Text = "Depo Yetkilisi", Value = "2" },
         new SelectListItem { Text = "Rapor Kullanıcısı", Value = "3" }
     };
 }
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("KullaniciGuncelle", "Home", FormMethod.Post))
+@using (Html.BeginForm("KullaniciGuncelleRaporKullanicisi", "Home", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -65,7 +63,7 @@
 
     <div class="form-group">
         <input type="submit" value="Güncelle" class="btn btn-primary" />
-        @Html.ActionLink("Geri", "KullaniciListele", null, new { @class = "btn btn-default" })
+        @Html.ActionLink("Geri", "KullaniciListeleRaporKullanicisi", null, new { @class = "btn btn-default" })
     </div>
 }
 

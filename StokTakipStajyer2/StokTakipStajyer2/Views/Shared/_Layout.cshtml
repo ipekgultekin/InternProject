@@ -57,7 +57,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="stokDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Stok
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="altDepoDropdown">
+                            <div class="dropdown-menu" aria-labelledby="stokDropdown">
                                 @Html.ActionLink("Stok Ekle", "StokEkle", "Home", new { area = "" }, new { @class = "dropdown-item" })
                                 @Html.ActionLink("Stok Listesi", "StokListele", "Home", new { area = "" }, new { @class = "dropdown-item" })
                             </div>
@@ -66,13 +66,36 @@
                     @if (Session["ID"] != null && (int)Session["KullaniciTipi"] == 2)
                     {
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="stokDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="stokHareketDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Stok
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="altDepoDropdown">
+                            <div class="dropdown-menu" aria-labelledby="stokHareketDropdown">
                                 @Html.ActionLink("Stok Hareketi Ekle", "StokHareketEkle", "Home", new { area = "" }, new { @class = "dropdown-item" })
                                 @Html.ActionLink("Stok Hareketi Listesi", "StokHareketListele", "Home", new { area = "" }, new { @class = "dropdown-item" })
                             </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="kullaniciDepoYetkilisiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Kullanıcı
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="kullaniciDepoYetkilisiDropdown">
+                                @Html.ActionLink("Kullanıcı Ekle", "KullaniciEkleDepoYetkilisi", "Home", new { area = "" }, new { @class = "dropdown-item" })
+                                @Html.ActionLink("Kullanıcı Listesi", "KullaniciListeleDepoYetkilisi", "Home", new { area = "" }, new { @class = "dropdown-item" })
+                            </div>
+                        </li>
+                    }
+                    @if (Session["ID"] != null && (int)Session["KullaniciTipi"] == 3)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="kullaniciRaporKullanicisiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Kullanıcı
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="kullaniciRaporKullanicisiDropdown">
+                                @Html.ActionLink("Kullanıcı Ekle", "KullaniciEkleRaporKullanicisi", "Home", new { area = "" }, new { @class = "dropdown-item" })
+                                @Html.ActionLink("Kullanıcı Listesi", "KullaniciListeleRaporKullanicisi", "Home", new { area = "" }, new { @class = "dropdown-item" })
+                                @Html.ActionLink("Stok Hareket Raporu Listele", "StokHareketRaporuListele", "Home", new { area = "" }, new { @class = "dropdown-item" })
+                            </div>
+
                         </li>
                     }
                 </ul>

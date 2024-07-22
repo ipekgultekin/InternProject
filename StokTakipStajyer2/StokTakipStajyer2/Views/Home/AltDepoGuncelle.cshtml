@@ -14,9 +14,9 @@
 @using (Html.BeginForm("AltDepoGuncelle", "Home", FormMethod.Post))
 {
     @Html.HiddenFor(m => m.ALT_DEPO_ID)
-    <div>
-        <label>Alt Depo Adı</label><br />
-        @Html.TextBoxFor(m => m.ALT_DEPO_ADI)
+    <div class="form-group">
+        @Html.Label("Alt Depo Adı", htmlAttributes: new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.ALT_DEPO_ADI, new { @class = "form-control" })
     </div>
     <div>
         <label>Statü</label><br />

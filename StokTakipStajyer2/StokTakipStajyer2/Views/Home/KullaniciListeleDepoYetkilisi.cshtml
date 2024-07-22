@@ -14,11 +14,11 @@
 }
 
 <div class="d-flex justify-content-between mb-3">
-    <form class="form-inline" method="get" action="@Url.Action("KullaniciListele", "Home")">
+    <form class="form-inline" method="get" action="@Url.Action("KullaniciListeleDepoYetkilisi", "Home")">
         <input type="text" class="form-control mr-2" id="searchString" name="searchString" placeholder="Ara" value="@Request.QueryString["searchString"]" />
         <button type="submit" class="btn btn-primary">Ara</button>
     </form>
-    @Html.ActionLink("Excel'e Aktar", "ExportKullaniciToExcel", "Home", new { area = "" }, new { @class = "btn btn-success" })
+    @Html.ActionLink("Excel'e Aktar", "ExportKullaniciDepoYetkilisiToExcel", "Home", new { area = "" }, new { @class = "btn btn-success" })
 </div>
 
 <table class="table table-striped table-bordered">
@@ -50,8 +50,8 @@
                 <td>@kullanici.GUNCELLEYEN_KULLANICI</td>
                 <td>@kullanici.GUNCELLEME_TARIHI</td>
                 <td>
-                    @Html.ActionLink("Düzenle", "KullaniciGuncelle", new { id = kullanici.KUL_ID }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Sil", "KullaniciSil", new { id = kullanici.KUL_ID }, new { @class = "btn btn-danger", onclick = "return confirm('Bu kullanıcıyı silmek istediğinize emin misiniz?');" })
+                    @Html.ActionLink("Düzenle", "KullaniciGuncelleDepoYetkilisi", new { id = kullanici.KUL_ID }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Sil", "KullaniciSilDepoYetkilisi", new { id = kullanici.KUL_ID }, new { @class = "btn btn-danger", onclick = "return confirm('Bu kullanıcıyı silmek istediğinize emin misiniz?');" })
                 </td>
             </tr>
         }
