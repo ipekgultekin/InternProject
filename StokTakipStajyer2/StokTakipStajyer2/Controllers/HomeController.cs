@@ -1730,9 +1730,8 @@ namespace StokTakipStajyer2.Controllers
 
             return View(new STOK_DURUM());
         }
-
         [HttpPost]
-        public ActionResult StokDurumRaporuEkle(STOK_DURUM stokDurum)
+        public ActionResult StokDurumRaporuEkleUpdate(STOK_DURUM stokDurum, int stok, int depo)
         {
             if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 2)
             {
@@ -1741,27 +1740,49 @@ namespace StokTakipStajyer2.Controllers
 
             if (ModelState.IsValid)
             {
-              
-                var newStokDurum = new STOK_DURUM
+                try
                 {
-                    STOK_ID = stokDurum.STOK_ID,
-                    DEPO_ESLESTIRME_ID = stokDurum.DEPO_ESLESTIRME_ID,
-                    DURUM_MIKTAR = stokDurum.DURUM_MIKTAR,
-                    OLUSTURAN_KULLANICI = Convert.ToInt32(Session["ID"]),
-                    OLUSTURMA_TARIHI = DateTime.Now,
-                    GUNCELLEYEN_KULLANICI = stokDurum.GUNCELLEYEN_KULLANICI,
-                    GUNCELLEME_TARIHI = stokDurum.GUNCELLEME_TARIHI
-                };
+                    var newStokDurum = new STOK_DURUM
+                    {
+                        STOK_ID = stok,
+                        DEPO_ESLESTIRME_ID = depo,
+                        DURUM_MIKTAR = stokDurum.DURUM_MIKTAR,
+                        OLUSTURAN_KULLANICI = Convert.ToInt32(Session["ID"]),
+                        OLUSTURMA_TARIHI = DateTime.Now,
+                        GUNCELLEYEN_KULLANICI = stokDurum.GUNCELLEYEN_KULLANICI,
+                        GUNCELLEME_TARIHI = stokDurum.GUNCELLEME_TARIHI
+                    };
 
-                stokdata.STOK_DURUM.Add(newStokDurum);
-                stokdata.SaveChanges();
+                    stokdata.STOK_DURUM.Add(newStokDurum);
+                    stokdata.SaveChanges();
 
-                TempData["SuccessMessage"] = "Stok durumu başarıyla eklendi.";
-                return RedirectToAction("StokDurumRaporuListele");
+                    TempData["SuccessMessage"] = "Stok durumu başarıyla eklendi.";
+                    return RedirectToAction("StokDurumRaporuListele");
+                }
+                catch (Exception ex)
+                {
+                   
+                    ViewBag.ErrorMessage = "Bir hata oluştu: " + ex.Message;
+                    return View("StokDurumRaporuEkle", stokDurum);
+                }
+            }
+            else
+            {
+               
+                foreach (var state in ModelState.Values)
+                {
+                    foreach (var error in state.Errors)
+                    {
+                        Console.WriteLine(error.ErrorMessage);
+                    }
+                }
+                ViewBag.ErrorMessage = "Model doğrulaması başarısız.";
             }
 
-            return View(stokDurum);
+            return View("StokDurumRaporuEkle", stokDurum);
         }
+
+
 
 
 
@@ -1819,8 +1840,6 @@ namespace StokTakipStajyer2.Controllers
                     worksheet.Cells[$"C{row}"].Value = item.DEPO_ESLESTIRME_ID;
                     worksheet.Cells[$"D{row}"].Value = item.DURUM_MIKTAR;
                     worksheet.Cells[$"E{row}"].Value = item.OLUSTURAN_KULLANICI;
-
-                   
                     worksheet.Cells[$"F{row}"].Value = item.OLUSTURMA_TARIHI;
                     worksheet.Cells[$"G{row}"].Value = item.GUNCELLEYEN_KULLANICI;
                     worksheet.Cells[$"H{row}"].Value = item.GUNCELLEME_TARIHI; 
