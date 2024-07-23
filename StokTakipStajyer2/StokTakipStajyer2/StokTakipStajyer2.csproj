@@ -312,6 +312,9 @@
     <Content Include="Views\Home\KullaniciSilRaporKullanicisi.cshtml" />
     <Content Include="Views\Home\StokHareketRaporuListele.cshtml" />
     <Content Include="Views\Home\KullaniciBilgileri.cshtml" />
+    <Content Include="Views\Home\DepoAltdepoSil.cshtml" />
+    <Content Include="Views\Home\StokDurumRaporuEkle.cshtml" />
+    <Content Include="Views\Home\StokDurumRaporuListele.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

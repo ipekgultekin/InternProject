@@ -1,0 +1,47 @@
+﻿@model IEnumerable<StokTakipStajyer2.Models.STOK_DURUM>
+
+@{
+    ViewBag.Title = "Stok Durum Raporu Listele";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="container">
+    <div class="d-flex justify-content-between mb-3">
+        <form class="form-inline" method="get" action="@Url.Action("StokDurumRaporuListele", "Home")">
+            <input type="text" class="form-control mr-2" id="searchString" name="searchString" placeholder="Ara" value="@Request.QueryString["searchString"]" />
+            <button type="submit" class="btn btn-primary">Ara</button>
+        </form>
+        @Html.ActionLink("Excel'e Aktar", "ExportStokDurumToExcel", "Home", new { area = "" }, new { @class = "btn btn-success" })
+    </div>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>DURUM ID</th>
+                <th>STOK ID</th>
+                <th>DEPO ESLESTIRME ID</th>
+                <th>DURUM MIKTAR</th>
+                <th>OLUSTURAN KULLANICI</th>
+                <th>OLUSTURMA TARIHI</th>
+                <th>GUNCELLEYEN KULLANICI</th>
+                <th>GUNCELLEME TARIHI</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.DURUM_ID</td>
+                    <td>@item.STOK_ID</td>
+                    <td>@item.DEPO_ESLESTIRME_ID</td>
+                    <td>@item.DURUM_MIKTAR</td>
+                    <td>@item.OLUSTURAN_KULLANICI</td>
+                    <td>@item.OLUSTURMA_TARIHI</td>
+                    <td>@item.GUNCELLEYEN_KULLANICI</td>
+                    <td>@item.GUNCELLEME_TARIHI</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

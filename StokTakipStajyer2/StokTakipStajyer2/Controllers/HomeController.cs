@@ -764,6 +764,34 @@ namespace StokTakipStajyer2.Controllers
             return View(eslestirmeler.ToList());
         }
 
+        public ActionResult DepoAltdepoSil(int id)
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 1)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            var altdepo = stokdata.DEPO_ESLESTIRME.Find(id);
+            if (altdepo == null)
+            {
+                return HttpNotFound();
+            }
+
+            try
+            {
+                stokdata.DEPO_ESLESTIRME.Remove(altdepo);
+                stokdata.SaveChanges();
+                TempData["SuccessMessage"] = "Alt depo başarıyla silindi.";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Alt depo silinirken bir hata oluştu: " + ex.Message;
+            }
+
+            return RedirectToAction("DepoAltdepoListele");
+        }
+
+
         [HttpGet]
         public ActionResult StokEkle()
         {
@@ -953,6 +981,11 @@ namespace StokTakipStajyer2.Controllers
                 return HttpNotFound();
             }
 
+            var ilgiliStokHareketler = stokdata.STOK_HAREKET.Where(sh => sh.STOK_ID == id).ToList();
+            foreach (var stokHareket in ilgiliStokHareketler)
+            {
+                stokdata.STOK_HAREKET.Remove(stokHareket);
+            }
 
             stokdata.STOK.Remove(stok);
             stokdata.SaveChanges();
@@ -960,6 +993,7 @@ namespace StokTakipStajyer2.Controllers
 
             return RedirectToAction("StokListele");
         }
+
 
 
         [HttpGet]
@@ -1686,6 +1720,125 @@ namespace StokTakipStajyer2.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult StokDurumRaporuEkle()
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 2)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            return View(new STOK_DURUM());
+        }
+
+        [HttpPost]
+        public ActionResult StokDurumRaporuEkle(STOK_DURUM stokDurum)
+        {
+            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 2)
+            {
+                return RedirectToAction("Giris");
+            }
+
+            if (ModelState.IsValid)
+            {
+              
+                var newStokDurum = new STOK_DURUM
+                {
+                    STOK_ID = stokDurum.STOK_ID,
+                    DEPO_ESLESTIRME_ID = stokDurum.DEPO_ESLESTIRME_ID,
+                    DURUM_MIKTAR = stokDurum.DURUM_MIKTAR,
+                    OLUSTURAN_KULLANICI = Convert.ToInt32(Session["ID"]),
+                    OLUSTURMA_TARIHI = DateTime.Now,
+                    GUNCELLEYEN_KULLANICI = stokDurum.GUNCELLEYEN_KULLANICI,
+                    GUNCELLEME_TARIHI = stokDurum.GUNCELLEME_TARIHI
+                };
+
+                stokdata.STOK_DURUM.Add(newStokDurum);
+                stokdata.SaveChanges();
+
+                TempData["SuccessMessage"] = "Stok durumu başarıyla eklendi.";
+                return RedirectToAction("StokDurumRaporuListele");
+            }
+
+            return View(stokDurum);
+        }
+
+
+
+        [HttpGet]
+        public ActionResult StokDurumRaporuListele(string searchString = null)
+        {
+            var stokDurumlar = stokdata.STOK_DURUM.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                stokDurumlar = stokDurumlar.Where(s => s.STOK_ID.ToString().Contains(searchString) ||
+                                                       s.DEPO_ESLESTIRME_ID.ToString().Contains(searchString) ||
+                                                       s.DURUM_MIKTAR.ToString().Contains(searchString) ||
+                                                       s.OLUSTURAN_KULLANICI.ToString().Contains(searchString) ||
+                                                       s.OLUSTURMA_TARIHI.ToString().Contains(searchString) ||
+                                                       s.GUNCELLEYEN_KULLANICI.ToString().Contains(searchString) ||
+                                                       s.GUNCELLEME_TARIHI.ToString().Contains(searchString));
+            }
+
+            return View(stokDurumlar.ToList());
+        }
+
+        public ActionResult ExportToExcel(string searchString = null)
+        {
+            var stokDurumlar = stokdata.STOK_DURUM.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                stokDurumlar = stokDurumlar.Where(s => s.STOK_ID.ToString().Contains(searchString) ||
+                                                       s.DEPO_ESLESTIRME_ID.ToString().Contains(searchString) ||
+                                                       s.DURUM_MIKTAR.ToString().Contains(searchString) ||
+                                                       s.OLUSTURAN_KULLANICI.ToString().Contains(searchString) ||
+                                                       s.OLUSTURMA_TARIHI.ToString().Contains(searchString) ||
+                                                       s.GUNCELLEYEN_KULLANICI.ToString().Contains(searchString) ||
+                                                       s.GUNCELLEME_TARIHI.ToString().Contains(searchString));
+            }
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Stok Durum Raporları");
+                worksheet.Cells["A1"].Value = "DURUM ID";
+                worksheet.Cells["B1"].Value = "STOK ID";
+                worksheet.Cells["C1"].Value = "DEPO ESLESTIRME ID";
+                worksheet.Cells["D1"].Value = "DURUM MIKTAR";
+                worksheet.Cells["E1"].Value = "OLUSTURAN KULLANICI";
+                worksheet.Cells["F1"].Value = "OLUSTURMA TARIHI";
+                worksheet.Cells["G1"].Value = "GUNCELLEYEN KULLANICI";
+                worksheet.Cells["H1"].Value = "GUNCELLEME TARIHI";
+
+                var row = 2;
+                foreach (var item in stokDurumlar)
+                {
+                    worksheet.Cells[$"A{row}"].Value = item.DURUM_ID;
+                    worksheet.Cells[$"B{row}"].Value = item.STOK_ID;
+                    worksheet.Cells[$"C{row}"].Value = item.DEPO_ESLESTIRME_ID;
+                    worksheet.Cells[$"D{row}"].Value = item.DURUM_MIKTAR;
+                    worksheet.Cells[$"E{row}"].Value = item.OLUSTURAN_KULLANICI;
+
+                   
+                    worksheet.Cells[$"F{row}"].Value = item.OLUSTURMA_TARIHI;
+                    worksheet.Cells[$"G{row}"].Value = item.GUNCELLEYEN_KULLANICI;
+                    worksheet.Cells[$"H{row}"].Value = item.GUNCELLEME_TARIHI; 
+
+                    row++;
+                }
+
+               
+                worksheet.Column(6).Style.Numberformat.Format = "yyyy-mm-dd"; 
+                worksheet.Column(8).Style.Numberformat.Format = "yyyy-mm-dd"; 
+
+                var stream = new MemoryStream();
+                package.SaveAs(stream);
+                stream.Position = 0;
+                string fileName = $"StokDurumRaporu_{DateTime.Now.ToString("yyyyMMdd")}.xlsx";
+                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+            }
+        }
 
         public ActionResult Cikis()
         {

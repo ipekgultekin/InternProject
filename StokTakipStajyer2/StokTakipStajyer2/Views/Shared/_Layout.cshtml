@@ -21,7 +21,7 @@
                     <li class="nav-item">
                         @Html.ActionLink("Giriş", "Giris", "Home", new { area = "" }, new { @class = "nav-link" })
                     </li>
-                    @if (Session["ID"] != null && (int)Session["KullaniciTipi"] == 1) // Sadece admin için
+                    @if (Session["ID"] != null && (int)Session["KullaniciTipi"] == 1)
                     {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="kullaniciDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -83,6 +83,9 @@
                                 @Html.ActionLink("Kullanıcı Listesi", "KullaniciListeleDepoYetkilisi", "Home", new { area = "" }, new { @class = "dropdown-item" })
                             </div>
                         </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Stok Durum Raporu Ekle", "StokDurumRaporuEkle", "Home", new { area = "" }, new { @class = "nav-link" })
+                        </li>
                     }
                     @if (Session["ID"] != null && (int)Session["KullaniciTipi"] == 3)
                     {
@@ -93,14 +96,16 @@
                             <div class="dropdown-menu" aria-labelledby="kullaniciRaporKullanicisiDropdown">
                                 @Html.ActionLink("Kullanıcı Ekle", "KullaniciEkleRaporKullanicisi", "Home", new { area = "" }, new { @class = "dropdown-item" })
                                 @Html.ActionLink("Kullanıcı Listesi", "KullaniciListeleRaporKullanicisi", "Home", new { area = "" }, new { @class = "dropdown-item" })
-
                             </div>
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Stok Hareket Raporu Listele", "StokHareketRaporuListele", "Home", new { area = "" }, new { @class = "nav-link" })
                         </li>
 
                         <li class="nav-item">
-                                @Html.ActionLink("Stok Hareket Raporu Listele", "StokHareketRaporuListele", "Home", new { area = "" }, new { @class = "nav-link" }) 
-                     </li>
-                        
+                            @Html.ActionLink("Stok Durum Raporu Listele", "StokDurumRaporuListele", "Home", new { area = "" }, new { @class = "nav-link" })
+                        </li>
+
                     }
                 </ul>
                 <ul class="navbar-nav ml-auto">
@@ -116,7 +121,6 @@
                             </div>
                         </li>
                     }
-                  
                 </ul>
             </div>
         </div>

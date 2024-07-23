@@ -1,0 +1,20 @@
+﻿@model StokTakipStajyer2.Models.DEPO_ESLESTIRME
+
+@{
+    ViewBag.Title = "Depo Alt Depo Sil";
+}
+
+<h2>Depo Sil</h2>
+
+<div>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions no-color">
+            <input type="submit" value="Sil" class="btn btn-danger" /> |
+            @Html.ActionLink("İptal", "DepoAltdepoListele")
+        </div>
+    }
+</div>
