@@ -18,9 +18,6 @@
             </button>
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        @Html.ActionLink("Giriş", "Giris", "Home", new { area = "" }, new { @class = "nav-link" })
-                    </li>
                     @if (Session["ID"] != null && (int)Session["KullaniciTipi"] == 1)
                     {
                         <li class="nav-item dropdown">

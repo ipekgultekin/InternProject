@@ -4,40 +4,84 @@
     ViewBag.Title = "Kullanıcı Bilgileri";
 }
 
-<style>
-    .info-label {
-        font-weight: bold;
-        color: black;
-    }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - ASP.NET Uygulamam</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: white;
+            margin: 0;
+            padding: 0;
+        }
 
-    .info-value {
-        color: black;
-    }
+        .info-table {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin: 50px auto;
+        }
 
-    .username {
-        color: blue;
-        font-weight: normal;
-    }
-</style>
+        .info-label {
+            font-weight: bold;
+            color: black;
+            width: 200px; 
+        }
 
-<div class="container">
-    <div class="form-group">
-        <h2>Hoş Geldiniz <span class="username">@Model.KUL_USERNAME</span>!</h2>
+        .info-value {
+            color: black;
+        }
+
+        .username {
+            color: #86b9f5;
+            font-weight: normal;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="info-table">
+            <h2 class="text-center">Hoş Geldiniz <span class="username">@Model.KUL_USERNAME</span>!</h2>
+            <table>
+                <tr>
+                    <th class="info-label">Ad</th>
+                    <td class="info-value">@Model.KUL_AD</td>
+                </tr>
+                <tr>
+                    <th class="info-label">Soyad</th>
+                    <td class="info-value">@Model.KUL_SOYAD</td>
+                </tr>
+                <tr>
+                    <th class="info-label">Statü</th>
+                    <td class="info-value">@Model.STATU</td>
+                </tr>
+                <tr>
+                    <th class="info-label">Tip</th>
+                    <td class="info-value">@Model.KUL_TIP</td>
+                </tr>
+            </table>
+        </div>
     </div>
-    <div class="form-group">
-        <label class="info-label">Adı</label>
-        <p class="info-value">@Model.KUL_AD</p>
-    </div>
-    <div class="form-group">
-        <label class="info-label">Soyadı</label>
-        <p class="info-value">@Model.KUL_SOYAD</p>
-    </div>
-    <div class="form-group">
-        <label class="info-label">Kullanıcı Statüsü</label>
-        <p class="info-value">@Model.STATU</p>
-    </div>
-    <div class="form-group">
-        <label class="info-label">Kullanıcı Tipi</label>
-        <p class="info-value">@Model.KUL_TIP</p>
-    </div>
-</div>
+</body>
+</html>

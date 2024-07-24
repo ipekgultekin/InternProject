@@ -2,6 +2,52 @@
     ViewBag.Title = "Home Page";
 }
 
-<main>
-   <h2>Hoş Geldiniz!!!</h2>
-</main>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - SASA Stok Takip Sistemi</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url('https://i.dunya.com/storage/files/images/2024/02/10/sasa1-ryh1_cover.jpg') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+        }
+
+        .overlay {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 800px;
+            width: 90%;
+        }
+
+        .btn-group-horizontal {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-group-horizontal .btn {
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex justify-content-center align-items-start h-100 pt-5">
+        <div class="overlay mt-5">
+            <h2>Stok Takip Sistemi'ne Hoş Geldiniz!</h2>
+            <p>Lütfen rütbenizi seçiniz:</p>
+            <div class="btn-group-horizontal">
+                <a href="@Url.Action("Giris", "Home")" class="btn btn-primary">Admin</a>
+                <a href="@Url.Action("Giris", "Home")" class="btn btn-secondary">Depo Yöneticisi</a>
+                <a href="@Url.Action("Giris", "Home")" class="btn btn-info">Rapor Kullanıcısı</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

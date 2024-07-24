@@ -1044,6 +1044,7 @@ namespace StokTakipStajyer2.Controllers
                 stokdata.STOK_HAREKET.Add(newHareket);
                 stokdata.SaveChanges();
 
+                TempData["SuccessMessage"] = "Stok Hareketi başarıyla eklendi.";
                 return RedirectToAction("StokHareketListele");
             }
 
@@ -1066,6 +1067,8 @@ namespace StokTakipStajyer2.Controllers
             }
 
             var stokHareketListesi = stokHareketleri.ToList();
+
+            ViewBag.SuccessMessage = TempData["SuccessMessage"];
 
             return View(stokHareketListesi);
         }
@@ -1171,7 +1174,7 @@ namespace StokTakipStajyer2.Controllers
                 else
                 {
                     stokdata.STOK_HAREKET.Remove(stokHareket);
-                    TempData["SuccessMessage"] = "Depo başarıyla silindi.";
+                    TempData["SuccessMessage"] = "Stok hareketi başarıyla silindi.";
                 }
 
                 stokdata.SaveChanges();
@@ -1256,13 +1259,6 @@ namespace StokTakipStajyer2.Controllers
 
             if (ModelState.IsValid)
             {
-            
-                if (kullanici.KUL_TIP != 2)
-                {
-                    ModelState.AddModelError("", "Sadece Depo Yetkilisi ekleyebilirsiniz.");
-                    return View(kullanici);
-                }
-
                 var model = new KULLANICI()
                 {
                     KUL_USERNAME = kullanici.KUL_USERNAME,
@@ -1279,6 +1275,7 @@ namespace StokTakipStajyer2.Controllers
 
                 stokdata.KULLANICI.Add(model);
                 stokdata.SaveChanges();
+
                 TempData["SuccessMessage"] = "Kullanıcı başarıyla eklendi.";
                 return RedirectToAction("KullaniciListeleDepoYetkilisi");
             }
@@ -1407,6 +1404,7 @@ namespace StokTakipStajyer2.Controllers
                     updateKullanici.STATU = kullanici.STATU;
 
                     stokdata.SaveChanges();
+
                     TempData["SuccessMessage"] = "Kullanıcı başarıyla güncellendi.";
                     return RedirectToAction("KullaniciListeleDepoYetkilisi");
                 }
@@ -1431,6 +1429,7 @@ namespace StokTakipStajyer2.Controllers
 
             stokdata.KULLANICI.Remove(kullanici);
             stokdata.SaveChanges();
+
             TempData["SuccessMessage"] = "Kullanıcı başarıyla silindi.";
             return RedirectToAction("KullaniciListeleDepoYetkilisi");
         }
@@ -1458,13 +1457,6 @@ namespace StokTakipStajyer2.Controllers
 
             if (ModelState.IsValid)
             {
-
-                if (kullanici.KUL_TIP != 3)
-                {
-                    ModelState.AddModelError("", "Sadece Rapor Kullanıcısı ekleyebilirsiniz.");
-                    return View(kullanici);
-                }
-
                 var model = new KULLANICI()
                 {
                     KUL_USERNAME = kullanici.KUL_USERNAME,
@@ -1481,6 +1473,7 @@ namespace StokTakipStajyer2.Controllers
 
                 stokdata.KULLANICI.Add(model);
                 stokdata.SaveChanges();
+
                 TempData["SuccessMessage"] = "Kullanıcı başarıyla eklendi.";
                 return RedirectToAction("KullaniciListeleRaporKullanicisi");
             }
@@ -1609,6 +1602,7 @@ namespace StokTakipStajyer2.Controllers
                     updateKullanici.STATU = kullanici.STATU;
 
                     stokdata.SaveChanges();
+
                     TempData["SuccessMessage"] = "Kullanıcı başarıyla güncellendi.";
                     return RedirectToAction("KullaniciListeleRaporKullanicisi");
                 }
@@ -1633,6 +1627,7 @@ namespace StokTakipStajyer2.Controllers
 
             stokdata.KULLANICI.Remove(kullanici);
             stokdata.SaveChanges();
+
             TempData["SuccessMessage"] = "Kullanıcı başarıyla silindi.";
             return RedirectToAction("KullaniciListeleRaporKullanicisi");
         }
@@ -1831,7 +1826,7 @@ namespace StokTakipStajyer2.Controllers
         {
             FormsAuthentication.SignOut();
             Session.Clear();
-            return RedirectToAction("Giris");
+            return RedirectToAction("Index");
         }
 
 
