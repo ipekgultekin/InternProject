@@ -131,6 +131,7 @@
     <NavigationProperty Name="OLCU_BIRIM" Relationship="Self.FK_OLCU_BIRIMI_OLCU_BIRIMI_ID" FromRole="STOK" ToRole="OLCU_BIRIM" />
     <NavigationProperty Name="STOK_HAREKET" Relationship="Self.FK_STOK_HAREKET_STOK" FromRole="STOK" ToRole="STOK_HAREKET" />
     <NavigationProperty Name="STOK_DURUM" Relationship="Self.FK_STOK_STOK_ID" FromRole="STOK" ToRole="STOK_DURUM" />
+    <NavigationProperty Name="STOK_DURUM1" Relationship="StokTakipDBModel.FK_STOK_STOK_ID1" FromRole="STOK" ToRole="STOK_DURUM" />
   </EntityType>
   <EntityType Name="STOK_DURUM">
     <Key>
@@ -145,6 +146,7 @@
     <Property Name="GUNCELLEYEN_KULLANICI" Type="Int32" />
     <Property Name="GUNCELLEME_TARIHI" Type="DateTime" Precision="3" />
     <NavigationProperty Name="STOK" Relationship="Self.FK_STOK_STOK_ID" FromRole="STOK_DURUM" ToRole="STOK" />
+    <NavigationProperty Name="STOK1" Relationship="StokTakipDBModel.FK_STOK_STOK_ID1" FromRole="STOK_DURUM" ToRole="STOK" />
   </EntityType>
   <EntityType Name="STOK_HAREKET">
     <Key>
@@ -323,5 +325,21 @@
       <End Role="STOK" EntitySet="STOK" />
       <End Role="STOK_DURUM" EntitySet="STOK_DURUM" />
     </AssociationSet>
+    <AssociationSet Name="FK_STOK_STOK_ID1" Association="StokTakipDBModel.FK_STOK_STOK_ID1">
+      <End Role="STOK" EntitySet="STOK" />
+      <End Role="STOK_DURUM" EntitySet="STOK_DURUM" />
+    </AssociationSet>
   </EntityContainer>
+  <Association Name="FK_STOK_STOK_ID1">
+    <End Type="StokTakipDBModel.STOK" Role="STOK" Multiplicity="0..1" />
+    <End Type="StokTakipDBModel.STOK_DURUM" Role="STOK_DURUM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="STOK">
+        <PropertyRef Name="STOK_ID" />
+      </Principal>
+      <Dependent Role="STOK_DURUM">
+        <PropertyRef Name="STOK_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

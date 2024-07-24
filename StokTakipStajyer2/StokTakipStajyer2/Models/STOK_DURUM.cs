@@ -24,5 +24,6 @@ namespace StokTakipStajyer2.Models
         public Nullable<System.DateTime> GUNCELLEME_TARIHI { get; set; }
     
         public virtual STOK STOK { get; set; }
+        public virtual STOK STOK1 { get; set; }
     }
 }

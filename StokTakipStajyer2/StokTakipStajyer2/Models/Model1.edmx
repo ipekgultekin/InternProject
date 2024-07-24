@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="StokTakipDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="StokTakipDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ALT_DEPO">
           <Key>
             <PropertyRef Name="ALT_DEPO_ID" />
@@ -251,14 +251,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_STOK_STOK_ID">
-          <End Role="STOK" Type="Self.STOK" Multiplicity="1" />
-          <End Role="STOK_DURUM" Type="Self.STOK_DURUM" Multiplicity="0..1" />
+          <End Role="STOK" Type="Self.STOK" Multiplicity="0..1" />
+          <End Role="STOK_DURUM" Type="Self.STOK_DURUM" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="STOK">
               <PropertyRef Name="STOK_ID" />
             </Principal>
             <Dependent Role="STOK_DURUM">
-              <PropertyRef Name="DURUM_ID" />
+              <PropertyRef Name="STOK_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -311,8 +311,7 @@
             <End Role="STOK_DURUM" EntitySet="STOK_DURUM" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="StokTakipDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -447,6 +446,7 @@
           <NavigationProperty Name="OLCU_BIRIM" Relationship="Self.FK_OLCU_BIRIMI_OLCU_BIRIMI_ID" FromRole="STOK" ToRole="OLCU_BIRIM" />
           <NavigationProperty Name="STOK_HAREKET" Relationship="Self.FK_STOK_HAREKET_STOK" FromRole="STOK" ToRole="STOK_HAREKET" />
           <NavigationProperty Name="STOK_DURUM" Relationship="Self.FK_STOK_STOK_ID" FromRole="STOK" ToRole="STOK_DURUM" />
+          <NavigationProperty Name="STOK_DURUM1" Relationship="StokTakipDBModel.FK_STOK_STOK_ID1" FromRole="STOK" ToRole="STOK_DURUM" />
         </EntityType>
         <EntityType Name="STOK_DURUM">
           <Key>
@@ -461,6 +461,7 @@
           <Property Name="GUNCELLEYEN_KULLANICI" Type="Int32" />
           <Property Name="GUNCELLEME_TARIHI" Type="DateTime" Precision="3" />
           <NavigationProperty Name="STOK" Relationship="Self.FK_STOK_STOK_ID" FromRole="STOK_DURUM" ToRole="STOK" />
+          <NavigationProperty Name="STOK1" Relationship="StokTakipDBModel.FK_STOK_STOK_ID1" FromRole="STOK_DURUM" ToRole="STOK" />
         </EntityType>
         <EntityType Name="STOK_HAREKET">
           <Key>
@@ -639,7 +640,23 @@
             <End Role="STOK" EntitySet="STOK" />
             <End Role="STOK_DURUM" EntitySet="STOK_DURUM" />
           </AssociationSet>
+          <AssociationSet Name="FK_STOK_STOK_ID1" Association="StokTakipDBModel.FK_STOK_STOK_ID1">
+            <End Role="STOK" EntitySet="STOK" />
+            <End Role="STOK_DURUM" EntitySet="STOK_DURUM" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_STOK_STOK_ID1">
+          <End Type="StokTakipDBModel.STOK" Role="STOK" Multiplicity="0..1" />
+          <End Type="StokTakipDBModel.STOK_DURUM" Role="STOK_DURUM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STOK">
+              <PropertyRef Name="STOK_ID" />
+            </Principal>
+            <Dependent Role="STOK_DURUM">
+              <PropertyRef Name="STOK_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

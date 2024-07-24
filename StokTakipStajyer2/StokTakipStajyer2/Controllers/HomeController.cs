@@ -41,8 +41,6 @@ namespace StokTakipStajyer2.Controllers
         }
 
 
-
-
         [HttpGet]
         public ActionResult Giris()
         {
@@ -138,6 +136,7 @@ namespace StokTakipStajyer2.Controllers
 
             return View(kullanicilar.ToList());
         }
+
         public ActionResult ExportKullaniciToExcel()
         {
             var kullanicilar = stokdata.KULLANICI.ToList();
@@ -1723,34 +1722,21 @@ namespace StokTakipStajyer2.Controllers
         [HttpGet]
         public ActionResult StokDurumRaporuEkle()
         {
-            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 2)
-            {
-                return RedirectToAction("Giris");
-            }
-
-            return View(new STOK_DURUM());
+            return View();
         }
         [HttpPost]
         public ActionResult StokDurumRaporuEkleUpdate(STOK_DURUM stokDurum, int stok, int depo)
         {
-            if (Session["ID"] == null || (int)Session["KullaniciTipi"] != 2)
-            {
-                return RedirectToAction("Giris");
-            }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    var newStokDurum = new STOK_DURUM
+            var newStokDurum = new STOK_DURUM
                     {
                         STOK_ID = stok,
                         DEPO_ESLESTIRME_ID = depo,
                         DURUM_MIKTAR = stokDurum.DURUM_MIKTAR,
                         OLUSTURAN_KULLANICI = Convert.ToInt32(Session["ID"]),
                         OLUSTURMA_TARIHI = DateTime.Now,
-                        GUNCELLEYEN_KULLANICI = stokDurum.GUNCELLEYEN_KULLANICI,
-                        GUNCELLEME_TARIHI = stokDurum.GUNCELLEME_TARIHI
+                        GUNCELLEYEN_KULLANICI = Convert.ToInt32(Session["ID"]),
+                        GUNCELLEME_TARIHI = DateTime.Now
                     };
 
                     stokdata.STOK_DURUM.Add(newStokDurum);
@@ -1758,30 +1744,8 @@ namespace StokTakipStajyer2.Controllers
 
                     TempData["SuccessMessage"] = "Stok durumu başarıyla eklendi.";
                     return RedirectToAction("StokDurumRaporuListele");
-                }
-                catch (Exception ex)
-                {
-                   
-                    ViewBag.ErrorMessage = "Bir hata oluştu: " + ex.Message;
-                    return View("StokDurumRaporuEkle", stokDurum);
-                }
-            }
-            else
-            {
-               
-                foreach (var state in ModelState.Values)
-                {
-                    foreach (var error in state.Errors)
-                    {
-                        Console.WriteLine(error.ErrorMessage);
-                    }
-                }
-                ViewBag.ErrorMessage = "Model doğrulaması başarısız.";
-            }
 
-            return View("StokDurumRaporuEkle", stokDurum);
         }
-
 
 
 
@@ -1802,8 +1766,12 @@ namespace StokTakipStajyer2.Controllers
                                                        s.GUNCELLEME_TARIHI.ToString().Contains(searchString));
             }
 
-            return View(stokDurumlar.ToList());
+            var stokDurumList = stokDurumlar.ToList();
+            Console.WriteLine($"Found {stokDurumList.Count} records.");
+
+            return View(stokDurumList);
         }
+
 
         public ActionResult ExportToExcel(string searchString = null)
         {

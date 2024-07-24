@@ -18,6 +18,7 @@ namespace StokTakipStajyer2.Models
         public STOK()
         {
             this.STOK_HAREKET = new HashSet<STOK_HAREKET>();
+            this.STOK_DURUM1 = new HashSet<STOK_DURUM>();
         }
     
         public int STOK_ID { get; set; }
@@ -37,5 +38,7 @@ namespace StokTakipStajyer2.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<STOK_HAREKET> STOK_HAREKET { get; set; }
         public virtual STOK_DURUM STOK_DURUM { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<STOK_DURUM> STOK_DURUM1 { get; set; }
     }
 }

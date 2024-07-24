@@ -246,14 +246,14 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_STOK_STOK_ID">
-    <End Role="STOK" Type="Self.STOK" Multiplicity="1" />
-    <End Role="STOK_DURUM" Type="Self.STOK_DURUM" Multiplicity="0..1" />
+    <End Role="STOK" Type="Self.STOK" Multiplicity="0..1" />
+    <End Role="STOK_DURUM" Type="Self.STOK_DURUM" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="STOK">
         <PropertyRef Name="STOK_ID" />
       </Principal>
       <Dependent Role="STOK_DURUM">
-        <PropertyRef Name="DURUM_ID" />
+        <PropertyRef Name="STOK_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

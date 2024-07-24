@@ -25,6 +25,7 @@
         <AssociationConnector Association="StokTakipDBModel.FK_SORUMLU_SORUMLU_ID" ManuallyRouted="false" />
         <AssociationConnector Association="StokTakipDBModel.FK_STOK_HAREKET_STOK" ManuallyRouted="false" />
         <AssociationConnector Association="StokTakipDBModel.FK_STOK_STOK_ID" ManuallyRouted="false" />
+        <AssociationConnector Association="StokTakipDBModel.FK_STOK_STOK_ID1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
