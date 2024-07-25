@@ -37,7 +37,7 @@ C#,Javascript,HTML,CSS,Framework/Library
 ![Ekran Görüntüsü (6)](https://github.com/user-attachments/assets/8745e227-ab05-4ebb-a991-69dd6dce176c)
 
 
-<h2>Database Tabloları </h2>
+<h2>Database Table</h2>
 
 
 ![Ekran Görüntüsü (1)](https://github.com/user-attachments/assets/d54f6744-b647-488d-9795-48e3190e5689)
