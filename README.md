@@ -13,7 +13,7 @@ Generating reports on stock status.
 Exporting stock data to Excel for further analysis.
 
 <h1>Frontend:</h1>
-HTML,CSS,C#,Framework/Library
+C#,Javascript,HTML,CSS,Framework/Library
 
 
 
