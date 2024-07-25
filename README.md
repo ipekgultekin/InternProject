@@ -12,11 +12,13 @@ Viewing detailed information about each stock item.
 Generating reports on stock status.
 Exporting stock data to Excel for further analysis.
 
-<h1>Frontend:</h1>HTML,CSS,JavaScript,Framework/Library
+<h1>Frontend:</h1>
+HTML,CSS,JavaScript,Framework/Library
 
 
 
-<h1>Backend:<h1/>Programming Language/Framework,Database
+<h1>Backend:<h1/>
+  Programming Language/Framework,Database
 
 
 
