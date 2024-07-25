@@ -17,12 +17,12 @@ Exporting stock data to Excel for further analysis.
 HTML
 CSS
 JavaScript
-[Framework/Library]
+Framework/Library
 
 <h1>Backend:<h1/>
   
-[Programming Language/Framework]
-[Database]
+Programming Language/Framework
+Database
 
 
 ![Ekran Görüntüsü (3)](https://github.com/user-attachments/assets/6830aea7-d0a3-4484-8b7f-aa9db500287b)
