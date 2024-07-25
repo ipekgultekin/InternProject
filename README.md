@@ -1,5 +1,29 @@
 <h1>Stok Takip Web Sitesi</h1>
 
+<h1>Project Description</h1>
+
+The Stock Tracking System is a web-based application designed to efficiently manage and track the inventory of various products within a warehouse. The system allows warehouse managers to add, update, and monitor stock levels, ensuring that the inventory is always up-to-date. The main goals of this project are to streamline the stock management process, reduce errors, and improve overall warehouse productivity.
+
+The application provides the following functionalities:
+
+Adding new stock items to the inventory.
+Updating existing stock information.
+Viewing detailed information about each stock item.
+Generating reports on stock status.
+Exporting stock data to Excel for further analysis.
+
+<h1>Frontend:</h1>
+
+HTML
+CSS
+JavaScript
+[Framework/Library]
+
+<h1>Backend:<h1/>
+  
+[Programming Language/Framework]
+[Database]
+
 
 ![Ekran Görüntüsü (3)](https://github.com/user-attachments/assets/6830aea7-d0a3-4484-8b7f-aa9db500287b)
 
