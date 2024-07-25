@@ -1,4 +1,4 @@
-<h1>Stok Takip Web Sitesi</h1>
+<h1>The Stock Tracking System</h1>
 
 <h1>Project Description</h1>
 
@@ -21,7 +21,7 @@ Exporting stock data to Excel for further analysis.
 
 
 
------
+<h1>Screenshots</h1>
 
 ![Ekran Görüntüsü (3)](https://github.com/user-attachments/assets/6830aea7-d0a3-4484-8b7f-aa9db500287b)
 
