@@ -28,6 +28,9 @@ C#,Javascript,HTML,CSS,Framework/Library
 ![Ekran Görüntüsü (3)](https://github.com/user-attachments/assets/6830aea7-d0a3-4484-8b7f-aa9db500287b)
 
 
+![Ekran Görüntüsü (9)](https://github.com/user-attachments/assets/575299da-3492-41d8-846b-57aaadefbf07)
+
+
 ![Ekran Görüntüsü (7)](https://github.com/user-attachments/assets/e91c92d9-3bd7-4e58-b7d5-a6d390fd87aa)
 
 
